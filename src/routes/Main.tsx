@@ -14,7 +14,7 @@ const Header = styled.header`
 `;
 const UnivsList = styled.ul``;
 const Univ = styled.li`
-  background-color: blue;
+  background-color: ${(props) => props.theme.circle2Color};
   margin-bottom: 10px;
   border-radius: 15px;
 
@@ -25,13 +25,13 @@ const Univ = styled.li`
   }
   &:hover {
     a {
-      color: red;
+      color: ${(props) => props.theme.accentColor};
     }
   }
 `;
 const Title = styled.h1`
   font-size: 48px;
-  color: tomato;
+  color: ${(props) => props.theme.circle1Color};
 `;
 
 const univs = [
