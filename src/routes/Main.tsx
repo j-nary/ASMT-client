@@ -50,8 +50,14 @@ function Main() {
       <UnivsList>
         {univs.map((univ) => (
           <Univ key={univ.name}>
-            <Link to={`/${univ.name}`} />
-            {univ.name} &rarr;
+            <Link
+              to={{
+                pathname: `/${univ.name}`,
+                state: { name: univ.name },
+              }}
+            >
+              {univ.name} &rarr;
+            </Link>
           </Univ>
         ))}
       </UnivsList>
