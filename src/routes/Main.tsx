@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import {RangeSlider} from '../index';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -46,7 +47,7 @@ function Main() {
       <Header>
         <Title>얼마쓸래?</Title>
       </Header>
-
+      <RangeSlider/>
       <UnivsList>
         {univs.map((univ) => (
           <Univ key={univ.name}>
