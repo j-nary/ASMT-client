@@ -2,31 +2,14 @@ import {useState, useCallback} from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Rank from "./components/Rank";
+import BackgroundSrc from "../img/backimg3.jpg";
 
-interface RouteParams {
-    univName: string;
-}
-
-function Univ() {
-    const {univName} = useParams<RouteParams>();    
-    const [isOpenRank, setOpenRank] = useState<boolean>(false);
-
-    const onClickToggleModal = useCallback(() => {
-        setOpenRank(!isOpenRank);
-    }, [isOpenRank]);
-
-    return (
-        <Main>
-            <Title> {univName} Ranking </Title>
-            {isOpenRank && (
-                <Rank onClickToggleModal={onClickToggleModal}>
-                    Ranking list
-                </Rank>
-            )}
-            <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
-        </Main>
-    );
-}
+// TODO: Background 수정 필요
+const Background = styled.div`
+  background-image: url(${BackgroundSrc});
+  background-size: cover;
+  background-position: center;
+`;
 
 const Main = styled.main`
   width: 100%;
@@ -56,5 +39,31 @@ const DialogButton = styled.button`
   }
 `;
 
+interface RouteParams {
+    univName: string;
+}
+
+function Univ() {
+    const {univName} = useParams<RouteParams>();    
+    const [isOpenRank, setOpenRank] = useState<boolean>(false);
+
+    const onClickToggleModal = useCallback(() => {
+        setOpenRank(!isOpenRank);
+    }, [isOpenRank]);
+
+    return (
+      <Background>
+        <Main>
+            <Title> {univName} Ranking </Title>
+            {isOpenRank && (
+                <Rank onClickToggleModal={onClickToggleModal}>
+                    Ranking list
+                </Rank>
+            )}
+            <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
+        </Main>
+      </Background>
+    );
+}
 
 export default Univ;
