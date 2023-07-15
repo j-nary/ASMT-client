@@ -2,7 +2,7 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { ThemeProvider } from 'styled-components';
-import { theme } from "./theme";
+import { theme } from "./Styles/theme";
 
 import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
 import { Handle, Track, Tick } from './Components/RangeSlider';

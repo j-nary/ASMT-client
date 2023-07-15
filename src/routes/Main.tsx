@@ -49,7 +49,7 @@ const Univ = styled.li`
   }
   &:hover {
     a {
-      color: ${(props: any) => props.theme.accentColor};
+      color: white;
     }
   }
 `;

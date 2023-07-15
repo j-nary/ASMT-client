@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-
 export default createGlobalStyle`
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -55,8 +54,9 @@ body {
   /* font-family: 'Source Sans 3', sans-serif; */
   /* font-family: 'Black Han Sans', sans-serif; */
   font-family: "Font";
-  background-color: ${(props: any) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.bgColor};
   color: ${(props: any) => props.theme.textColor};
+  font-size: 1rem;
 }
 a {
   text-decoration: none;

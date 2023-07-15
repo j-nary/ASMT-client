@@ -1,4 +1,4 @@
-import {useState, useCallback} from "react";
+import { useState, useCallback } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Rank from "../Components/Rank";
@@ -22,6 +22,10 @@ const Main = styled.main`
 
 const Title = styled.h1`
   text-align: center;
+
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const DialogButton = styled.button`
@@ -40,34 +44,57 @@ const DialogButton = styled.button`
   }
 `;
 
+const SearchContainer = styled.div`
+  width: 400px;
+  height: 45px;
+  position: relative;
+  border: 0;
+  img {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+  margin-bottom: 1rem;
+`;
+const SearchBar = styled.input`
+  border: 0;
+  padding-left: 10px;
+  background-color: #eaeaea;
+  width: 100%;
+  height:100%;
+  outline: none;
+`;
+
 interface RouteParams {
-    univId: string;
+  univId: string;
 }
 interface RouteState {
-    univName: string;
+  univName: string;
 }
 
 function Univ() {
-    const {univId} = useParams<RouteParams>();    
-    const [isOpenRank, setOpenRank] = useState<boolean>(false);
-    const {state} = useLocation<RouteState>();
-    const onClickToggleModal = useCallback(() => {
-        setOpenRank(!isOpenRank);
-    }, [isOpenRank]);
+  const { univId } = useParams<RouteParams>();
+  const [isOpenRank, setOpenRank] = useState<boolean>(false);
+  const { state } = useLocation<RouteState>();
+  const onClickToggleModal = useCallback(() => {
+    setOpenRank(!isOpenRank);
+  }, [isOpenRank]);
 
-    return (
-      <Background>
-        <Main>
-            <Title> {state.univName} Ranking </Title>
-            {isOpenRank && (
-                <Rank onClickToggleModal={onClickToggleModal}>
-                    Ranking list
-                </Rank>
-            )}
-            <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
-        </Main>
-      </Background>
-    );
+  return (
+    <Background>
+      <Main>
+        <Title> {state.univName} Ranking </Title>
+        <SearchContainer>
+          <SearchBar />
+          <img src="../Assets/Img/searchIcon.png" alt="searchIcon"/>
+        </SearchContainer>
+        {isOpenRank && (
+          <Rank onClickToggleModal={onClickToggleModal}>Ranking list</Rank>
+        )}
+        <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
+      </Main>
+    </Background>
+  );
 }
 
 export default Univ;
