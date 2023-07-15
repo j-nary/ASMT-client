@@ -2,7 +2,7 @@ import {useState, useCallback} from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Rank from "./components/Rank";
-import BackgroundSrc from "../img/backimg3.jpg";
+import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import { useLocation } from "react-router-dom";
 
 // TODO: Background 수정 필요

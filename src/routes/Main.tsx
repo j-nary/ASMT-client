@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {RangeSlider} from '../index';
-import LogoSrc from '../img/logo.jpg';
-import BackgroundSrc from '../img/backimg1.jpg';
+import LogoSrc from '../Assets/Img/logo.jpg';
+import BackgroundSrc from '../Assets/Img/backimg3.jpg';
 
 const Container = styled.div`
   padding: 0px 20px;
