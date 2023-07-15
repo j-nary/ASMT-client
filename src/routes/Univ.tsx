@@ -2,8 +2,8 @@ import { useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Rank from "../Components/Modal";
-import DialogButton from "../Components/DialogButton"
-import { RangeSlider } from "../index";
+import DialogButton from "../Components/DialogButton";
+import RangeSlider from "../Components/RangeSlider";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import SearchSrc from "../Assets/Img/searchIcon.png";
 import { Link, useLocation } from "react-router-dom";
