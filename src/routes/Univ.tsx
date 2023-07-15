@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import Rank from "./components/Rank";
 import BackgroundSrc from "../img/backimg3.jpg";
+import { useLocation } from "react-router-dom";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
@@ -40,13 +41,16 @@ const DialogButton = styled.button`
 `;
 
 interface RouteParams {
+    univId: string;
+}
+interface RouteState {
     univName: string;
 }
 
 function Univ() {
-    const {univName} = useParams<RouteParams>();    
+    const {univId} = useParams<RouteParams>();    
     const [isOpenRank, setOpenRank] = useState<boolean>(false);
-
+    const {state} = useLocation<RouteState>();
     const onClickToggleModal = useCallback(() => {
         setOpenRank(!isOpenRank);
     }, [isOpenRank]);
@@ -54,7 +58,7 @@ function Univ() {
     return (
       <Background>
         <Main>
-            <Title> {univName} Ranking </Title>
+            <Title> {state.univName} Ranking </Title>
             {isOpenRank && (
                 <Rank onClickToggleModal={onClickToggleModal}>
                     Ranking list
