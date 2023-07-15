@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import Rank from "../Components/Rank";
+import Rank from "../Components/Modal";
+import DialogButton from "../Components/DialogButton"
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import { Link, useLocation } from "react-router-dom";
 
@@ -26,22 +27,6 @@ const Title = styled.h1`
   font-size: 2rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
-`;
-
-const DialogButton = styled.button`
-  width: 160px;
-  height: 40px;
-  background-color: black;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 400;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
 `;
 
 const SearchContainer = styled.div`
@@ -90,6 +75,7 @@ interface FoodInterface {
   menuPrice: number;
   menuImg: string;
 }
+
 function Univ() {
   const { univId } = useParams<RouteParams>();
   const [isOpenRank, setOpenRank] = useState<boolean>(false);
@@ -116,9 +102,10 @@ function Univ() {
           <img src="../Assets/Img/searchIcon.png" alt="searchIcon"/>
         </SearchContainer>
         {isOpenRank && (
-          <Rank onClickToggleModal={onClickToggleModal}>Ranking list</Rank>
+          <Rank onClickToggleModal={onClickToggleModal}>
+          </Rank>
         )}
-        <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
+        <DialogButton onClickToggleModal={onClickToggleModal}/>
         {loading ? (
           <Loader>Loading...</Loader>
         ): (

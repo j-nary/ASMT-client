@@ -1,4 +1,6 @@
+// 가격 조정 RangeSlider
 // 참고 : https://codesandbox.io/s/zl8nrlp9x?file=/src/index.tsx
+
 import * as React from 'react';
 import {
   SliderItem,
