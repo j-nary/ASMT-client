@@ -30,7 +30,7 @@ const Title = styled.h1`
 
 const DialogButton = styled.button`
   width: 160px;
-  height: 48px;
+  height: 40px;
   background-color: black;
   color: white;
   font-size: 1.2rem;
