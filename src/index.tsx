@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from "./theme";
 
 import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
-import { Handle, Track, Tick } from './routes/components/RangeSlider';
+import { Handle, Track, Tick } from './Components/RangeSlider';
 
 // RangeSlider 기초 세팅
 const sliderStyle: React.CSSProperties = {

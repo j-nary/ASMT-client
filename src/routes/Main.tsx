@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {RangeSlider} from '../index';
-import LogoSrc from '../Assets/Img/logo.jpg';
-import BackgroundSrc from '../Assets/Img/backimg3.jpg';
+import { RangeSlider } from "../index";
+import LogoSrc from "../Assets/Img/logo.jpg";
+import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 
 const Container = styled.div`
   padding: 0px 20px;
   max-width: 800px;
   margin: 0 auto;
   size: cover;
-  height: 100%
+  height: 100%;
 `;
 
 // TODO: Background 수정 필요
@@ -38,7 +38,7 @@ const Logo = styled.img`
 const UnivsList = styled.ul``;
 
 const Univ = styled.li`
-  background-color: ${(props:any) => props.theme.circle2Color};
+  background-color: ${(props: any) => props.theme.circle2Color};
   margin-bottom: 10px;
   border-radius: 15px;
 
@@ -49,14 +49,14 @@ const Univ = styled.li`
   }
   &:hover {
     a {
-      color: ${(props:any) => props.theme.accentColor};
+      color: ${(props: any) => props.theme.accentColor};
     }
   }
 `;
 
 const Title = styled.h1`
   font-size: 48px;
-  color: ${(props:any) => props.theme.circle1Color};
+  color: ${(props: any) => props.theme.circle1Color};
 `;
 
 const univs = [
@@ -116,7 +116,7 @@ const univs = [
   { name: "한신대학교", id: "hs" },
   { name: "한양대학교", id: "hanyang" },
   { name: "호서대학교", id: "hoseo" },
-  { name: "홍익대학교", id: "hongik" }
+  { name: "홍익대학교", id: "hongik" },
 ];
 
 function Main() {
@@ -124,10 +124,10 @@ function Main() {
     <Background>
       <Container>
         <Header>
-          <Logo src={LogoSrc} alt="Logo"/>
+          <Logo src={LogoSrc} alt="Logo" />
           <Title>얼마 쓸래?</Title>
         </Header>
-        <RangeSlider/>
+        <RangeSlider />
         <UnivsList>
           {univs.map((univ) => (
             <Univ key={univ.name}>
