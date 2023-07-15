@@ -5,6 +5,7 @@ import Rank from "../Components/Rank";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { RangeSlider } from "..";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
@@ -208,6 +209,7 @@ function Univ() {
           <Rank onClickToggleModal={onClickToggleModal}>Ranking list</Rank>
         )}
         <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
+        <RangeSlider />
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (

@@ -5,7 +5,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/:univName">
+        <Route path="/:univId">
           <Univ />
         </Route>
         <Route path="/">
