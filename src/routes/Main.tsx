@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { RangeSlider } from "../index";
 import LogoSrc from "../Assets/Img/logo.jpg";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
+import { useState } from "react";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -120,6 +121,8 @@ const univs = [
 ];
 
 function Main() {
+  const [minPrice, setMinPrice] = useState(1);
+  const [maxPrice, setMaxPrice] = useState(100000);
   return (
     <Background>
       <Container>
@@ -134,7 +137,7 @@ function Main() {
               <Link
                 to={{
                   pathname: `/${univ.id}`,
-                  state: { univName: univ.name },
+                  state: { univName: univ.name, minumumPrice: minPrice, maximumPrice: maxPrice, univId: univ.id,},
                 }}
               >
                 {univ.name} &rarr;
