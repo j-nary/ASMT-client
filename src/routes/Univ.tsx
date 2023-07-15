@@ -1,9 +1,9 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Rank from "../Components/Rank";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
@@ -64,6 +64,14 @@ const SearchBar = styled.input`
   height:100%;
   outline: none;
 `;
+const Loader = styled.span`
+  text-align: center;
+  display: block;
+  margin-top: 3rem;
+`;
+const FoodsList = styled.ul``;
+const FoodBox = styled.li``;
+const FoodImg = styled.img``;
 
 interface RouteParams {
   univId: string;
@@ -71,11 +79,30 @@ interface RouteParams {
 interface RouteState {
   univName: string;
 }
-
+interface FoodInterface {
+  placeName: string;
+  placeAddress: string;
+  placeRating: number;
+  placeLink: string;
+  placeDistance: number;
+  school: string;
+  menuName: string;
+  menuPrice: number;
+  menuImg: string;
+}
 function Univ() {
   const { univId } = useParams<RouteParams>();
   const [isOpenRank, setOpenRank] = useState<boolean>(false);
   const { state } = useLocation<RouteState>();
+  const [foods, setFoods] = useState<FoodInterface[]>([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    (async () => {
+      const response = await(await fetch("")).json();
+      setFoods(response);
+      setLoading(false);
+    })();
+  }, []);
   const onClickToggleModal = useCallback(() => {
     setOpenRank(!isOpenRank);
   }, [isOpenRank]);
@@ -92,6 +119,16 @@ function Univ() {
           <Rank onClickToggleModal={onClickToggleModal}>Ranking list</Rank>
         )}
         <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
+        {loading ? (
+          <Loader>Loading...</Loader>
+        ): (
+          <FoodsList>
+            {foods.map((f) => (
+            <FoodBox>
+              <FoodImg src = {`${f.menuImg}`}/>
+              </FoodBox>))}
+          </FoodsList>
+        )}
       </Main>
     </Background>
   );
