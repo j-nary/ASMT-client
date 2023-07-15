@@ -3,7 +3,9 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import Rank from "../Components/Modal";
 import DialogButton from "../Components/DialogButton"
+import { RangeSlider } from "../index";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
+import SearchSrc from "../Assets/Img/searchIcon.png";
 import { Link, useLocation } from "react-router-dom";
 
 // TODO: Background 수정 필요
@@ -19,11 +21,13 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  size: cover;
 `;
 
 const Title = styled.h1`
   text-align: center;
-
   font-size: 2rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
@@ -99,13 +103,13 @@ function Univ() {
         <Title> {state.univName} Ranking </Title>
         <SearchContainer>
           <SearchBar />
-          <img src="../Assets/Img/searchIcon.png" alt="searchIcon"/>
         </SearchContainer>
         {isOpenRank && (
           <Rank onClickToggleModal={onClickToggleModal}>
           </Rank>
         )}
         <DialogButton onClickToggleModal={onClickToggleModal}/>
+        <RangeSlider/>
         {loading ? (
           <Loader>Loading...</Loader>
         ): (
