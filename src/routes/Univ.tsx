@@ -20,7 +20,7 @@ const Main = styled.main`
   align-items: center;
 `;
 
-const Title = styled.h3`
+const Title = styled.h1`
   text-align: center;
 `;
 
