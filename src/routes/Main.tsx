@@ -137,7 +137,7 @@ function Main() {
               <Link
                 to={{
                   pathname: `/${univ.id}`,
-                  state: { univName: univ.name, minumumPrice: minPrice, maximumPrice: maxPrice, univId: univ.id,},
+                  state: { univName: univ.name, minumumPrice: minPrice, maximumPrice: maxPrice},
                 }}
               >
                 {univ.name} &rarr;
