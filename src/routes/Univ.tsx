@@ -10,7 +10,7 @@ import ImageComponent from "../Components/FoodImage";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
-// import SearchBar from "../Components/SearchBar";
+import SearchBar from "../Components/SearchBar";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
