@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Rank from "../Components/Modal";
 import DialogButton from "../Components/DialogButton";
 import RangeSlider from "../Components/RangeSlider";
+import Radio from "../Components/Radio";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import SearchSrc from "../Assets/Img/searchIcon.png";
 import ImageComponent from "../Components/FoodImage";
@@ -27,7 +28,6 @@ const Main = styled.main`
   align-items: center;
   margin: 0 auto;
   size: cover;
-  background-color: blue;
 `;
 
 const Title = styled.h1`
@@ -76,7 +76,7 @@ const FoodsList = styled.ul`
   overflow-y: scroll;
   width: 100vh;
   align-content: center;
-  margin: 0px 50px 50px 50px;
+  margin: 8px 50px 35px 50px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -261,6 +261,7 @@ function Univ() {
         <RangeSliderWrapper>
           <RangeSlider />
         </RangeSliderWrapper>
+        <Radio/>
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
