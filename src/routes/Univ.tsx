@@ -132,18 +132,17 @@ function Univ() {
   const { state } = useLocation<RouteState>();
   const [foods, setFoods] = useState<FoodInterface[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState([]);
+
   const [minPrice, setMinPrice] = useState(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
-  const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
   const data = {
-    minimumPrice: 0,
+    minimumPrice: 1000,
     maximumPrice: maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
-    showZeroPriceItems: showZeroPrice,
+    showZeroPriceItems: true,
     school: univId
   };
   useEffect(() => {
@@ -166,7 +165,7 @@ function Univ() {
         console.error(error);
       }
     })();
-  }, [filter, sortMethod]);
+  }, [keywordList, sortMethod]);
 
   const onClickToggleModal = useCallback(() => {
     setOpenRank(!isOpenRank);
@@ -176,10 +175,15 @@ function Univ() {
     if (query.trim() !== '' && !keywordList.includes(query)) {
       // 최대 5개까지만 유지하는 로직 추가
       if (keywordList.length < 5) {
-        setKeywordList((prevList) => [...prevList, query]);
+        setKeywordList([...keywordList, query]);
       }
     }
+    console.log(keywordList);
   };
+  const removeTip = (index: number) => {
+    setKeywordList((prevList) => prevList.filter((_, i) => i !== index));
+  };
+
   useEffect(() => {
     console.log(keywordList);
   }, [keywordList]);
@@ -202,7 +206,7 @@ function Univ() {
     <Background>
       <Main>
         <Title> {state.univName} 맛집 리스트 </Title>
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar onSearch={handleSearch} onRemoveTip={removeTip} />
 
         {isOpenRank && (
           <Rank onClickToggleModal={onClickToggleModal}>
