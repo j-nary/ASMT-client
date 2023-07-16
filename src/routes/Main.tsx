@@ -44,12 +44,14 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   margin: 5vh;
+  font-family: "jjwfont", sans-serif;
 `;
 
 const Logo = styled.img`
   height: 12vh;
   display: flex;
   margin: 5vh;
+  font-family: "jjwfont", sans-serif;
 `;
 
 const UnivsList = styled.ul`
@@ -64,11 +66,7 @@ const Univ = styled.li`
   background-color: #7aa0c4;
   border-radius: 15px;
   padding: 10px 10px;
-  @font-face {
-    font-family: "Roboto Regular";
-    font-weight: 400;
-    src: url("./fonts/Roboto-Regular.ttf") format("truetype");
-  }
+  font-family: "jjwfont2", sans-serif;
   a {
     align-items: center;
     display: flex;
