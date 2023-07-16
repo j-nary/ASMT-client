@@ -1,9 +1,10 @@
+//브랜치 테스트4
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import RangeSlider from "../Components/RangeSlider";
+import { RangeSlider } from "../index";
 import LogoSrc from "../Assets/Img/logo.jpg";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
-import { useState } from "react";
 
 const Container = styled.div`
   padding: 0px 20px;
