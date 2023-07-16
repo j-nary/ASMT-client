@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { RangeSlider } from "../index";
+import RangeSlider from "../Components/RangeSlider";
 import LogoSrc from "../Assets/Img/logo.jpg";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 
@@ -187,6 +187,8 @@ const AlphabetButton = styled.button<AlphabetButtonProps>`
 function Main() {
   const [selectedAlphabet, setSelectedAlphabet] = useState("");
   const [filteredUnivs, setFilteredUnivs] = useState<any[]>([]); // 수정: any[]로 타입 설정
+  const [minPrice, setMinPrice] = useState(1);
+  const [maxPrice, setMaxPrice] = useState(100000);
 
   const handleAlphabetClick = (alphabet: string) => {
     setSelectedAlphabet(alphabet);
@@ -326,7 +328,7 @@ function Main() {
                 <Link
                   to={{
                     pathname: `/${univ.id}`,
-                    state: { univName: univ.name },
+                    state: { univName: univ.name, minumumPrice: minPrice, maximumPrice: maxPrice },
                   }}
                 >
                   {univ.name}
