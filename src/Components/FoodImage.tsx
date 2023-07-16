@@ -17,7 +17,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({imageUrl}) => {
   const defaultImage = AltSrc;
 
   // 이미지 URL이 null 또는 빈 값인 경우
-  if (imageUrl == null) {
+  if (imageUrl == "null" || imageUrl == null) {
     return <FoodImg src={defaultImage} alt="Default" />;
   }
   
