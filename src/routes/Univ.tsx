@@ -75,21 +75,21 @@ const FoodsList = styled.ul`
   overflow-y: scroll;
   width: auto;
   align-content: center;
-  padding: 0em 0em 0.2em 15em;
-  margin: 0px 50px 50px 50px;
+  // padding: 0em 0em 0.2em 15em;
+  // margin: 0px 50px 50px 50px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 
-  background-color: blue;
+  // background-color: blue;
 `;
 
 const FoodBox = styled.li`
   align-content:vertical;
     float:left;
     border: 1px solid #aaa;
-    width: 170px;
-    min-height:33%;
+    width:46.5%;
+    min-height: 33%;
     max-height:33%;
     border-radius: 7px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
@@ -229,7 +229,7 @@ function Univ() {
     setKeysord(e.currentTarget.value);
   };
 
-// 클릭 한 번 할 시, 랭크에 기여
+  // 클릭 한 번 할 시, 랭크에 기여
   const postRank = async (data: FoodInterface) => {
     try {
       const response = await axios.post('http://13.125.233.202/api/rank', { menuId: data.menuId }, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
@@ -265,7 +265,7 @@ function Univ() {
             {foods.map((f) => (
               <FoodBox onClick={() => postRank(f)}>
                 <a href={f.placeLink} style={{ cursor: 'pointer' }}>
-                  <FoodImg src={`${f.menuImg}`}/>
+                  <FoodImg src={`${f.menuImg}`} />
                   <FoodInfo>
                     <span>{f.menuName}</span>
                     <span>{f.menuPrice}</span>
