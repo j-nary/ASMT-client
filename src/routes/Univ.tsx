@@ -139,7 +139,7 @@ function Univ() {
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
   const data = {
-    minimumPrice: minPrice,
+    minimumPrice: 0,
     maximumPrice: maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
@@ -166,7 +166,7 @@ function Univ() {
         console.error(error);
       }
     })();
-  }, [filter]);
+  }, [filter, sortMethod]);
 
   const onClickToggleModal = useCallback(() => {
     setOpenRank(!isOpenRank);
