@@ -12,12 +12,13 @@ const Container = styled.div`
   margin: 0 auto;
   size: cover;
   height: 100%;
-`;
+  `;
 
 const Background = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  overflow-y: hidden;
   background-image: url(${BackgroundSrc});
   background-size: cover;
   background-position: center;
@@ -48,9 +49,9 @@ const Header = styled.header`
 `;
 
 const Logo = styled.img`
-  height: 12vh;
+  height: 10vh;
   display: flex;
-  margin: 5vh;
+  margin: 3vh 3vh 5vh 3vh;
   font-family: "jjwfont", sans-serif;
 `;
 
@@ -161,6 +162,13 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
+`;
+
+const RangeSliderWrapper = styled.ul`
+  width: 100vh;
+  height: 8vh;
+  align-content: center;
+  margin: 0 10px;
 `;
 
 interface AlphabetButtonProps {
@@ -286,7 +294,9 @@ function Main() {
           <Logo src={LogoSrc} alt="Logo" />
           <Title>얼마 쓸래?</Title>
         </Header>
-        <RangeSlider />
+        <RangeSliderWrapper>
+          <RangeSlider />
+        </RangeSliderWrapper>
         <div>
           {/* 알파벳 버튼 리스트 */}
           <ButtonWrapper>
@@ -338,7 +348,7 @@ function Main() {
           )}
         </UnivsList>
       </Container>
-    </Background>
+      </Background>
   );
 }
 
