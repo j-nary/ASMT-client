@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { RangeSlider } from "../index";
+import RangeSlider from "../Components/RangeSlider";
 import LogoSrc from "../Assets/Img/logo.jpg";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import { useState } from "react";

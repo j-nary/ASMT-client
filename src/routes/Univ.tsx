@@ -1,11 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import Rank from "../Components/Rank";
+import Rank from "../Components/Modal";
+import DialogButton from "../Components/DialogButton";
+import RangeSlider from "../Components/RangeSlider";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
+import SearchSrc from "../Assets/Img/searchIcon.png";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { RangeSlider } from "..";
 import { Handle } from "../Components/RangeSlider";
 
 // TODO: Background 수정 필요
@@ -21,30 +23,16 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  size: cover;
 `;
 
 const Title = styled.h1`
   text-align: center;
-
   font-size: 2rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
-`;
-
-const DialogButton = styled.button`
-  width: 160px;
-  height: 40px;
-  background-color: black;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 400;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
 `;
 
 const SearchContainer = styled.div`
@@ -164,7 +152,7 @@ function Univ() {
   const [minPrice, setMinPrice] = useState(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState("lowPrice");
-
+  const [keyword, setKeysord] = useState<string>("");
   const data = {
     minimumPrice: 0,
     maximumPrice: maxPrice,
@@ -198,20 +186,23 @@ function Univ() {
     setOpenRank(!isOpenRank);
   }, [isOpenRank]);
 
+  const onChangeSearch = (e: React.FormEvent<HTMLInputElement>) => {
+    setKeysord(e.currentTarget.value);
+  };
+
   return (
     <Background>
       <Main>
         <Title> {state.univName} Ranking </Title>
         <SearchContainer>
-          <SearchBar />
-          <img src="../Assets/Img/searchIcon.png" alt="searchIcon" />
+          <SearchBar value={keyword} onChange={onChangeSearch}/>
         </SearchContainer>
         {isOpenRank && (
-          <Rank onClickToggleModal={onClickToggleModal}>Ranking list</Rank>
+          <Rank onClickToggleModal={onClickToggleModal}>
+          </Rank>
         )}
-        <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
-        <RangeSlider />
-        {/* <Handle domain={[minPrice, maxPrice]} handle={} getHandleProps={} /> */}
+        <DialogButton onClickToggleModal={onClickToggleModal}/>
+        <RangeSlider/>
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
