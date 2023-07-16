@@ -68,6 +68,23 @@ const FoodsList = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start; 
+  /* 커스텀 스크롤바 스타일 적용 */
+  scrollbar-width: thin;
+  scrollbar-color: #6a91bd rgba(33, 122, 244, .1);
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: #6a91bd;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);
+  }
 `;
 
 const FoodBox = styled.li`
@@ -86,6 +103,7 @@ const FoodBox = styled.li`
   &:hover {
     background-color: #B0E0E6;
   }
+  
 `;
 
 const FoodName = styled.li`
