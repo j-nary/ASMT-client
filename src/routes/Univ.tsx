@@ -8,7 +8,6 @@ import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import SearchSrc from "../Assets/Img/searchIcon.png";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { RangeSlider } from "..";
 import { Handle } from "../Components/RangeSlider";
 
 // TODO: Background 수정 필요
@@ -153,7 +152,7 @@ function Univ() {
   const [minPrice, setMinPrice] = useState(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState("lowPrice");
-
+  const [keyword, setKeysord] = useState<string>("");
   const data = {
     minimumPrice: 0,
     maximumPrice: maxPrice,
@@ -187,13 +186,16 @@ function Univ() {
     setOpenRank(!isOpenRank);
   }, [isOpenRank]);
 
+  const onChangeSearch = (e: React.FormEvent<HTMLInputElement>) => {
+    setKeysord(e.currentTarget.value);
+  };
+
   return (
     <Background>
       <Main>
         <Title> {state.univName} Ranking </Title>
         <SearchContainer>
-          <SearchBar />
-          <img src="../Assets/Img/searchIcon.png" alt="searchIcon" />
+          <SearchBar value={keyword} onChange={onChangeSearch}/>
         </SearchContainer>
         {isOpenRank && (
           <Rank onClickToggleModal={onClickToggleModal}>
