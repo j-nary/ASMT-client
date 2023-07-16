@@ -5,11 +5,10 @@ import Rank from "../Components/Modal";
 import DialogButton from "../Components/DialogButton";
 import RangeSlider from "../Components/RangeSlider";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
-import SearchSrc from "../Assets/Img/searchIcon.png";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
-// import SearchBar from "../Components/SearchBar";
+import SearchBar from "../Components/SearchBar";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
@@ -27,6 +26,7 @@ const Main = styled.main`
   max-width: 800px;
   margin: 0 auto;
   size: cover;
+  position: relative;
 `;
 
 const Title = styled.h1`
@@ -97,13 +97,14 @@ function Univ() {
   const [minPrice, setMinPrice] = useState(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState("lowPrice");
-  const [keyword, setKeysord] = useState<string>("");
+  const [keywordList, setKeywordList] = useState<string[]>([]);
+  const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
   const data = {
-    minimumPrice: 0,
+    minimumPrice: minPrice,
     maximumPrice: maxPrice,
-    searchKeywordList: [],
+    searchKeywordList: keywordList,
     sortMethod: sortMethod,
-    showZeroPriceItems: true,
+    showZeroPriceItems: showZeroPrice,
     school: univId
   };
   useEffect(() => {
@@ -132,9 +133,17 @@ function Univ() {
     setOpenRank(!isOpenRank);
   }, [isOpenRank]);
 
-  const onChangeSearch = (e: React.FormEvent<HTMLInputElement>) => {
-    setKeysord(e.currentTarget.value);
+  const handleSearch = (query: string) => {
+    if (query.trim() !== '' && !keywordList.includes(query)) {
+      // 최대 5개까지만 유지하는 로직 추가
+      if (keywordList.length < 5) {
+        setKeywordList((prevList) => [...prevList, query]);
+      }
+    }
   };
+  useEffect(() => {
+    console.log(keywordList);
+  }, [keywordList]);
 
   const postRank = async (data: FoodInterface) => {
     try {
@@ -152,8 +161,9 @@ function Univ() {
   return (
     <Background>
       <Main>
-        <Title> {state.univName} Ranking </Title>
-        {/* <SearchBar onChangeSearch={onChangeSearch} /> */}
+        <Title> {state.univName} 맛집 리스트 </Title>
+        <SearchBar onSearch={handleSearch}/>
+
         {isOpenRank && (
           <Rank onClickToggleModal={onClickToggleModal}>
           </Rank>
