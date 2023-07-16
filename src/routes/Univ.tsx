@@ -6,12 +6,10 @@ import DialogButton from "../Components/DialogButton";
 import RangeSlider from "../Components/RangeSlider";
 import Radio from "../Components/Radio";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
-import SearchSrc from "../Assets/Img/searchIcon.png";
 import ImageComponent from "../Components/FoodImage";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
-import { isTemplateElement } from "@babel/types";
 // import SearchBar from "../Components/SearchBar";
 
 // TODO: Background 수정 필요
@@ -29,6 +27,7 @@ const Main = styled.main`
   align-items: center;
   margin: 0 auto;
   size: cover;
+  position: relative;
 `;
 
 const Title = styled.h1`
@@ -137,13 +136,14 @@ function Univ() {
   const [minPrice, setMinPrice] = useState(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState("lowPrice");
-  const [keyword, setKeysord] = useState<string>("");
+  const [keywordList, setKeywordList] = useState<string[]>([]);
+  const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
   const data = {
-    minimumPrice: 0,
+    minimumPrice: minPrice,
     maximumPrice: maxPrice,
-    searchKeywordList: [],
+    searchKeywordList: keywordList,
     sortMethod: sortMethod,
-    showZeroPriceItems: true,
+    showZeroPriceItems: showZeroPrice,
     school: univId
   };
   useEffect(() => {
@@ -172,9 +172,17 @@ function Univ() {
     setOpenRank(!isOpenRank);
   }, [isOpenRank]);
 
-  const onChangeSearch = (e: React.FormEvent<HTMLInputElement>) => {
-    setKeysord(e.currentTarget.value);
+  const handleSearch = (query: string) => {
+    if (query.trim() !== '' && !keywordList.includes(query)) {
+      // 최대 5개까지만 유지하는 로직 추가
+      if (keywordList.length < 5) {
+        setKeywordList((prevList) => [...prevList, query]);
+      }
+    }
   };
+  useEffect(() => {
+    console.log(keywordList);
+  }, [keywordList]);
 
   // 클릭 한 번 할 시, 랭크에 기여
   const postRank = async (data: FoodInterface) => {
@@ -193,8 +201,9 @@ function Univ() {
   return (
     <Background>
       <Main>
-        <Title> {state.univName} Ranking </Title>
-        {/* <SearchBar onChangeSearch={onChangeSearch} /> */}
+        <Title> {state.univName} 맛집 리스트 </Title>
+        <SearchBar onSearch={handleSearch} />
+
         {isOpenRank && (
           <Rank onClickToggleModal={onClickToggleModal}>
           </Rank>
@@ -203,7 +212,7 @@ function Univ() {
         <RangeSliderWrapper>
           <RangeSlider />
         </RangeSliderWrapper>
-        <Radio/>
+        <Radio />
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
@@ -211,7 +220,7 @@ function Univ() {
             {foods.map((f) => (
               <FoodBox onClick={() => postRank(f)}>
                 <a href={f.placeLink} style={{ cursor: 'pointer' }}>
-                  <ImageComponent imageUrl={`${f.menuImg}`}/>
+                  <ImageComponent imageUrl={`${f.menuImg}`} />
                   <FoodInfo>
                     <FoodName>
                       <span>{f.menuName}</span>
