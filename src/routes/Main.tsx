@@ -13,19 +13,34 @@ const Container = styled.div`
   height: 100%;
 `;
 
-// TODO: Background 수정 필요
 const Background = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
   background-image: url(${BackgroundSrc});
   background-size: cover;
   background-position: center;
+`;
+
+const BackgroundOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* 이미지 위에 겹칠 오버레이 색상 설정 */
 `;
 
 const Header = styled.header`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 5vh;
 `;
@@ -36,23 +51,46 @@ const Logo = styled.img`
   margin: 5vh;
 `;
 
-const UnivsList = styled.ul``;
+const UnivsList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 한 행에 3개씩 나열 */
+  gap: 10px; /* 항목 사이의 간격 설정 */
+  margin-top: 20px;
+  justify-content: center; /* 가로 중앙 정렬 */
+`;
 
 const Univ = styled.li`
-  background-color: ${(props: any) => props.theme.circle2Color};
-  margin-bottom: 10px;
+  background-color: #7aa0c4;
   border-radius: 15px;
-
+  padding: 10px 10px;
+  @font-face {
+    font-family: "Roboto Regular";
+    font-weight: 400;
+    src: url("./fonts/Roboto-Regular.ttf") format("truetype");
+  }
   a {
     align-items: center;
     display: flex;
-    padding: 20px;
+    justify-content: center;
   }
   &:hover {
     a {
       color: white;
     }
   }
+`;
+
+const NoSelectionMessage = styled(Univ)`
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  padding: 20px;
+  border: none;
+  background: none;
+  white-space: nowrap; /* 한 줄로 표시 */
+  text-align: center; /* 텍스트 가운데 정렬 */
 `;
 
 const Title = styled.h1`
@@ -120,9 +158,126 @@ const univs = [
   { name: "홍익대학교", id: "hongik" },
 ];
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+interface AlphabetButtonProps {
+  active: boolean;
+}
+// h
+const AlphabetButton = styled.button<AlphabetButtonProps>`
+  font-size: 25px; /* 2배로 키움 */
+  font-weight: bold;
+  color: ${(props) => (props.active ? "#34568E" : "gray")};
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin: 0 2px;
+
+  &:hover {
+    color: ${(props) => (props.active ? "#34568E" : "#34568E")};
+  }
+`;
+
 function Main() {
-  const [minPrice, setMinPrice] = useState(1);
-  const [maxPrice, setMaxPrice] = useState(100000);
+  const [selectedAlphabet, setSelectedAlphabet] = useState("");
+  const [filteredUnivs, setFilteredUnivs] = useState<any[]>([]); // 수정: any[]로 타입 설정
+
+  const handleAlphabetClick = (alphabet: string) => {
+    setSelectedAlphabet(alphabet);
+    // 선택된 알파벳에 해당하는 학교 리스트 필터링
+
+    let filteredList: any[] = []; // 수정:
+    // 선택된 알파벳에 해당하는 학교 리스트 필터링
+    if (alphabet === "ㄱ") {
+      filteredList = univs.filter((univ) =>
+        [
+          "가톨릭대학교",
+          "강서대학교",
+          "감리교신학대학교",
+          "건국대학교",
+          "경기대학교",
+          "경희대학교",
+          "고려대학교",
+          "광운대학교",
+          "국민대학교",
+        ].includes(univ.name)
+      );
+    } else if (alphabet === "ㄴ") {
+      filteredList = [];
+    } else if (alphabet === "ㄷ") {
+      filteredList = univs.filter((univ) =>
+        ["덕성여대학교", "동국대학교", "동덕여자대학교"].includes(univ.name)
+      );
+    } else if (alphabet === "ㄷ") {
+      filteredList = univs.filter((univ) =>
+        ["덕성여대학교", "동국대학교", "동덕여자대학교"].includes(univ.name)
+      );
+    } else if (alphabet === "ㅁ") {
+      filteredList = univs.filter((univ) => ["명지대학교"].includes(univ.name));
+    } else if (alphabet === "ㅂ") {
+      filteredList = univs.filter((univ) => ["백석대학교"].includes(univ.name));
+    } else if (alphabet === "ㅅ") {
+      filteredList = univs.filter((univ) =>
+        [
+          "서울과학기술대학교",
+          "서울교육대학교",
+          "서울대학교",
+          "서울시립대학교",
+          "삼육대학교",
+          "상명대학교",
+          "서강대학교",
+          "서경대학교",
+          "서울기독대학교",
+          "서울여대학교",
+          "서울한영대학교",
+          "성공회대학교",
+          "성균관대학교",
+          "성신여대학교",
+          "세종대학교",
+          "숙명여대학교",
+          "숭실대학교",
+        ].includes(univ.name)
+      );
+    } else if (alphabet === "ㅇ") {
+      filteredList = univs.filter((univ) =>
+        ["육군사관학교", "연세대학교", "이화여대학교"].includes(univ.name)
+      );
+    } else if (alphabet === "ㅈ") {
+      filteredList = univs.filter((univ) =>
+        ["장로회신학대학교", "중앙대학교"].includes(univ.name)
+      );
+    } else if (alphabet === "ㅊ") {
+      filteredList = univs.filter((univ) =>
+        ["총신대학교", "추계예술대학교"].includes(univ.name)
+      );
+    } else if (alphabet === "ㅎ") {
+      filteredList = univs.filter((univ) =>
+        [
+          "한국과학기술원",
+          "한국예술종합학교",
+          "한국체육대학교",
+          "한국방송통신대학교",
+          "한국성서대학교",
+          "한국외국어대학교",
+          "한성대학교",
+          "한신대학교",
+          "한양대학교",
+          "호서대학교",
+          "홍익대학교",
+        ].includes(univ.name)
+      );
+    } else {
+      filteredList = [];
+    }
+
+    setFilteredUnivs(filteredList);
+  };
+
   return (
     <Background>
       <Container>
@@ -131,22 +286,59 @@ function Main() {
           <Title>얼마 쓸래?</Title>
         </Header>
         <RangeSlider />
-        <UnivsList>
-          {univs.map((univ) => (
-            <Univ key={univ.name}>
-              <Link
-                to={{
-                  pathname: `/${univ.id}`,
-                  state: { univName: univ.name, minumumPrice: minPrice, maximumPrice: maxPrice},
-                }}
+        <div>
+          {/* 알파벳 버튼 리스트 */}
+          <ButtonWrapper>
+            {" "}
+            {/* 추가: 버튼을 감싸는 Wrapper */}
+            {[
+              "ㄱ",
+              "ㄴ",
+              "ㄷ",
+              "ㄹ",
+              "ㅁ",
+              "ㅂ",
+              "ㅅ",
+              "ㅇ",
+              "ㅈ",
+              "ㅊ",
+              "ㅋ",
+              "ㅌ",
+              "ㅍ",
+              "ㅎ",
+            ].map((alphabet) => (
+              <AlphabetButton
+                key={alphabet}
+                onClick={() => handleAlphabetClick(alphabet)}
+                active={selectedAlphabet === alphabet}
               >
-                {univ.name} &rarr;
-              </Link>
-            </Univ>
-          ))}
+                {alphabet}
+              </AlphabetButton>
+            ))}
+          </ButtonWrapper>
+        </div>
+        <UnivsList>
+          {/* 선택된 알파벳에 해당하는 학교 리스트 */}
+          {filteredUnivs.length > 0 ? (
+            filteredUnivs.map((univ) => (
+              <Univ key={univ.name}>
+                <Link
+                  to={{
+                    pathname: `/${univ.id}`,
+                    state: { univName: univ.name },
+                  }}
+                >
+                  {univ.name}
+                </Link>
+              </Univ>
+            ))
+          ) : (
+            <NoSelectionMessage>학교를 선택해주세요.</NoSelectionMessage>
+          )}
         </UnivsList>
       </Container>
     </Background>
   );
 }
+
 export default Main;
