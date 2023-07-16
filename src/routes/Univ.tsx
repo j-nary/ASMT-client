@@ -15,6 +15,7 @@ const Background = styled.div`
   background-image: url(${BackgroundSrc});
   background-size: cover;
   background-position: center;
+  alin-items: center;
 `;
 
 const Main = styled.main`
@@ -60,18 +61,54 @@ const Loader = styled.span`
   display: block;
   margin-top: 3rem;
 `;
-const FoodsList = styled.ul``;
-const FoodBox = styled.li`
-  height: 80px;
-  background-color: yellow;
-  padding-bottom: 2px;
-  padding-top: 2px;
-  padding-left: 2px;
-  padding-right: 2px;
-  margin-bottom: 1rem;
+
+const RangeSliderWrapper = styled.ul`
+  width: 100vh;
+  height: 100px;
+  align-content: center;
+  margin: 0 10px;
 `;
+
+const FoodsList = styled.ul`
+  max-height: 41em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: auto;
+  align-content: center;
+  padding: 0em 0em 0.2em 15em;
+  margin: 0px 50px 50px 50px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  background-color: blue;
+`;
+
+const FoodBox = styled.li`
+  align-content:vertical;
+    float:left;
+    border: 1px solid #aaa;
+    width: 170px;
+    min-height:33%;
+    max-height:33%;
+    border-radius: 7px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    padding: 1em;
+    margin: 0 1em 1em 0;
+    transition: all 0.4s;
+    &:hover {
+      background-color: #B0E0E6;
+    }
+`;
+
 const FoodImg = styled.img`
-  height: 100%;
+  height:90px;
+  width:90px;
+`;
+
+const FoodInfo = styled.li`
+height:90px;
+width:90px;
 `;
 
 const API_URL = "http://13.125.233.202/api/search";
@@ -192,6 +229,7 @@ function Univ() {
     setKeysord(e.currentTarget.value);
   };
 
+// 클릭 한 번 할 시, 랭크에 기여
   const postRank = async (data: FoodInterface) => {
     try {
       const response = await axios.post('http://13.125.233.202/api/rank', { menuId: data.menuId }, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
@@ -217,7 +255,9 @@ function Univ() {
           </Rank>
         )}
         <DialogButton onClickToggleModal={onClickToggleModal} />
-        <RangeSlider />
+        <RangeSliderWrapper>
+          <RangeSlider />
+        </RangeSliderWrapper>
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
@@ -225,13 +265,15 @@ function Univ() {
             {foods.map((f) => (
               <FoodBox onClick={() => postRank(f)}>
                 <a href={f.placeLink} style={{ cursor: 'pointer' }}>
-                  <FoodImg src={`${f.menuImg}`} />
-                  <span>{f.menuName}</span>
-                  <span>{f.menuPrice}</span>
-                  <div align-items="horizontal">
-                    <span>{f.placeName}</span>
-                    <span>{f.placeRating}</span>
-                  </div>
+                  <FoodImg src={`${f.menuImg}`}/>
+                  <FoodInfo>
+                    <span>{f.menuName}</span>
+                    <span>{f.menuPrice}</span>
+                    <div align-items="horizontal">
+                      <span>{f.placeName}</span>
+                      <span>{f.placeRating}</span>
+                    </div>
+                  </FoodInfo>
                 </a>
               </FoodBox>
             ))}

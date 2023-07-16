@@ -2,7 +2,7 @@
 // 참고 : https://codesandbox.io/s/zl8nrlp9x?file=/src/index.tsx
 
 import * as React from 'react';
-
+import styled from "styled-components";
 import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
 
 import {
