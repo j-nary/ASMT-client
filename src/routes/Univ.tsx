@@ -92,6 +92,7 @@ interface FoodInterface {
   placeLink: string;
   placeDistance: number;
   school: string;
+  menuId: number;
   menuName: string;
   menuPrice: number;
   menuImg: string;
@@ -156,10 +157,11 @@ function Univ() {
   const data = {
     minimumPrice: 0,
     maximumPrice: maxPrice,
-    searchKeywordList:[],
+    searchKeywordList: [],
     sortMethod: sortMethod,
     showZeroPriceItems: true,
-    school: univId };
+    school: univId
+  };
   useEffect(() => {
     (async () => {
       try {
@@ -190,32 +192,47 @@ function Univ() {
     setKeysord(e.currentTarget.value);
   };
 
+  const postRank = async (data: FoodInterface) => {
+    try {
+      const response = await axios.post('http://13.125.233.202/api/rank', { menuId: data.menuId }, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+      console.log(response);
+      console.log('POST 요청이 성공적으로 전송되었습니다.');
+      // 성공적으로 요청이 전송되었을 때 실행할 코드를 추가하세요.
+    } catch (error) {
+      console.error('POST 요청 중 오류가 발생하였습니다:', error);
+      // 오류가 발생했을 때 실행할 코드를 추가하세요.
+    }
+  };
+
+
   return (
     <Background>
       <Main>
         <Title> {state.univName} Ranking </Title>
         <SearchContainer>
-          <SearchBar value={keyword} onChange={onChangeSearch}/>
+          <SearchBar value={keyword} onChange={onChangeSearch} />
         </SearchContainer>
         {isOpenRank && (
           <Rank onClickToggleModal={onClickToggleModal}>
           </Rank>
         )}
-        <DialogButton onClickToggleModal={onClickToggleModal}/>
-        <RangeSlider/>
+        <DialogButton onClickToggleModal={onClickToggleModal} />
+        <RangeSlider />
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
           <FoodsList>
             {foods.map((f) => (
-              <FoodBox>
-                <FoodImg src={`${f.menuImg}`} />
-                <span>{f.menuName}</span>
-                <span>{f.menuPrice}</span>
-                <div align-items="horizontal">
-                  <span>{f.placeName}</span>
-                  <span>{f.placeRating}</span>
-                </div>
+              <FoodBox onClick={() => postRank(f)}>
+                <a href={f.placeLink} style={{ cursor: 'pointer' }}>
+                  <FoodImg src={`${f.menuImg}`} />
+                  <span>{f.menuName}</span>
+                  <span>{f.menuPrice}</span>
+                  <div align-items="horizontal">
+                    <span>{f.placeName}</span>
+                    <span>{f.placeRating}</span>
+                  </div>
+                </a>
               </FoodBox>
             ))}
           </FoodsList>
