@@ -138,7 +138,7 @@ function Univ() {
   const [sortMethod, setSortMethod] = useState("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const data = {
-    minimumPrice: 1000,
+    minimumPrice: minPrice,
     maximumPrice: maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
@@ -165,7 +165,7 @@ function Univ() {
         console.error(error);
       }
     })();
-  }, [keywordList, sortMethod]);
+  }, [keywordList, sortMethod, minPrice, maxPrice]);
 
   const onClickToggleModal = useCallback(() => {
     setOpenRank(!isOpenRank);
@@ -201,6 +201,11 @@ function Univ() {
     }
   };
 
+  const handleSliderChange = (values: readonly number[]) => {
+    setMinPrice(values[0]);
+    setMaxPrice(values[1]);
+  };
+
 
   return (
     <Background>
@@ -214,7 +219,7 @@ function Univ() {
         )}
         <DialogButton onClickToggleModal={onClickToggleModal} />
         <RangeSliderWrapper>
-          <RangeSlider />
+          <RangeSlider onChangeValues={handleSliderChange} />
         </RangeSliderWrapper>
         <Radio />
         {loading ? (

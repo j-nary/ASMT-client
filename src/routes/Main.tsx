@@ -281,6 +281,11 @@ function Main() {
     setFilteredUnivs(filteredList);
   };
 
+  const handleSliderChange = (values: readonly number[]) => {
+    setMinPrice(values[0]);
+    setMaxPrice(values[1]);
+  };
+
   return (
     <Background>
       <Container>
@@ -288,7 +293,7 @@ function Main() {
           <Logo src={LogoSrc} alt="Logo" />
           <Title>얼마 쓸래?</Title>
         </Header>
-        <RangeSlider />
+        <RangeSlider onChangeValues={handleSliderChange}/>
         <div>
           {/* 알파벳 버튼 리스트 */}
           <ButtonWrapper>

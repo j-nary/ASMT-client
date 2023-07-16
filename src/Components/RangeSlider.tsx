@@ -133,14 +133,18 @@ const railStyle: React.CSSProperties = {
 
 const domain: number[] = [0, 20000]; // RangeSlider 최소, 최대 범위
 
+interface RangeSliderProps {
+  onChangeValues: (values:readonly number[]) => void;
+}
 // RangeSlider 클래스
-export class RangeSlider extends React.Component {
+export class RangeSlider extends React.Component<RangeSliderProps> {
   public state = {
     values: [0, 10000]
   };
 
   public onChange = (values: readonly number[]) => {
     this.setState({ values });
+    this.props.onChangeValues(values);
   };
 
   public render() {
