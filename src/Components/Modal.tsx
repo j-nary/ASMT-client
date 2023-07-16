@@ -1,31 +1,8 @@
+// 전체 랭킹 display Modal
 // 참고 : https://jeewonscript.tistory.com/25
 
 import React, {PropsWithChildren} from "react";
 import styled from "styled-components";
-
-interface ModalDefaultType{
-    onClickToggleModal: () => void;
-}
-
-function Rank({
-    onClickToggleModal,
-    children,
-}:PropsWithChildren<ModalDefaultType>){
-    return (
-        <ModalContainer>
-            <DialogBox>{children}</DialogBox>
-            <Backdrop
-                onClick={(e:React.MouseEvent)=>{
-                    e.preventDefault();
-
-                    if(onClickToggleModal){
-                        onClickToggleModal();
-                    }
-                }}
-            />
-        </ModalContainer>
-    );
-}
 
 const ModalContainer = styled.div`
   width: 100%;
@@ -34,6 +11,7 @@ const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
   position: fixed;
+  z-index: 9999;
 `;
 
 const DialogBox = styled.dialog`
@@ -59,4 +37,28 @@ const Backdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
 `;
 
-export default Rank;
+interface ModalDefaultType{
+    onClickToggleModal: () => void;
+}
+
+function Modal({
+    onClickToggleModal,
+    children,
+}:PropsWithChildren<ModalDefaultType>){
+    return (
+        <ModalContainer>
+            <DialogBox>{children}</DialogBox>
+            <Backdrop
+                onClick={(e:React.MouseEvent)=>{
+                    e.preventDefault();
+
+                    if(onClickToggleModal){
+                        onClickToggleModal();
+                    }
+                }}
+            />
+        </ModalContainer>
+    );
+}
+
+export default Modal;
