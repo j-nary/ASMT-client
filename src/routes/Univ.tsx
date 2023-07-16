@@ -6,9 +6,11 @@ import DialogButton from "../Components/DialogButton";
 import RangeSlider from "../Components/RangeSlider";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import SearchSrc from "../Assets/Img/searchIcon.png";
+import ImageComponent from "../Components/FoodImage";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
+import { isTemplateElement } from "@babel/types";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
@@ -19,14 +21,13 @@ const Background = styled.div`
 `;
 
 const Main = styled.main`
-  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 800px;
   margin: 0 auto;
   size: cover;
+  background-color: blue;
 `;
 
 const Title = styled.h1`
@@ -73,42 +74,44 @@ const FoodsList = styled.ul`
   max-height: 41em;
   overflow-x: hidden;
   overflow-y: scroll;
-  width: auto;
+  width: 100vh;
   align-content: center;
-  // padding: 0em 0em 0.2em 15em;
-  // margin: 0px 50px 50px 50px;
+  margin: 0px 50px 50px 50px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-
-  // background-color: blue;
 `;
 
 const FoodBox = styled.li`
-  align-content:vertical;
+    align-content: vertical;
     float:left;
     border: 1px solid #aaa;
     width:46.5%;
     min-height: 33%;
-    max-height:33%;
+    max-height: 33%;
     border-radius: 7px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     padding: 1em;
     margin: 0 1em 1em 0;
     transition: all 0.4s;
+    background-color: white;
+
     &:hover {
       background-color: #B0E0E6;
     }
 `;
 
-const FoodImg = styled.img`
-  height:90px;
-  width:90px;
+const FoodName = styled.li`
+    font-weight: bold;
+    margin-bottom: 0.3em;
+    margin-top: 0.5em;
 `;
 
 const FoodInfo = styled.li`
-height:90px;
-width:90px;
+  width:100%;
+  max-height:fit-content;
+  margin-left:2em;
+  padding: 2px;
 `;
 
 const API_URL = "http://13.125.233.202/api/search";
@@ -265,14 +268,16 @@ function Univ() {
             {foods.map((f) => (
               <FoodBox onClick={() => postRank(f)}>
                 <a href={f.placeLink} style={{ cursor: 'pointer' }}>
-                  <FoodImg src={`${f.menuImg}`} />
+                  <ImageComponent imageUrl={`${f.menuImg}`}/>
                   <FoodInfo>
-                    <span>{f.menuName}</span>
-                    <span>{f.menuPrice}</span>
-                    <div align-items="horizontal">
+                    <FoodName>
+                      <span>{f.menuName}</span>
+                    </FoodName>
+                    <span>{f.menuPrice}원</span>
+                    <div align-items="vertical">
                       <span>{f.placeName}</span>
-                      <span>{f.placeRating}</span>
                     </div>
+                    <span>{f.placeDistance}m | ★: {f.placeRating}</span>
                   </FoodInfo>
                 </a>
               </FoodBox>

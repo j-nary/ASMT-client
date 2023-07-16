@@ -10,6 +10,12 @@ import {
   GetHandleProps,
   GetTrackProps
 } from 'react-compound-slider';
+import { number } from 'yargs';
+
+const formatTicks = (d: number) => {
+
+  return d < 20000 ? d : '20000+';
+};
 
 // Handle component
 interface IHandleProps {
@@ -77,9 +83,10 @@ interface ITickProps {
   key: string;
   tick: SliderItem;
   count: number;
+  format: Function;
 }
 
-export const Tick: React.FC<ITickProps> = ({ tick, count }) => (
+export const Tick: React.FC<ITickProps> = ({ tick, count, format }) => (
   <div>
     <div
       style={{
@@ -102,7 +109,8 @@ export const Tick: React.FC<ITickProps> = ({ tick, count }) => (
         left: `${tick.percent}%`
       }}
     >
-      {tick.value}
+
+      {format(tick.value)}
     </div>
   </div>
 );
@@ -187,7 +195,12 @@ export class RangeSlider extends React.Component {
             {({ ticks }) => (
               <div className="slider-ticks">
                 {ticks.map(tick => (
-                  <Tick key={tick.id} tick={tick} count={ticks.length} />
+                  <Tick
+                    key={tick.id}
+                    tick={tick}
+                    count={ticks.length}
+                    format={formatTicks}
+                  />
                 ))}
               </div>
             )}
