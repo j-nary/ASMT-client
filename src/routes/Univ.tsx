@@ -6,6 +6,7 @@ import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { RangeSlider } from "..";
+import { Handle } from "../Components/RangeSlider";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
@@ -210,6 +211,7 @@ function Univ() {
         )}
         <DialogButton onClick={onClickToggleModal}>Open Rank</DialogButton>
         <RangeSlider />
+        {/* <Handle domain={[minPrice, maxPrice]} handle={} getHandleProps={} /> */}
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
