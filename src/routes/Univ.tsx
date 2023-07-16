@@ -9,7 +9,7 @@ import SearchSrc from "../Assets/Img/searchIcon.png";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
-import SearchBar from "../Components/SearchBar";
+// import SearchBar from "../Components/SearchBar";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
