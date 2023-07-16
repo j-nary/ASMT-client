@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
 import { isTemplateElement } from "@babel/types";
+// import SearchBar from "../Components/SearchBar";
 
 // TODO: Background 수정 필요
 const Background = styled.div`
@@ -37,26 +38,6 @@ const Title = styled.h1`
   margin-bottom: 2rem;
 `;
 
-const SearchContainer = styled.div`
-  width: 400px;
-  height: 45px;
-  position: relative;
-  border: 0;
-  img {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-  }
-  margin-bottom: 1rem;
-`;
-const SearchBar = styled.input`
-  border: 0;
-  padding-left: 10px;
-  background-color: #eaeaea;
-  width: 100%;
-  height: 100%;
-  outline: none;
-`;
 const Loader = styled.span`
   text-align: center;
   display: block;
@@ -137,44 +118,7 @@ interface FoodInterface {
   menuPrice: number;
   menuImg: string;
 }
-// const foods = [
-//   {
-//     placeName: "존맛집",
-//     placeAddress: "서울 동작구 사당로 6-1",
-//     placeRating: 4.34,
-//     placeLink: "https://map.naver.com/v5/entry/place/35688740",
-//     placeDistance: 352,
-//     school: "ssu",
-//     menuName: "제계치2",
-//     menuPrice: 150000,
-//     menuImg:
-//       "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=f320_320&src=https://ldb-phinf.pstatic.net/20200116_202/1579159139861EGFkk_JPEG/570619_286_20170526164736.jpg",
-//   },
-//   {
-//     placeName: "존맛집",
-//     placeAddress: "서울 동작구 사당로 6-1",
-//     placeRating: 4.34,
-//     placeLink: "https://map.naver.com/v5/entry/place/35688740",
-//     placeDistance: 352,
-//     school: "ssu",
-//     menuName: "제계치2",
-//     menuPrice: 150000,
-//     menuImg:
-//       "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=f320_320&src=https://ldb-phinf.pstatic.net/20200116_202/1579159139861EGFkk_JPEG/570619_286_20170526164736.jpg",
-//   },
-//   {
-//     placeName: "존맛집",
-//     placeAddress: "서울 동작구 사당로 6-1",
-//     placeRating: 4.34,
-//     placeLink: "https://map.naver.com/v5/entry/place/35688740",
-//     placeDistance: 352,
-//     school: "ssu",
-//     menuName: "제계치2",
-//     menuPrice: 150000,
-//     menuImg:
-//       "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=f320_320&src=https://ldb-phinf.pstatic.net/20200116_202/1579159139861EGFkk_JPEG/570619_286_20170526164736.jpg",
-//   },
-// ];
+
 interface ApiPostInterface {
   minimumPrice: number;
   maximumPrice: number;
@@ -250,9 +194,7 @@ function Univ() {
     <Background>
       <Main>
         <Title> {state.univName} Ranking </Title>
-        <SearchContainer>
-          <SearchBar value={keyword} onChange={onChangeSearch} />
-        </SearchContainer>
+        {/* <SearchBar onChangeSearch={onChangeSearch} /> */}
         {isOpenRank && (
           <Rank onClickToggleModal={onClickToggleModal}>
           </Rank>
