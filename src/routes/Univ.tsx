@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Modal from "../Components/Modal";
 import DialogButton from "../Components/DialogButton";
 import RangeSlider from "../Components/RangeSlider";
-import Radio from "../Components/Radio";
+import RadioComponent, {Option} from "../Components/Radio";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import ImageComponent from "../Components/FoodImage";
 import { useLocation } from "react-router-dom";
@@ -159,7 +159,7 @@ function Univ() {
   const [filter, setFilter] = useState([]);
   const [minPrice, setMinPrice] = useState(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
-  const [sortMethod, setSortMethod] = useState("lowPrice");
+  const [sortMethod, setSortMethod] = useState<Option>("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
   const data = {
@@ -221,6 +221,10 @@ function Univ() {
     }
   };
 
+  const handleSortMethodChange = (option: Option) => {
+    setSortMethod(option);
+  };
+
   return (
     <Background>
       <Main>
@@ -235,7 +239,7 @@ function Univ() {
         <RangeSliderWrapper>
           <RangeSlider />
         </RangeSliderWrapper>
-        <Radio />
+        <RadioComponent setSortMethod={handleSortMethodChange}/>
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
