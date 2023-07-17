@@ -28,6 +28,7 @@ const Main = styled.main`
   margin: 0 auto;
   size: cover;
   position: relative;
+  min-height: 100vh;
 `;
 
 const Title = styled.h1`
@@ -50,35 +51,59 @@ const RangeSliderWrapper = styled.ul`
   margin: 0 10px;
 `;
 
+const Container = styled.div`
+  height: calc(100vh - 300px); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const FoodsList = styled.ul`
   max-height: 41em;
   overflow-x: hidden;
   overflow-y: scroll;
-  width: 100vh;
-  align-content: center;
-  margin: 8px 50px 35px 50px;
+  width: 65%;
+  margin: 8px auto 0; /* 가운데 정렬 및 상단 여백 수정 */
+  display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
+  align-items: flex-start; 
+  /* 커스텀 스크롤바 스타일 적용 */
+  scrollbar-width: thin;
+  scrollbar-color: #6a91bd rgba(33, 122, 244, .1);
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: #6a91bd;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);
+  }
 `;
 
 const FoodBox = styled.li`
-    align-content: vertical;
-    float:left;
-    border: 1px solid #aaa;
-    width:46.5%;
-    min-height: 33%;
-    max-height: 33%;
-    border-radius: 7px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-    padding: 1em;
-    margin: 0 1em 1em 0;
-    transition: all 0.4s;
-    background-color: white;
+  align-content: vertical;
+  width: calc(50% - 1em); 
+  min-height: 33%;
+  max-height: 33%;
+  border: 1px solid #aaa;
+  border-radius: 7px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1em;
+  margin: 0.5em;
+  transition: all 0.4s;
+  background-color: white;
 
-    &:hover {
-      background-color: #B0E0E6;
-    }
+  &:hover {
+    background-color: #B0E0E6;
+  }
+  
 `;
 
 const FoodName = styled.li`
@@ -216,25 +241,27 @@ function Univ() {
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
-          <FoodsList>
-            {foods.map((f) => (
-              <FoodBox onClick={() => postRank(f)}>
-                <a href={f.placeLink} style={{ cursor: 'pointer' }}>
-                  <ImageComponent imageUrl={`${f.menuImg}`} />
-                  <FoodInfo>
-                    <FoodName>
-                      <span>{f.menuName}</span>
-                    </FoodName>
-                    <span>{f.menuPrice}원</span>
-                    <div align-items="vertical">
-                      <span>{f.placeName}</span>
-                    </div>
-                    <span>{f.placeDistance}m | ★: {f.placeRating}</span>
-                  </FoodInfo>
-                </a>
-              </FoodBox>
-            ))}
-          </FoodsList>
+          <Container>
+            <FoodsList>
+              {foods.map((f) => (
+                <FoodBox onClick={() => postRank(f)}>
+                  <a href={f.placeLink} style={{ cursor: 'pointer' }}>
+                    <ImageComponent imageUrl={`${f.menuImg}`} />
+                    <FoodInfo>
+                      <FoodName>
+                        <span>{f.menuName}</span>
+                      </FoodName>
+                      <span>{f.menuPrice}원</span>
+                      <div align-items="vertical">
+                        <span>{f.placeName}</span>
+                      </div>
+                      <span>{f.placeDistance}m | ★: {f.placeRating}</span>
+                    </FoodInfo>
+                  </a>
+                </FoodBox>
+              ))}
+            </FoodsList>
+          </Container>
         )}
       </Main>
     </Background>
