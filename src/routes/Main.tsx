@@ -46,6 +46,7 @@ const Header = styled.header`
   align-items: center;
   margin: 5vh;
   font-family: "jjwfont", sans-serif;
+
 `;
 
 const Logo = styled.img`
@@ -53,6 +54,11 @@ const Logo = styled.img`
   display: flex;
   margin: 3vh 3vh 5vh 3vh;
   font-family: "jjwfont", sans-serif;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height : auto;
+  }
 `;
 
 const UnivsList = styled.ul`
@@ -96,6 +102,10 @@ const NoSelectionMessage = styled(Univ)`
 const Title = styled.h1`
   font-size: 48px;
   color: ${(props: any) => props.theme.circle1Color};
+
+  @media screen and (max-width: 768px) {
+    font-size: 40px;
+  }
 `;
 
 const univs = [
@@ -158,18 +168,32 @@ const univs = [
   { name: "홍익대학교", id: "hongik" },
 ];
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-`;
 
 const RangeSliderWrapper = styled.ul`
   width: 100vh;
   height: 8vh;
   align-content: center;
   margin: 0 10px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin: 0 
+  }
+  
 `;
+
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+  }
+`;
+
+
+
 
 interface AlphabetButtonProps {
   active: boolean;
@@ -187,6 +211,11 @@ const AlphabetButton = styled.button<AlphabetButtonProps>`
 
   &:hover {
     color: ${(props) => (props.active ? "#34568E" : "#34568E")};
+  }
+
+  
+  @media (max-width: 600px) {
+    margin: 5px;
   }
 `;
 
@@ -348,7 +377,7 @@ function Main() {
           )}
         </UnivsList>
       </Container>
-      </Background>
+    </Background>
   );
 }
 

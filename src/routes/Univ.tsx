@@ -120,7 +120,7 @@ const FoodInfo = styled.li`
   padding: 2px;
 `;
 
-const API_URL = "http://localhost:8080/api/search";
+const API_URL = "http://13.125.233.202/api/search";
 
 interface RouteParams {
   univId: string;
