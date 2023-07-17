@@ -15,10 +15,11 @@ const Container = styled.div`
   `;
 
 const Background = styled.div`
-  position: relative;
+  position: fixed;
   width: 100%;
   height: 100vh;
   overflow-y: hidden;
+  
   background-image: url(${BackgroundSrc});
   background-size: cover;
   background-position: center;
@@ -50,10 +51,10 @@ const Header = styled.header`
 `;
 
 const Logo = styled.img`
-  height: 10vh;
   display: flex;
   margin: 3vh 3vh 5vh 3vh;
   font-family: "jjwfont", sans-serif;
+  
 
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -63,10 +64,17 @@ const Logo = styled.img`
 
 const UnivsList = styled.ul`
   display: grid;
+  overflow-y:hidden;
   grid-template-columns: repeat(3, 1fr); /* 한 행에 3개씩 나열 */
   gap: 10px; /* 항목 사이의 간격 설정 */
   margin-top: 20px;
   justify-content: center; /* 가로 중앙 정렬 */
+
+  @media screen and (max-width: 768px) {
+    max-height: 16vh;
+
+    overflow-y:scroll;
+  }
 `;
 
 const Univ = styled.li`
@@ -189,6 +197,7 @@ const ButtonWrapper = styled.div`
   margin-top: 20px;
   @media (max-width: 600px) {
     flex-wrap: wrap;
+    height:60%;
   }
 `;
 

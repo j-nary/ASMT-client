@@ -31,6 +31,7 @@ const Main = styled.main`
   min-height: 100vh;
 `;
 
+
 const Title = styled.h1`
   text-align: center;
   font-size: 2rem;
