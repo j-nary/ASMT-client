@@ -4,13 +4,14 @@ import styled from "styled-components";
 import Modal from "../Components/Modal";
 import DialogButton from "../Components/DialogButton";
 import RangeSlider from "../Components/RangeSlider";
-import RadioComponent, {Option} from "../Components/Radio";
+import RadioComponent, { Option } from "../Components/Radio";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import ImageComponent from "../Components/FoodImage";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
 import SearchBar from "../Components/SearchBar";
+import { useInView } from 'react-intersection-observer';
 
 const Background = styled.div`
   background-image: url(${BackgroundSrc});
@@ -149,6 +150,7 @@ interface ApiPostInterface {
   sortMethod: string;
   showZeroPriceItems: boolean;
   school: string;
+  page: Number;
 }
 function Univ() {
   const { univId } = useParams<RouteParams>();
@@ -162,35 +164,57 @@ function Univ() {
   const [sortMethod, setSortMethod] = useState<Option>("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
+  const [page, setPage] = useState(1);
+  const [ref, inView] = useInView();
   const data = {
     minimumPrice: 0,
     maximumPrice: maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
     showZeroPriceItems: showZeroPrice,
-    school: univId
+    school: univId,
+    page: 1
   };
+  const fetchData = (async () => {
+    try {
+      // console.log(typeof(state.univId));
+      console.log(`data = ${data}`);
+      console.log(data);
+      const jsonData = JSON.stringify(data);
+      console.log(jsonData);
+      const response = await axios.post(API_URL, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data);
+      setFoods(prev => [...prev, ...response.data]);
+      setLoading(false);
+      setPage((page) => page + 1)
+    } catch (error) {
+      console.error(error);
+    }
+  });
+  // }, [filter, sortMethod]);
+
   useEffect(() => {
-    (async () => {
-      try {
-        // console.log(typeof(state.univId));
-        console.log(`data = ${data}`);
-        console.log(data);
-        const jsonData = JSON.stringify(data);
-        console.log(jsonData);
-        const response = await axios.post(API_URL, data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log(response.data);
-        setFoods(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, [filter, sortMethod]);
+    setFoods([]);
+    fetchData();
+  }, [filter, sortMethod])
+
+  useEffect(() => {
+    // inView가 true 일때만 실행한다.
+    if (inView) {
+      console.log(inView, '무한 스크롤 요청 ')
+      data.page = page;
+
+      fetchData();
+    }
+  }, [inView]);
+
+
+
+
 
   const onClickToggleModal = useCallback(() => {
     setOpenRank(!isOpenRank);
@@ -239,7 +263,7 @@ function Univ() {
         <RangeSliderWrapper>
           <RangeSlider />
         </RangeSliderWrapper>
-        <RadioComponent setSortMethod={handleSortMethodChange}/>
+        <RadioComponent setSortMethod={handleSortMethodChange} />
         {loading ? (
           <Loader>Loading...</Loader>
         ) : (
