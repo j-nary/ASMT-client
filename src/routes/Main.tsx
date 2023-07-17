@@ -51,15 +51,15 @@ const Header = styled.header`
 `;
 
 const Logo = styled.img`
-  display: flex;
-  margin: 3vh 3vh 5vh 3vh;
-  font-family: "jjwfont", sans-serif;
-  
+height: 10vh;
+display: flex;
+margin: 3vh 3vh 5vh 3vh;
+font-family: "jjwfont", sans-serif;
 
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    height : auto;
-  }
+@media screen and (max-width: 768px) {
+  width: 100%;
+  height : auto;
+}
 `;
 
 const UnivsList = styled.ul`
