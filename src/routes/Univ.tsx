@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
 import SearchBar from "../Components/SearchBar";
+import { useInView } from 'react-intersection-observer';
 
 // TODO: Background 수정 필요
 const Background = styled.div`
@@ -119,7 +120,7 @@ const FoodInfo = styled.li`
   padding: 2px;
 `;
 
-const API_URL = "http://13.125.233.202/api/search";
+const API_URL = "http://localhost:8080/api/search";
 
 interface RouteParams {
   univId: string;
@@ -150,6 +151,7 @@ interface ApiPostInterface {
   sortMethod: string;
   showZeroPriceItems: boolean;
   school: string;
+  page: Number;
 }
 function Univ() {
   const { univId } = useParams<RouteParams>();
@@ -163,35 +165,57 @@ function Univ() {
   const [sortMethod, setSortMethod] = useState("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
+  const [page, setPage] = useState(1);
+  const [ref, inView] = useInView();
   const data = {
     minimumPrice: 0,
     maximumPrice: maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
     showZeroPriceItems: showZeroPrice,
-    school: univId
+    school: univId,
+    page: 1
   };
+  const fetchData = (async () => {
+    try {
+      // console.log(typeof(state.univId));
+      console.log(`data = ${data}`);
+      console.log(data);
+      const jsonData = JSON.stringify(data);
+      console.log(jsonData);
+      const response = await axios.post(API_URL, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data);
+      setFoods(prev => [...prev, ...response.data]);
+      setLoading(false);
+      setPage((page) => page + 1)
+    } catch (error) {
+      console.error(error);
+    }
+  });
+  // }, [filter, sortMethod]);
+
   useEffect(() => {
-    (async () => {
-      try {
-        // console.log(typeof(state.univId));
-        console.log(`data = ${data}`);
-        console.log(data);
-        const jsonData = JSON.stringify(data);
-        console.log(jsonData);
-        const response = await axios.post(API_URL, data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log(response.data);
-        setFoods(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, [filter, sortMethod]);
+    setFoods([]);
+    fetchData();
+  }, [filter, sortMethod])
+
+  useEffect(() => {
+    // inView가 true 일때만 실행한다.
+    if (inView) {
+      console.log(inView, '무한 스크롤 요청 ')
+      data.page = page;
+
+      fetchData();
+    }
+  }, [inView]);
+
+
+
+
 
   const onClickToggleModal = useCallback(() => {
     setOpenRank(!isOpenRank);
@@ -238,31 +262,29 @@ function Univ() {
           <RangeSlider />
         </RangeSliderWrapper>
         <Radio />
-        {loading ? (
-          <Loader>Loading...</Loader>
-        ) : (
-          <Container>
-            <FoodsList>
-              {foods.map((f) => (
-                <FoodBox onClick={() => postRank(f)}>
-                  <a href={f.placeLink} style={{ cursor: 'pointer' }}>
-                    <ImageComponent imageUrl={`${f.menuImg}`} />
-                    <FoodInfo>
-                      <FoodName>
-                        <span>{f.menuName}</span>
-                      </FoodName>
-                      <span>{f.menuPrice}원</span>
-                      <div align-items="vertical">
-                        <span>{f.placeName}</span>
-                      </div>
-                      <span>{f.placeDistance}m | ★: {f.placeRating}</span>
-                    </FoodInfo>
-                  </a>
-                </FoodBox>
-              ))}
-            </FoodsList>
-          </Container>
-        )}
+
+        <Container>
+          <FoodsList>
+            {foods.map((f) => (
+              <FoodBox onClick={() => postRank(f)}>
+                <a href={f.placeLink} style={{ cursor: 'pointer' }}>
+                  <ImageComponent imageUrl={`${f.menuImg}`} />
+                  <FoodInfo>
+                    <FoodName>
+                      <span>{f.menuName}</span>
+                    </FoodName>
+                    <span>{f.menuPrice}원</span>
+                    <div align-items="vertical">
+                      <span>{f.placeName}</span>
+                    </div>
+                    <span>{f.placeDistance}m | ★: {f.placeRating}</span>
+                  </FoodInfo>
+                </a>
+              </FoodBox>
+            ))}
+            <Loader ref={ref} >loading...</Loader>
+          </FoodsList>
+        </Container>
       </Main>
     </Background>
   );
