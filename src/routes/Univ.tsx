@@ -137,6 +137,7 @@ function Univ() {
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const data = {
     minimumPrice: minPrice,
     maximumPrice: maxPrice,
@@ -165,7 +166,7 @@ function Univ() {
         console.error(error);
       }
     })();
-  }, [keywordList, sortMethod, minPrice, maxPrice]);
+  }, [data]);
 
   const onClickToggleModal = useCallback(() => {
     setOpenRank(!isOpenRank);
