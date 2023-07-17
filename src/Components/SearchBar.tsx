@@ -53,9 +53,10 @@ const CloseButton = styled.button`
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
+  onRemoveTip: (index: number) => void;
 }
 
-function SearchBar({ onSearch }: SearchBarProps) {
+function SearchBar({ onSearch, onRemoveTip }: SearchBarProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueries, setSearchQueries] = useState<string[]>([]);
 
@@ -65,8 +66,9 @@ function SearchBar({ onSearch }: SearchBarProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      e.preventDefault();
-      addSearchQuery(searchQuery);
+        e.preventDefault();
+        onSearch(searchQuery);
+        addSearchQuery(searchQuery);
     }
   };
 
@@ -78,6 +80,7 @@ function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   const removeSearchQuery = (index: number) => {
+    onRemoveTip(index);
     setSearchQueries((prevQueries) =>
       prevQueries.filter((_, i) => i !== index)
     );

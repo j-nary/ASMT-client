@@ -159,7 +159,7 @@ function Univ() {
   const { state } = useLocation<RouteState>();
   const [foods, setFoods] = useState<FoodInterface[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState([]);
+
   const [minPrice, setMinPrice] = useState(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState<Option>("lowPrice");
@@ -168,7 +168,7 @@ function Univ() {
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView();
   const data = {
-    minimumPrice: 0,
+    minimumPrice: minPrice,
     maximumPrice: maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
@@ -225,10 +225,15 @@ function Univ() {
     if (query.trim() !== '' && !keywordList.includes(query)) {
       // 최대 5개까지만 유지하는 로직 추가
       if (keywordList.length < 5) {
-        setKeywordList((prevList) => [...prevList, query]);
+        setKeywordList([...keywordList, query]);
       }
     }
+    console.log(keywordList);
   };
+  const removeTip = (index: number) => {
+    setKeywordList((prevList) => prevList.filter((_, i) => i !== index));
+  };
+
   useEffect(() => {
     console.log(keywordList);
   }, [keywordList]);
@@ -249,12 +254,17 @@ function Univ() {
   const handleSortMethodChange = (option: Option) => {
     setSortMethod(option);
   };
+  const handleSliderChange = (values: readonly number[]) => {
+    setMinPrice(values[0]);
+    setMaxPrice(values[1]);
+  };
+
 
   return (
     <Background>
       <Main>
-        <Title>{state.univName} 맛집 리스트 </Title>
-        <SearchBar onSearch={handleSearch} />
+        <Title> {state.univName} 맛집 리스트 </Title>
+        <SearchBar onSearch={handleSearch} onRemoveTip={removeTip} />
 
         {isOpenRank && (
           <Modal univName={univId} onClickToggleModal={onClickToggleModal}>
@@ -262,7 +272,7 @@ function Univ() {
         )}
         <DialogButton univName={univId} onClickToggleModal={onClickToggleModal} />
         <RangeSliderWrapper>
-          <RangeSlider />
+          <RangeSlider onChangeValues={handleSliderChange} />
         </RangeSliderWrapper>
         <RadioComponent setSortMethod={handleSortMethodChange} />
 
