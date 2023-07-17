@@ -48,8 +48,6 @@ const DialogButton: React.FC<DialogButtonProps> = ({ univName, onClickToggleModa
     const [currentMenu, setCurrentMenu] = useState<string>('');
     const [currentPlace, setCurrentPlace] = useState<string>('');
     const [currentRank, setCurrentRank] = useState(0);
-    const [loading, setLoading] = useState(true);
-
     let currentIndex = 0;
 
     const [foods, setFoods] = useState<FoodInterface[]>([]);

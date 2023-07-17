@@ -243,7 +243,7 @@ function Univ() {
             <FoodsList>
               {foods.map((f) => (
                 <FoodBox onClick={() => postRank(f)}>
-                  <a href={f.placeLink} style={{ cursor: 'pointer' }}>
+                  <a href={f.placeLink} target="_blank" rel="noreferrer" style={{ cursor: 'pointer' }}>
                     <ImageComponent imageUrl={`${f.menuImg}`} />
                     <FoodInfo>
                       <FoodName>
