@@ -264,31 +264,29 @@ function Univ() {
           <RangeSlider />
         </RangeSliderWrapper>
         <RadioComponent setSortMethod={handleSortMethodChange} />
-        {loading ? (
-          <Loader>Loading...</Loader>
-        ) : (
-          <Container>
-            <FoodsList>
-              {foods.map((f) => (
-                <FoodBox onClick={() => postRank(f)}>
-                  <a href={f.placeLink} target="_blank" rel="noreferrer" style={{ cursor: 'pointer' }}>
-                    <ImageComponent imageUrl={`${f.menuImg}`} />
-                    <FoodInfo>
-                      <FoodName>
-                        <span>{f.menuName}</span>
-                      </FoodName>
-                      <span>{f.menuPrice}원</span>
-                      <div align-items="vertical">
-                        <span>{f.placeName}</span>
-                      </div>
-                      <span>{f.placeDistance}m | ★: {f.placeRating}</span>
-                    </FoodInfo>
-                  </a>
-                </FoodBox>
-              ))}
-            </FoodsList>
-          </Container>
-        )}
+
+        <Container>
+          <FoodsList>
+            {foods.map((f) => (
+              <FoodBox onClick={() => postRank(f)}>
+                <a href={f.placeLink} target="_blank" rel="noreferrer" style={{ cursor: 'pointer' }}>
+                  <ImageComponent imageUrl={`${f.menuImg}`} />
+                  <FoodInfo>
+                    <FoodName>
+                      <span>{f.menuName}</span>
+                    </FoodName>
+                    <span>{f.menuPrice}원</span>
+                    <div align-items="vertical">
+                      <span>{f.placeName}</span>
+                    </div>
+                    <span>{f.placeDistance}m | ★: {f.placeRating}</span>
+                  </FoodInfo>
+                </a>
+              </FoodBox>
+            ))}
+            <Loader ref={ref}>Loading...</Loader>
+          </FoodsList>
+        </Container>
       </Main>
     </Background>
   );
