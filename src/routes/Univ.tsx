@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import Rank from "../Components/Modal";
+import Modal from "../Components/Modal";
 import DialogButton from "../Components/DialogButton";
 import RangeSlider from "../Components/RangeSlider";
 import Radio from "../Components/Radio";
@@ -12,7 +12,6 @@ import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
 import SearchBar from "../Components/SearchBar";
 
-// TODO: Background 수정 필요
 const Background = styled.div`
   background-image: url(${BackgroundSrc});
   background-size: cover;
@@ -222,18 +221,17 @@ function Univ() {
     }
   };
 
-
   return (
     <Background>
       <Main>
-        <Title> {state.univName} 맛집 리스트 </Title>
+        <Title>{state.univName} 맛집 리스트 </Title>
         <SearchBar onSearch={handleSearch} />
 
         {isOpenRank && (
-          <Rank onClickToggleModal={onClickToggleModal}>
-          </Rank>
+          <Modal univName={univId} onClickToggleModal={onClickToggleModal}>
+          </Modal>
         )}
-        <DialogButton onClickToggleModal={onClickToggleModal} />
+        <DialogButton univName={univId} onClickToggleModal={onClickToggleModal} />
         <RangeSliderWrapper>
           <RangeSlider />
         </RangeSliderWrapper>
