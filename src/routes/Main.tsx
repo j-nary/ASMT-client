@@ -328,6 +328,7 @@ function Main() {
   const handleSliderChange = (values: readonly number[]) => {
     setMinPrice(values[0]);
     setMaxPrice(values[1]);
+    console.log(values[0], values[1]);
   };
 
   return (
@@ -338,7 +339,7 @@ function Main() {
           <Title>얼마 쓸래?</Title>
         </Header>
         <RangeSliderWrapper>
-          <RangeSlider onChangeValues={handleSliderChange}/>
+          <RangeSlider onChangeValues={handleSliderChange} minPrice={minPrice} maxPrice={maxPrice}/>
         </RangeSliderWrapper>
         <div>
           {/* 알파벳 버튼 리스트 */}
@@ -379,7 +380,7 @@ function Main() {
                 <Link
                   to={{
                     pathname: `/${univ.id}`,
-                    state: { univName: univ.name, minumumPrice: minPrice, maximumPrice: maxPrice },
+                    state: { univName: univ.name, minimumPrice: minPrice, maximumPrice: maxPrice },
                   }}
                 >
                   {univ.name}

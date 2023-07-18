@@ -158,17 +158,17 @@ function Univ() {
   const [isOpenRank, setOpenRank] = useState<boolean>(false);
   const { state } = useLocation<RouteState>();
   const [foods, setFoods] = useState<FoodInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const [minPrice, setMinPrice] = useState(state.minimumPrice);
-  const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [minPrice, setMinPrice] = useState<number>(state.minimumPrice || 0);
+  const [maxPrice, setMaxPrice] = useState<number>(state.maximumPrice || 20000);
   const [sortMethod, setSortMethod] = useState<Option>("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView();
+
+
   const data = {
-    minimumPrice: minPrice,
     minimumPrice: minPrice,
     maximumPrice: maxPrice,
     searchKeywordList: keywordList,
@@ -201,7 +201,7 @@ function Univ() {
   useEffect(() => {
     setFoods([]);
     fetchData();
-  }, [keywordList, sortMethod])
+  }, [keywordList, sortMethod, minPrice, maxPrice]);
 
   useEffect(() => {
     // inView가 true 일때만 실행한다.
@@ -212,10 +212,6 @@ function Univ() {
       fetchData();
     }
   }, [inView]);
-
-
-
-
 
   const onClickToggleModal = useCallback(() => {
     setOpenRank(!isOpenRank);
@@ -255,6 +251,7 @@ function Univ() {
 
   const handleSortMethodChange = (option: Option) => {
     setSortMethod(option);
+    console.log(option);
   };
   const handleSliderChange = (values: readonly number[]) => {
     setMinPrice(values[0]);
@@ -274,7 +271,7 @@ function Univ() {
         )}
         <DialogButton univName={univId} onClickToggleModal={onClickToggleModal} />
         <RangeSliderWrapper>
-          <RangeSlider onChangeValues={handleSliderChange} />
+          <RangeSlider onChangeValues={handleSliderChange} minPrice={minPrice} maxPrice={maxPrice}/>
         </RangeSliderWrapper>
         <RadioComponent setSortMethod={handleSortMethodChange} />
 
