@@ -17,7 +17,7 @@ const Background = styled.div`
   background-image: url(${BackgroundSrc});
   background-size: cover;
   background-position: center;
-  alin-items: center;
+  align-items: center;
 `;
 
 const Main = styled.main`
@@ -159,7 +159,6 @@ function Univ() {
   const { state } = useLocation<RouteState>();
   const [foods, setFoods] = useState<FoodInterface[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [minPrice, setMinPrice] = useState(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState<Option>("lowPrice");
@@ -196,12 +195,11 @@ function Univ() {
       console.error(error);
     }
   });
-  // }, [filter, sortMethod]);
 
   useEffect(() => {
     setFoods([]);
     fetchData();
-  }, [filter, sortMethod])
+  }, [keywordList, sortMethod])
 
   useEffect(() => {
     // inView가 true 일때만 실행한다.
