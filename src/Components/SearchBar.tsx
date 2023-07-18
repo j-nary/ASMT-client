@@ -66,15 +66,17 @@ function SearchBar({ onSearch, onRemoveTip }: SearchBarProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-        e.preventDefault();
-        onSearch(searchQuery);
-        addSearchQuery(searchQuery);
+      e.preventDefault();
+      onSearch(searchQuery);
+      addSearchQuery(searchQuery);
     }
   };
 
   const addSearchQuery = (query: string) => {
     if (query.trim() !== "") {
-      setSearchQueries((prevQueries) => [...prevQueries, query]);
+      if (searchQueries.length < 5) {
+        setSearchQueries((prevQueries) => [...prevQueries, query]);
+      }
       setSearchQuery("");
     }
   };
@@ -93,7 +95,7 @@ function SearchBar({ onSearch, onRemoveTip }: SearchBarProps) {
         value={searchQuery}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        placeholder="먹고싶은 메뉴를 입력하세요"
+        placeholder={`먹고싶은 메뉴를 입력해주세요! (${searchQueries.length}/5)`}
       />
       <img
         src={SearchSrc}
