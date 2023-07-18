@@ -267,6 +267,7 @@ function Univ() {
 
   const handleSortMethodChange = (option: Option) => {
     setSortMethod(option);
+    setPage(0);
     console.log(option);
   };
   const handleSliderChange = (values: readonly number[]) => {
