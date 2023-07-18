@@ -41,6 +41,10 @@ const LogoImage = styled.img`
   width: 400px;
   height: auto;
   cursor: pointer;
+
+  @media screen and (max-width: 768px) {
+    width : 250px;
+    }
 `;
 const UnivName = styled.p`
   font-size: 1.2rem;
@@ -354,7 +358,7 @@ function Univ() {
     <Background>
       <Main>
         <Link to="/">
-          <LogoImage src={LogoSrc} alt="Logo"/>
+          <LogoImage src={LogoSrc} alt="Logo" />
         </Link>
         <UnivName>-{state.univName}-</UnivName>
         <SearchBar onSearch={handleSearch} onRemoveTip={removeTip} />
