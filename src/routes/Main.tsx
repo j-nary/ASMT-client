@@ -193,7 +193,7 @@ const univs = [
 
 
 const RangeSliderWrapper = styled.ul`
-  width: 100vh;
+  width: 100%;
   height: 8vh;
   align-content: center;
   margin: 0 10px;

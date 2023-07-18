@@ -16,6 +16,10 @@ const SearchContainer = styled.div`
     cursor: pointer;
   }
   margin-bottom: 2.5rem;
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
 `;
 const Search = styled.input`
   border: 0;

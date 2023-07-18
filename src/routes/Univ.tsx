@@ -25,7 +25,6 @@ const Background = styled.div`
 `;
 
 const Main = styled.main`
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,9 +36,14 @@ const Main = styled.main`
 
 const Title = styled.h1`
   text-align: center;
-  font-size: 2rem;
+  font-size: 2rem;[']
   margin-top: 1rem;
   margin-bottom: 2rem;
+  @media screen and (max-width: 768px) {
+  font-size: 1.5rem;
+
+  }
+  
 `;
 
 const Loader = styled.span`
@@ -49,10 +53,15 @@ const Loader = styled.span`
 `;
 
 const RangeSliderWrapper = styled.ul`
-  width: 100vh;
+  width: 110vh;
   height: 100px;
   align-content: center;
   margin: 0 10px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin: 0 
+  }
 `;
 
 const Container = styled.div`
@@ -64,7 +73,7 @@ const Container = styled.div`
 `;
 
 const FoodsList = styled.ul`
-  height: 45vw;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
   width: 85vw;
@@ -77,6 +86,13 @@ const FoodsList = styled.ul`
   scrollbar-width: thin;
   scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
 
+
+  @media screen and (max-width: 768px) {
+    height: 100%;
+
+  }
+
+  
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -113,9 +129,18 @@ const FoodBox = styled.li`
   transition: all 0.4s;
   background-color: white;
 
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    min-height: 25%;
+    max-height: 25%;
+
+  }
+
   &:hover {
     background-color: #b0e0e6;
   }
+
+  
 `;
 
 const FoodName = styled.li`
