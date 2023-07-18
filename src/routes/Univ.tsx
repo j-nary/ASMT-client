@@ -22,6 +22,7 @@ const Background = styled.div`
   background-position: center;
   align-items: center;
   overflow-y: hidden;
+  overflow-x:hidden
 `;
 
 const Main = styled.main`
@@ -60,7 +61,7 @@ const RangeSliderWrapper = styled.ul`
   margin: 0 10px;
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 90%;
     margin: 0 
   }
 `;

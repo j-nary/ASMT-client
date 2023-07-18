@@ -10,6 +10,8 @@ import Rank2 from "../Assets/Img/rank2.png";
 import Rank3 from "../Assets/Img/rank3.png";
 import Rank4 from "../Assets/Img/rank4.png";
 import Rank5 from "../Assets/Img/rank5.png";
+import AltSrc from "../Assets/Img/alt_img.png";
+
 
 const ModalContainer = styled.div`
   flex-wrap: wrap;
@@ -54,15 +56,22 @@ const Backdrop = styled.div`
 `;
 
 const RankBox = styled.ul`
+    position: relative;
     flex-direction: row;
     max-height: 41em;
     width: 65%;
     margin: 8px auto 0; /* 가운데 정렬 및 상단 여백 수정 */
     flex-wrap: wrap;
     align-items: flex-start;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      margin: 0 
+    }
 `;
 
 const FoodBox = styled.ul`
+align-items: stretch;
   align-content: vertical;
   min-width: calc(50% - 1em); 
   min-height: 33%;
@@ -79,6 +88,11 @@ const FoodBox = styled.ul`
     background-color: #B0E0E6;
   }
   
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height:130px
+
+  }
 `;
 
 const FoodName = styled.ul`
@@ -94,6 +108,15 @@ const FoodInfo = styled.ul`
   max-width: 90%;
   margin-left:2em;
   padding: 2px;
+`;
+
+
+const FoodImg = styled.img`
+  float: left;
+  height:90px;
+  width:90px;
+  margin-right: 10px;
+
 `;
 
 interface FoodInterface {
@@ -150,6 +173,13 @@ function Modal({ univName, onClickToggleModal }: PropsWithChildren<ModalDefaultT
             <FoodBox>
               <a href={f.placeLink} style={{ cursor: 'pointer' }}>
                 <ImageComponent imageUrl={`${f.menuImg}`} />
+                {/* {(f.menuImg == "null" || f.menuImg == null) ? (
+                  <FoodImg src={AltSrc} alt="static" />
+
+                ) : (
+                  <FoodImg src={f.menuImg} alt="Dynamic" />
+                )} */}
+
                 <FoodInfo>
                   <FoodName>
                     <span>{f.menuName}</span>

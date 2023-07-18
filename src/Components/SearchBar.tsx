@@ -26,7 +26,11 @@ const SearchWrapper = styled.div`
   }
 
   @media screen and (max-width: 768px) {
+  justify-content: center;
+
     width: 80%;
+    margin : 0 auto;
+    margin-top:3px
   }
 `;
 
@@ -44,17 +48,33 @@ const TipContainer = styled.div`
   align-items: center;
   margin-top: 0.5rem;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
+
+  
+  @media screen and (max-width: 768px) {
+    margin-left:5px
+    }
+  
+
 `;
 
 const Tip = styled.div`
-  background-color: grey;
-  color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  margin-right: 0.5rem;
-  position: relative;
-  display: flex;
+background-color: grey;
+color: white;
+padding: 0.25rem 0.5rem;
+border-radius: 4px;
+margin-right: 0.25rem; // 팁 간 여백을 줄임;
+margin-left: 0.25rem; // 팁 간 여백을 줄임;
+position: relative;
+display: flex;
+
+@media screen and (max-width: 768px) {
+  margin-right: 0.15rem; // 팁 간 여백을 줄임;
+margin-left: 0.15rem; // 팁 간 여백을 줄임;
+  }
+
+  
+  
 `;
 
 const CloseButton = styled.button`
@@ -115,10 +135,10 @@ function SearchBar({ onSearch, onRemoveTip }: SearchBarProps) {
           placeholder={`먹고싶은 메뉴를 입력해주세요! (${searchQueries.length}/5)`}
         />
         <img
-        src={SearchSrc}
-        alt="search"
-        onClick={() => addSearchQuery(searchQuery)}
-      />
+          src={SearchSrc}
+          alt="search"
+          onClick={() => addSearchQuery(searchQuery)}
+        />
       </SearchWrapper>
       <div style={{ display: "flex" }}>
         {searchQueries.map((query, index) => (

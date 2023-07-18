@@ -134,7 +134,7 @@ const railStyle: React.CSSProperties = {
 const domain: number[] = [0, 20000]; // RangeSlider 최소, 최대 범위
 
 interface RangeSliderProps {
-  onChangeValues: (values:readonly number[]) => void;
+  onChangeValues: (values: readonly number[]) => void;
   minPrice: number;
   maxPrice: number;
 }
@@ -206,7 +206,7 @@ export class RangeSlider extends React.Component<RangeSliderProps> {
               </div>
             )}
           </Tracks>
-          <Ticks count={10}>
+          <Ticks values={[0, 5000, 10000, 15000, 20000]}>
             {({ ticks }) => (
               <div className="slider-ticks">
                 {ticks.map(tick => (
