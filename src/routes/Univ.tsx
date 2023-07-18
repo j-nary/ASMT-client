@@ -230,9 +230,10 @@ function Univ() {
   const [ref, inView] = useInView();
 
   const newMinPrice = minPrice < 2000 ? 2000 : minPrice;
+  const newMaxPrice = maxPrice == 20000 ? 1000000 : maxPrice;
   const data = {
     minimumPrice: newMinPrice,
-    maximumPrice: maxPrice,
+    maximumPrice: newMaxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
     showZeroPriceItems: showZeroPrice,
