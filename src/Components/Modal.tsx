@@ -43,7 +43,9 @@ const DialogBox = styled.dialog`
   box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
   box-sizing: border-box;
   background-color: white;
-  z-index: 10000;  
+  z-index: 10000;
+  border: 2px solid black;
+  border-radius: 10px;
 `;
 
 const Backdrop = styled.div`
