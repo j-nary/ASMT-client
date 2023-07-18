@@ -7,7 +7,7 @@ import RangeSlider from "../Components/RangeSlider";
 import RadioComponent, { Option } from "../Components/Radio";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import ImageComponent from "../Components/FoodImage";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
 import SearchBar from "../Components/SearchBar";
@@ -15,6 +15,7 @@ import { useInView } from "react-intersection-observer";
 import BookmarkOff from "../Assets/Img/bookmarkOff.png";
 import BookamrkOn from "../Assets/Img/bookmarkOn.png";
 import Cookies from "js-cookie";
+import LogoSrc from "../Assets/Img/logo2.jpeg";
 
 const Background = styled.div`
   background-image: url(${BackgroundSrc});
@@ -35,17 +36,35 @@ const Main = styled.main`
   font-family: "jjwfont", sans-serif;
 `;
 
-const Title = styled.h1`
-  text-align: center;
-  font-size: 2rem;[']
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  @media screen and (max-width: 768px) {
-  font-size: 1.5rem;
-
-  }
-  
+const LogoImage = styled.img`
+  width: 400px;
+  height: auto;
+  cursor: pointer;
 `;
+const UnivName = styled.p`
+  font-size: 1.2rem;
+  text-align: center;
+  color: black;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  @media screen and (max-width: 768px) {
+  font-size: 1.2rem;
+  }
+`;
+
+// const Title = styled.div`
+//   text-align: center;
+//   font-size: 2rem;[']
+//   margin-top: 1rem;
+//   margin-bottom: 2rem;
+//   @media screen and (max-width: 768px) {
+//   font-size: 1.5rem;
+//   }
+//   &:img {
+//     height: 50px;
+//     width: 50px;
+//   }
+// `;
 
 const Loader = styled.span`
   text-align: center;
@@ -333,7 +352,10 @@ function Univ() {
   return (
     <Background>
       <Main>
-        <Title> {state.univName} 맛집 리스트 </Title>
+        <Link to="/">
+          <LogoImage src={LogoSrc} alt="Logo"/>
+        </Link>
+        <UnivName>-{state.univName}-</UnivName>
         <SearchBar onSearch={handleSearch} onRemoveTip={removeTip} />
 
         {isOpenRank && (
