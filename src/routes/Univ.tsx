@@ -11,7 +11,10 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
 import SearchBar from "../Components/SearchBar";
-import { useInView } from 'react-intersection-observer';
+import { useInView } from "react-intersection-observer";
+import BookmarkOff from "../Assets/Img/bookmarkOff.png";
+import BookamrkOn from "../Assets/Img/bookmarkOn.png";
+import Cookies from "js-cookie";
 
 const Background = styled.div`
   background-image: url(${BackgroundSrc});
@@ -30,7 +33,6 @@ const Main = styled.main`
   position: relative;
   min-height: 100vh;
 `;
-
 
 const Title = styled.h1`
   text-align: center;
@@ -53,7 +55,7 @@ const RangeSliderWrapper = styled.ul`
 `;
 
 const Container = styled.div`
-  height: calc(100vh - 300px); 
+  height: calc(100vh - 300px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,11 +70,11 @@ const FoodsList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start; 
+  align-items: flex-start;
   /* 커스텀 스크롤바 스타일 적용 */
   scrollbar-width: thin;
-  scrollbar-color: #6a91bd rgba(33, 122, 244, .1);
-  
+  scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
+
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -84,13 +86,21 @@ const FoodsList = styled.ul`
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);
+    background: rgba(33, 122, 244, 0.1);
   }
+`;
+
+const BookmarkIcon = styled.img`
+  position: relative;
+  float: right;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
 `;
 
 const FoodBox = styled.li`
   align-content: vertical;
-  width: calc(50% - 1em); 
+  width: calc(50% - 1em);
   min-height: 33%;
   max-height: 33%;
   border: 1px solid #aaa;
@@ -102,21 +112,20 @@ const FoodBox = styled.li`
   background-color: white;
 
   &:hover {
-    background-color: #B0E0E6;
+    background-color: #b0e0e6;
   }
-  
 `;
 
 const FoodName = styled.li`
-    font-weight: bold;
-    margin-bottom: 0.3em;
-    margin-top: 0.5em;
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  margin-top: 0.5em;
 `;
 
 const FoodInfo = styled.li`
-  width:100%;
-  max-height:fit-content;
-  margin-left:2em;
+  width: 100%;
+  max-height: fit-content;
+  margin-left: 2em;
   padding: 2px;
 `;
 
@@ -167,7 +176,6 @@ function Univ() {
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView();
 
-
   const data = {
     minimumPrice: minPrice,
     maximumPrice: maxPrice,
@@ -175,9 +183,9 @@ function Univ() {
     sortMethod: sortMethod,
     showZeroPriceItems: showZeroPrice,
     school: univId,
-    page: 1
+    page: 1,
   };
-  const fetchData = (async () => {
+  const fetchData = async () => {
     try {
       // console.log(typeof(state.univId));
       console.log(`data = ${data}`);
@@ -190,13 +198,13 @@ function Univ() {
         },
       });
       console.log(response.data);
-      setFoods(prev => [...prev, ...response.data]);
+      setFoods((prev) => [...prev, ...response.data]);
       setLoading(false);
-      setPage((page) => page + 1)
+      setPage((page) => page + 1);
     } catch (error) {
       console.error(error);
     }
-  });
+  };
 
   useEffect(() => {
     setFoods([]);
@@ -206,7 +214,7 @@ function Univ() {
   useEffect(() => {
     // inView가 true 일때만 실행한다.
     if (inView) {
-      console.log(inView, '무한 스크롤 요청 ')
+      console.log(inView, "무한 스크롤 요청 ");
       data.page = page;
 
       fetchData();
@@ -218,7 +226,7 @@ function Univ() {
   }, [isOpenRank]);
 
   const handleSearch = (query: string) => {
-    if (query.trim() !== '' && !keywordList.includes(query)) {
+    if (query.trim() !== "" && !keywordList.includes(query)) {
       // 최대 5개까지만 유지하는 로직 추가
       if (keywordList.length < 5) {
         setKeywordList([...keywordList, query]);
@@ -239,12 +247,16 @@ function Univ() {
   // 클릭 한 번 할 시, 랭크에 기여
   const postRank = async (data: FoodInterface) => {
     try {
-      const response = await axios.post('http://13.125.233.202/api/rank', { menuId: data.menuId }, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+      const response = await axios.post(
+        "http://13.125.233.202/api/rank",
+        { menuId: data.menuId },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      );
       console.log(response);
-      console.log('POST 요청이 성공적으로 전송되었습니다.');
+      console.log("POST 요청이 성공적으로 전송되었습니다.");
       // 성공적으로 요청이 전송되었을 때 실행할 코드를 추가하세요.
     } catch (error) {
-      console.error('POST 요청 중 오류가 발생하였습니다:', error);
+      console.error("POST 요청 중 오류가 발생하였습니다:", error);
       // 오류가 발생했을 때 실행할 코드를 추가하세요.
     }
   };
@@ -258,7 +270,36 @@ function Univ() {
     setMaxPrice(values[1]);
   };
 
+  const [bookmarkItems, setBookmarkItems] = useState<number[]>([]);
+  useEffect(() => {
+    const savedBookmarkedItems = Cookies.get("bookmarkedItems");
+    console.log("북마크 아이템 = ", savedBookmarkedItems);
+    if (savedBookmarkedItems && typeof savedBookmarkedItems == "string") {
+      setBookmarkItems(JSON.parse(savedBookmarkedItems));
+    } else {
+      setBookmarkItems([]);
+    }
+  }, []);
 
+  const toggleBookmark = (menuId: number) => {
+    if (bookmarkItems.includes(menuId)) {
+      const updateItems = bookmarkItems.filter((id) => id !== menuId);
+      setBookmarkItems(updateItems);
+      Cookies.set("bookmarkedItems", JSON.stringify(updateItems));
+    } else {
+      setBookmarkItems([...bookmarkItems, menuId]);
+      Cookies.set(
+        "bookmarkedItems",
+        JSON.stringify([...bookmarkItems, menuId])
+      );
+    }
+
+    const expirationDate = new Date();
+    expirationDate.setFullYear(expirationDate.getFullYear() + 10);
+    Cookies.set("bookmarkedItems", JSON.stringify(bookmarkItems), {
+      expires: expirationDate,
+    });
+  };
   return (
     <Background>
       <Main>
@@ -266,20 +307,47 @@ function Univ() {
         <SearchBar onSearch={handleSearch} onRemoveTip={removeTip} />
 
         {isOpenRank && (
-          <Modal univName={univId} onClickToggleModal={onClickToggleModal}>
-          </Modal>
+          <Modal
+            univName={univId}
+            onClickToggleModal={onClickToggleModal}
+          ></Modal>
         )}
-        <DialogButton univName={univId} onClickToggleModal={onClickToggleModal} />
+        <DialogButton
+          univName={univId}
+          onClickToggleModal={onClickToggleModal}
+        />
         <RangeSliderWrapper>
-          <RangeSlider onChangeValues={handleSliderChange} minPrice={minPrice} maxPrice={maxPrice}/>
+          <RangeSlider
+            onChangeValues={handleSliderChange}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+          />
         </RangeSliderWrapper>
         <RadioComponent setSortMethod={handleSortMethodChange} />
 
         <Container>
           <FoodsList>
             {foods.map((f) => (
-              <FoodBox onClick={() => postRank(f)}>
-                <a href={f.placeLink} target="_blank" rel="noreferrer" style={{ cursor: 'pointer' }}>
+              <FoodBox key={f.menuId} onClick={() => postRank(f)}>
+                {bookmarkItems.includes(f.menuId) ? (
+                  <BookmarkIcon
+                    src={BookamrkOn}
+                    alt="BookmarkOn"
+                    onClick={() => toggleBookmark(f.menuId)}
+                  />
+                ) : (
+                  <BookmarkIcon
+                    src={BookmarkOff}
+                    alt="BookmarkOff"
+                    onClick={() => toggleBookmark(f.menuId)}
+                  />
+                )}
+                <a
+                  href={f.placeLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ cursor: "pointer" }}
+                >
                   <ImageComponent imageUrl={`${f.menuImg}`} />
                   <FoodInfo>
                     <FoodName>
@@ -289,7 +357,9 @@ function Univ() {
                     <div align-items="vertical">
                       <span>{f.placeName}</span>
                     </div>
-                    <span>{f.placeDistance}m | ★: {f.placeRating}</span>
+                    <span>
+                      {f.placeDistance}m | ★: {f.placeRating}
+                    </span>
                   </FoodInfo>
                 </a>
               </FoodBox>
