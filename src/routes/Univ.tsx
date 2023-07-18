@@ -235,10 +235,6 @@ function Univ() {
     setKeywordList((prevList) => prevList.filter((_, i) => i !== index));
     console.log(keywordList);
   };
-  const removeTip = (index: number) => {
-    setKeywordList((prevList) => prevList.filter((_, i) => i !== index));
-  };
-
 
   useEffect(() => {
     console.log(keywordList);

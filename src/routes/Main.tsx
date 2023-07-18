@@ -330,11 +330,6 @@ function Main() {
     setMaxPrice(values[1]);
   };
 
-  const handleSliderChange = (values: readonly number[]) => {
-    setMinPrice(values[0]);
-    setMaxPrice(values[1]);
-  };
-
   return (
     <Background>
       <Container>
