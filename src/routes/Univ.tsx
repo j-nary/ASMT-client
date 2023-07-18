@@ -21,6 +21,7 @@ const Background = styled.div`
   background-size: cover;
   background-position: center;
   align-items: center;
+  overflow-y: hidden;
 `;
 
 const Main = styled.main`
@@ -63,10 +64,10 @@ const Container = styled.div`
 `;
 
 const FoodsList = styled.ul`
-  max-height: 41em;
+  height: 45vw;
   overflow-x: hidden;
   overflow-y: scroll;
-  width: 65%;
+  width: 85vw;
   margin: 8px auto 0; /* 가운데 정렬 및 상단 여백 수정 */
   display: flex;
   flex-wrap: wrap;
@@ -103,7 +104,7 @@ const FoodBox = styled.li`
   align-content: vertical;
   width: calc(50% - 1em);
   min-height: 33%;
-  max-height: 33%;
+  max-height: 33vw;
   border: 1px solid #aaa;
   border-radius: 7px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
@@ -365,7 +366,7 @@ function Univ() {
                 </a>
               </FoodBox>
             ))}
-            <Loader ref={ref}>Loading...</Loader>
+            <div ref={ref}></div>
           </FoodsList>
         </Container>
       </Main>
