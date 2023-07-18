@@ -1,10 +1,23 @@
 //브랜치 테스트4
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import RangeSlider from "../Components/RangeSlider";
 import LogoSrc from "../Assets/Img/logo.png";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
+import styled, { keyframes, css } from 'styled-components';
+import { InView } from 'react-intersection-observer';
+
+
+const fadeInAnimation = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -71,17 +84,19 @@ const UnivsList = styled.ul`
   justify-content: center; /* 가로 중앙 정렬 */
 
   @media screen and (max-width: 768px) {
-    max-height: 16vh;
+    max-height: 24vh;
 
     overflow-y:scroll;
   }
 `;
 
-const Univ = styled.li`
+const Univ = styled.li<{ visible: boolean }>`
   background-color: #7aa0c4;
   border-radius: 15px;
   padding: 10px 10px;
   font-family: "jjwfont2", sans-serif;
+  animation: ${({ visible }) => visible && css`${fadeInAnimation} 0.5s ease-in-out`};
+  
   a {
     align-items: center;
     display: flex;
@@ -198,6 +213,8 @@ const ButtonWrapper = styled.div`
   @media (max-width: 600px) {
     flex-wrap: wrap;
     height:60%;
+  margin-top: 5px;
+
   }
 `;
 
@@ -224,7 +241,9 @@ const AlphabetButton = styled.button<AlphabetButtonProps>`
 
   
   @media (max-width: 600px) {
-    margin: 5px;
+  margin: 0 1px;
+
+
   }
 `;
 
@@ -339,7 +358,7 @@ function Main() {
           <Title>얼마 쓸래?</Title>
         </Header>
         <RangeSliderWrapper>
-          <RangeSlider onChangeValues={handleSliderChange} minPrice={minPrice} maxPrice={maxPrice}/>
+          <RangeSlider onChangeValues={handleSliderChange} minPrice={minPrice} maxPrice={maxPrice} />
         </RangeSliderWrapper>
         <div>
           {/* 알파벳 버튼 리스트 */}
@@ -376,19 +395,23 @@ function Main() {
           {/* 선택된 알파벳에 해당하는 학교 리스트 */}
           {filteredUnivs.length > 0 ? (
             filteredUnivs.map((univ) => (
-              <Univ key={univ.name}>
-                <Link
-                  to={{
-                    pathname: `/${univ.id}`,
-                    state: { univName: univ.name, minimumPrice: minPrice, maximumPrice: maxPrice },
-                  }}
-                >
-                  {univ.name}
-                </Link>
-              </Univ>
+              <InView key={univ.name} threshold={0.1}>
+                {({ inView, ref }) => (
+                  <Univ ref={ref} visible={inView}>
+                    <Link
+                      to={{
+                        pathname: `/${univ.id}`,
+                        state: { univName: univ.name, minimumPrice: minPrice, maximumPrice: maxPrice },
+                      }}
+                    >
+                      {univ.name}
+                    </Link>
+                  </Univ>
+                )}
+              </InView>
             ))
           ) : (
-            <NoSelectionMessage>학교를 선택해주세요.</NoSelectionMessage>
+            <NoSelectionMessage visible={true}>학교를 선택해주세요.</NoSelectionMessage>
           )}
         </UnivsList>
       </Container>
