@@ -15,7 +15,7 @@ const SearchContainer = styled.div`
     height: 25px;
     cursor: pointer;
   }
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
 `;
 const Search = styled.input`
   border: 0;
@@ -29,6 +29,7 @@ const TipContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 0.5rem;
+  flex-wrap: wrap;
 `;
 
 const Tip = styled.div`
