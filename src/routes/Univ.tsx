@@ -229,8 +229,9 @@ function Univ() {
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView();
 
+  const newMinPrice = minPrice < 2000 ? 2000 : minPrice;
   const data = {
-    minimumPrice: minPrice,
+    minimumPrice: newMinPrice,
     maximumPrice: maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
