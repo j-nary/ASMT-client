@@ -17,7 +17,7 @@ import Logo from "../Assets/Img/ModalLogo.jpeg";
 const ModalContainer = styled.div`
   flex-wrap: wrap;
   min-width: 100%;
-  /* width: 30px; */
+  width: 30px;
   height: 100%;
   display: flex;
   align-items: center;
