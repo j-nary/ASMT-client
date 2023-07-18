@@ -1,7 +1,7 @@
 // 전체 랭킹 display Modal
 // 참고 : https://jeewonscript.tistory.com/25
 
-import React, {useState, useEffect, PropsWithChildren} from "react";
+import React, { useState, useEffect, PropsWithChildren } from "react";
 import styled from "styled-components";
 import ImageComponent from "../Components/FoodImage";
 import axios from "axios";
@@ -21,6 +21,9 @@ const ModalContainer = styled.div`
   justify-content: center;
   position: fixed;
   z-index: 9999;
+
+  
+
 `;
 
 const DialogBox = styled.dialog`
@@ -37,6 +40,8 @@ const DialogBox = styled.dialog`
   box-sizing: border-box;
   background-color: white;
   z-index: 10000;
+
+  
 `;
 
 const Backdrop = styled.div`
@@ -92,85 +97,85 @@ const FoodInfo = styled.ul`
 `;
 
 interface FoodInterface {
-    rankImgSrc: string;
-    placeName: string;
-    placeAddress: string;
-    placeRating: number;
-    placeLink: string;
-    placeDistance: number;
-    school: string;
-    menuId: number;
-    menuName: string;
-    menuPrice: number;
-    menuImg: string;
-  }  
+  rankImgSrc: string;
+  placeName: string;
+  placeAddress: string;
+  placeRating: number;
+  placeLink: string;
+  placeDistance: number;
+  school: string;
+  menuId: number;
+  menuName: string;
+  menuPrice: number;
+  menuImg: string;
+}
 
 const API_URL = "http://13.125.233.202/api/rank";
 const RankImgUrl = "src/Assets/Img/rank";
 
-interface ModalDefaultType{
-    univName: string;
-    onClickToggleModal: () => void;
+interface ModalDefaultType {
+  univName: string;
+  onClickToggleModal: () => void;
 }
 
-function Modal({univName, onClickToggleModal}:PropsWithChildren<ModalDefaultType>){
-    const [foods, setFoods] = useState<FoodInterface[]>([]);
+function Modal({ univName, onClickToggleModal }: PropsWithChildren<ModalDefaultType>) {
+  const [foods, setFoods] = useState<FoodInterface[]>([]);
 
-    useEffect(() => {
-        const getFoods = async () => {
-          try {
-            const response = await axios.get<FoodInterface[]>(API_URL, {
-              params: {
-                rankCount: 5,
-                school: univName
-              }
-            });
-    
-            const fetchedFoods = response.data;
-            setFoods(fetchedFoods);
-          } catch (error) {
-            console.error(error);
+  useEffect(() => {
+    const getFoods = async () => {
+      try {
+        const response = await axios.get<FoodInterface[]>(API_URL, {
+          params: {
+            rankCount: 5,
+            school: univName
           }
-        };
-    
-        getFoods();
-      }, []);
+        });
 
-    return (
-        <ModalContainer>
-            <DialogBox>
-                {foods.map((f, index) => (
-                    <RankBox>
-                        <ImageComponent imageUrl={index === 0 ? Rank1 : index === 1 ? Rank2 : index === 2 ? Rank3 : index === 3 ? Rank4 : index === 4 ? Rank5 :''} />
-                    <FoodBox>
-                    <a href={f.placeLink} style={{ cursor: 'pointer' }}>
-                        <ImageComponent imageUrl={`${f.menuImg}`} />
-                        <FoodInfo>
-                        <FoodName>
-                            <span>{f.menuName}</span>
-                        </FoodName>
-                        <span>{f.menuPrice}원</span>
-                        <div align-items="vertical">
-                            <span>{f.placeName}</span>
-                        </div>
-                        <span>{f.placeDistance}m | ★: {f.placeRating}</span>
-                        </FoodInfo>
-                    </a>
-                    </FoodBox>
-                    </RankBox>
-                ))}
-            </DialogBox>
-            <Backdrop
-                onClick={(e:React.MouseEvent)=>{
-                    e.preventDefault();
+        const fetchedFoods = response.data;
+        setFoods(fetchedFoods);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-                    if(onClickToggleModal){
-                        onClickToggleModal();
-                    }
-                }}
-            />
-        </ModalContainer>
-    );
+    getFoods();
+  }, []);
+
+  return (
+    <ModalContainer>
+      <DialogBox>
+        {foods.map((f, index) => (
+          <RankBox>
+            <ImageComponent imageUrl={index === 0 ? Rank1 : index === 1 ? Rank2 : index === 2 ? Rank3 : index === 3 ? Rank4 : index === 4 ? Rank5 : ''} />
+            <FoodBox>
+              <a href={f.placeLink} style={{ cursor: 'pointer' }}>
+                <ImageComponent imageUrl={`${f.menuImg}`} />
+                <FoodInfo>
+                  <FoodName>
+                    <span>{f.menuName}</span>
+                  </FoodName>
+                  <span>{f.menuPrice}원</span>
+                  <div align-items="vertical">
+                    <span>{f.placeName}</span>
+                  </div>
+                  <span>{f.placeDistance}m | ★: {f.placeRating}</span>
+                </FoodInfo>
+              </a>
+            </FoodBox>
+          </RankBox>
+        ))}
+      </DialogBox>
+      <Backdrop
+        onClick={(e: React.MouseEvent) => {
+          e.preventDefault();
+
+          if (onClickToggleModal) {
+            onClickToggleModal();
+          }
+        }}
+      />
+    </ModalContainer>
+  );
 }
 
 export default Modal;
