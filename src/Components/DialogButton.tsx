@@ -8,13 +8,13 @@ const DialogButtonWrapper = styled.button`
   height: cover;
   background-color: white;
   color: black;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 400;
   border-radius: 4px;
   border: 2px solid #B0E0E6;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-
+  font-family: "jjwfont", sans-serif;
   &:hover {
     background-color: #B0E0E6;
   }

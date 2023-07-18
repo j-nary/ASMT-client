@@ -16,6 +16,8 @@ const SearchContainer = styled.div`
     cursor: pointer;
   }
   margin-bottom: 2.5rem;
+  font-family: "jjwfont2", sans-serif;
+  font-weight: light;
 `;
 const Search = styled.input`
   border: 0;
@@ -24,6 +26,7 @@ const Search = styled.input`
   width: 100%;
   height: 100%;
   outline: none;
+  font-family: "jjwfont2", sans-serif;
 `;
 const TipContainer = styled.div`
   display: flex;

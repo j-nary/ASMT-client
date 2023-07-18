@@ -33,6 +33,7 @@ const Main = styled.main`
   size: cover;
   position: relative;
   min-height: 100vh;
+  font-family: "jjwfont", sans-serif;
 `;
 
 const Title = styled.h1`
@@ -61,6 +62,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
+  font-family: "jjwfont2", sans-serif;
 `;
 
 const FoodsList = styled.ul`
