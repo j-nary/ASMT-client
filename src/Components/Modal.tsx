@@ -11,21 +11,23 @@ import Rank3 from "../Assets/Img/rank3.png";
 import Rank4 from "../Assets/Img/rank4.png";
 import Rank5 from "../Assets/Img/rank5.png";
 import AltSrc from "../Assets/Img/alt_img.png";
+import Logo from "../Assets/Img/ModalLogo.jpeg";
 
 
 const ModalContainer = styled.div`
   flex-wrap: wrap;
   min-width: 100%;
-  width: 30px;
+  /* width: 30px; */
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: fixed;
   z-index: 9999;
+`;
 
-  
-
+const ModalLogo = styled.img`
+  width: 60%;
 `;
 
 const DialogBox = styled.dialog`
@@ -41,9 +43,7 @@ const DialogBox = styled.dialog`
   box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
   box-sizing: border-box;
   background-color: white;
-  z-index: 10000;
-
-  
+  z-index: 10000;  
 `;
 
 const Backdrop = styled.div`
@@ -70,6 +70,12 @@ const RankBox = styled.ul`
     }
 `;
 
+const RankImg = styled.img`
+  position: absolute;
+  width: 100px;
+  z-index: 1;
+`;
+
 const FoodBox = styled.ul`
 align-items: stretch;
   align-content: vertical;
@@ -83,6 +89,7 @@ align-items: stretch;
   margin: 0.5em;
   transition: all 0.4s;
   background-color: white;
+  position: relative;
 
   &:hover {
     background-color: #B0E0E6;
@@ -106,7 +113,7 @@ const FoodInfo = styled.ul`
   width:100%;
   max-height:fit-content;
   max-width: 90%;
-  margin-left:2em;
+  margin-left: 35%;
   padding: 2px;
 `;
 
@@ -116,7 +123,7 @@ const FoodImg = styled.img`
   height:90px;
   width:90px;
   margin-right: 10px;
-
+  /* margin-left: 10%; */
 `;
 
 interface FoodInterface {
@@ -167,9 +174,10 @@ function Modal({ univName, onClickToggleModal }: PropsWithChildren<ModalDefaultT
   return (
     <ModalContainer>
       <DialogBox>
+        <ModalLogo src={Logo}/>
         {foods.map((f, index) => (
           <RankBox>
-            <ImageComponent imageUrl={index === 0 ? Rank1 : index === 1 ? Rank2 : index === 2 ? Rank3 : index === 3 ? Rank4 : index === 4 ? Rank5 : ''} />
+            <RankImg src={index === 0 ? Rank1 : index === 1 ? Rank2 : index === 2 ? Rank3 : index === 3 ? Rank4 : index === 4 ? Rank5 : ''} />
             <FoodBox>
               <a href={f.placeLink} style={{ cursor: 'pointer' }}>
                 <ImageComponent imageUrl={`${f.menuImg}`} />
