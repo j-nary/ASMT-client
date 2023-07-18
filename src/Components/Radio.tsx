@@ -1,11 +1,16 @@
 import { useState } from 'react';
 
-type Option = "low" | "high" | "dist";
+export type Option = "lowPrice" | "highPrice" | "distance";
 
-const RadioComponent = () => {
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+type Props = {
+  setSortMethod: (option:Option) => void;
+}
+
+const RadioComponent = ({setSortMethod}:Props) => {
+  const [selectedOption, setSelectedOption] = useState<Option>('lowPrice');
 
   const handleOrderChange = (option: Option) => {
+    setSortMethod(option);
     setSelectedOption(option);
   };
 
@@ -14,9 +19,9 @@ const RadioComponent = () => {
       <label>
         <input
           type="radio"
-          value="low"
-          checked={selectedOption === "low"}
-          onChange={() => handleOrderChange("low")}
+          value="lowPrice"
+          checked={selectedOption === "lowPrice"}
+          onChange={() => handleOrderChange("lowPrice")}
         />
         최저가순
       </label>
@@ -24,9 +29,9 @@ const RadioComponent = () => {
       <label>
         <input
           type="radio"
-          value="high"
-          checked={selectedOption === "high"}
-          onChange={() => handleOrderChange("high")}
+          value="highPrice"
+          checked={selectedOption === "highPrice"}
+          onChange={() => handleOrderChange("highPrice")}
         />
         최고가순
       </label>
@@ -34,9 +39,9 @@ const RadioComponent = () => {
       <label>
         <input
           type="radio"
-          value="dist"
-          checked={selectedOption === "dist"}
-          onChange={() => handleOrderChange("dist")}
+          value="distance"
+          checked={selectedOption === "distance"}
+          onChange={() => handleOrderChange("distance")}
         />
         거리순
       </label>

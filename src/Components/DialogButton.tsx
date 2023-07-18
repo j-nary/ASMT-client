@@ -1,9 +1,10 @@
 // 랭킹 display 버튼
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const DialogButtonWrapper = styled.button`
-  width: 50vh;
+  width: 80vh;
   height: cover;
   background-color: white;
   color: black;
@@ -19,40 +20,97 @@ const DialogButtonWrapper = styled.button`
   }
 `;
 
+interface FoodInterface {
+    placeName: string;
+    placeAddress: string;
+    placeRating: number;
+    placeLink: string;
+    placeDistance: number;
+    school: string;
+    menuId: number;
+    menuName: string;
+    menuPrice: number;
+    menuImg: string;
+  }  
+
 // DialogButton onClickToggleModal 등록
 interface DialogButtonProps {
+    univName: string;
     onClickToggleModal: () => void;
 }
 
-// DialogButton 컴포넌트
-const DialogButton: React.FC<DialogButtonProps> = ({ onClickToggleModal }) => {
-    const [currentLetter, setCurrentLetter] = useState<string>('');
-    const [currentRank, setCurrentRank] = useState(0);
+const API_URL = "http://13.125.233.202/api/rank";
 
+// DialogButton 컴포넌트
+const DialogButton: React.FC<DialogButtonProps> = ({ univName, onClickToggleModal }) => {
+    const [menu, setMenu] = useState<string[]>([]);
+    const [place, setPlace] = useState<string[]>([]);
+    const [currentMenu, setCurrentMenu] = useState<string>('');
+    const [currentPlace, setCurrentPlace] = useState<string>('');
+    const [currentRank, setCurrentRank] = useState(0);
     let currentIndex = 0;
 
+    const [foods, setFoods] = useState<FoodInterface[]>([]);
+
+
     useEffect(() => {
-        const ranking = ['apple', 'banana', 'pear', 'cherry', 'strawberry', 'mellon']; // 랭킹 메뉴 및 가게명으로 대체될 예정
-
-        const interval = setInterval(() => {
-            setCurrentLetter(ranking[currentIndex]);
-            setCurrentRank(currentIndex+1);
-            currentIndex++;
-
-            if (currentIndex >= ranking.length) {
-                //clearInterval(interval); -> 1회 순환에서 끝남
-                currentIndex = 0;
+      const getFoods = async () => {
+        try {
+          const response = await axios.get<FoodInterface[]>(API_URL, {
+            params: {
+              rankCount: 5,
+              school: univName
             }
-        }, 1000);
+          });
+  
+          const fetchedFoods = response.data;
+          setFoods(fetchedFoods);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      getFoods(); // 랭킹 정보 가져오기
 
-        return () => {
-            clearInterval(interval);
-        };
-    }, []);
+      const menuNames = foods.map((f) => f.menuName);
+      const placeNames = foods.map((f) => f.placeName);
+  
+      setMenu(menuNames);
+      setPlace(placeNames);
+    }, [univName]);
+  
+    useEffect(() => {
+      const menuNames = foods.map((f) => f.menuName);
+      const placeNames = foods.map((f) => f.placeName);
+  
+      setMenu(menuNames);
+      setPlace(placeNames);
+    }, [foods]);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrentMenu(menu[currentIndex]);
+        setCurrentPlace(place[currentIndex]);
+        setCurrentRank(currentIndex + 1);
+        currentIndex++;
+  
+        if (currentIndex >= menu.length) {
+          currentIndex = 0;
+        }
+      }, 1500);
+  
+      return () => {
+        clearInterval(interval);
+      };
+    }, [menu, place]);
 
     return (
         <DialogButtonWrapper onClick={onClickToggleModal}>
-            <h1>{currentRank}. {currentLetter}</h1>
+          {menu.length > 0 && place.length > 0 ? (
+            <h1>
+              {currentRank}. {currentPlace} - {currentMenu}
+            </h1>
+          ) : null}
         </DialogButtonWrapper>
     );
 };

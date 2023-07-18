@@ -14,8 +14,10 @@
     "react": "^18.2.0",
     "react-compound-slider": "^3.4.0",
     "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.5.2",
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
+    "react-virtuoso": "^4.4.0",
     "styled-components": "^6.0.4",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"

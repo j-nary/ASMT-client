@@ -1,25 +1,18 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
-import titleFont from '../Assets/Fonts/Title.ttf';
-import lightFont from '../Assets/Fonts/Light.ttf';
-import boldFont from '../Assets/Fonts/Bold.ttf';
+//import titleFont from "../Assets/Fonts/Title.woff";
+//import lightFont from "../Assets/Fonts/Light.woff";
+//import boldFont from "../Assets/Fonts/Bold.woff";
 
 export default createGlobalStyle`
- @font-face {
-    font-family: "Font";
-    src: local("Font"), url(${titleFont}) format('ttf');
-    font-weight: lighter;
+@font-face {
+   font-family: 'jjwfont';
+   src: url('/fonts/AnyConv.com__Bold.woff') format('woff');
  }
+ 
  @font-face {
-    font-family {
-        font-family: "Font";
-        src: local("Font"), url()(${lightFont}) format()('ttf');
-        font-weight: normal;
-    }
+   font-family: 'jjwfont2';
+   src: url('/fonts/AnyConv.com__light.woff') format('woff');
  }
- @font-face {
-    font-family: "Font";
-    src: local("Font"), url(${boldFont}) format('ttf');
-    font-weight: bold;
- }
-`
+ 
+`;

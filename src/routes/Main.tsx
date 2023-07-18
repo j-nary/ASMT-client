@@ -12,12 +12,14 @@ const Container = styled.div`
   margin: 0 auto;
   size: cover;
   height: 100%;
-`;
+  `;
 
 const Background = styled.div`
-  position: relative;
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+  
   background-image: url(${BackgroundSrc});
   background-size: cover;
   background-position: center;
@@ -44,31 +46,42 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   margin: 5vh;
+  font-family: "jjwfont", sans-serif;
+
 `;
 
 const Logo = styled.img`
-  height: 12vh;
-  display: flex;
-  margin: 5vh;
+height: 10vh;
+display: flex;
+margin: 3vh 3vh 5vh 3vh;
+font-family: "jjwfont", sans-serif;
+
+@media screen and (max-width: 768px) {
+  width: 100%;
+  height : auto;
+}
 `;
 
 const UnivsList = styled.ul`
   display: grid;
+  overflow-y:hidden;
   grid-template-columns: repeat(3, 1fr); /* 한 행에 3개씩 나열 */
   gap: 10px; /* 항목 사이의 간격 설정 */
   margin-top: 20px;
   justify-content: center; /* 가로 중앙 정렬 */
+
+  @media screen and (max-width: 768px) {
+    max-height: 16vh;
+
+    overflow-y:scroll;
+  }
 `;
 
 const Univ = styled.li`
   background-color: #7aa0c4;
   border-radius: 15px;
   padding: 10px 10px;
-  @font-face {
-    font-family: "Roboto Regular";
-    font-weight: 400;
-    src: url("./fonts/Roboto-Regular.ttf") format("truetype");
-  }
+  font-family: "jjwfont2", sans-serif;
   a {
     align-items: center;
     display: flex;
@@ -97,6 +110,10 @@ const NoSelectionMessage = styled(Univ)`
 const Title = styled.h1`
   font-size: 48px;
   color: ${(props: any) => props.theme.circle1Color};
+
+  @media screen and (max-width: 768px) {
+    font-size: 40px;
+  }
 `;
 
 const univs = [
@@ -159,11 +176,33 @@ const univs = [
   { name: "홍익대학교", id: "hongik" },
 ];
 
+
+const RangeSliderWrapper = styled.ul`
+  width: 100vh;
+  height: 8vh;
+  align-content: center;
+  margin: 0 10px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin: 0 
+  }
+  
+`;
+
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+    height:60%;
+  }
 `;
+
+
+
 
 interface AlphabetButtonProps {
   active: boolean;
@@ -181,6 +220,11 @@ const AlphabetButton = styled.button<AlphabetButtonProps>`
 
   &:hover {
     color: ${(props) => (props.active ? "#34568E" : "#34568E")};
+  }
+
+  
+  @media (max-width: 600px) {
+    margin: 5px;
   }
 `;
 
@@ -286,6 +330,11 @@ function Main() {
     setMaxPrice(values[1]);
   };
 
+  const handleSliderChange = (values: readonly number[]) => {
+    setMinPrice(values[0]);
+    setMaxPrice(values[1]);
+  };
+
   return (
     <Background>
       <Container>
@@ -293,7 +342,9 @@ function Main() {
           <Logo src={LogoSrc} alt="Logo" />
           <Title>얼마 쓸래?</Title>
         </Header>
-        <RangeSlider onChangeValues={handleSliderChange}/>
+        <RangeSliderWrapper>
+          <RangeSlider onChangeValues={handleSliderChange}/>
+        </RangeSliderWrapper>
         <div>
           {/* 알파벳 버튼 리스트 */}
           <ButtonWrapper>
