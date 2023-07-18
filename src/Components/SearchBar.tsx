@@ -38,17 +38,17 @@ const Tip = styled.div`
   border-radius: 4px;
   margin-right: 0.5rem;
   position: relative;
+  display: flex;
 `;
 
 const CloseButton = styled.button`
-  position: absolute;
-  right: 4px;
-  top: 50%;
-  transform: translateY()(-50%);
   border: none;
-  color: #888;
+  background-color: transparent;
+  color: white;
   font-size: 0.8rem;
   cursor: pointer;
+  padding: 0;
+  margin-left: 0.5rem;
 `;
 
 interface SearchBarProps {
@@ -103,10 +103,12 @@ function SearchBar({ onSearch, onRemoveTip }: SearchBarProps) {
       <div style={{ display: "flex" }}>
         {searchQueries.map((query, index) => (
           <TipContainer key={index}>
-            <Tip>{query}</Tip>
-            <CloseButton onClick={() => removeSearchQuery(index)}>
-              X
-            </CloseButton>
+            <Tip>
+              {query}
+              <CloseButton onClick={() => removeSearchQuery(index)}>
+                X
+              </CloseButton>
+            </Tip>
           </TipContainer>
         ))}
       </div>
