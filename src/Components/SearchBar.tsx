@@ -3,28 +3,35 @@ import SearchSrc from "../Assets/Img/searchIcon.png";
 import { useState } from "react";
 
 const SearchContainer = styled.div`
-  width: 400px;
   height: 45px;
   position: relative;
   border: 0;
+  margin-bottom: 2.5rem;
+  font-family: "jjwfont2", sans-serif;
+  font-weight: light;
+`;
+const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  background-color: #eaeaea;
+  height: 45px;
   img {
-    position: absolute;
-    right: 10px;
+    margin-right: 5px;
     top: 10px;
     width: 25px;
     height: 25px;
     cursor: pointer;
   }
-  margin-bottom: 2.5rem;
-  font-family: "jjwfont2", sans-serif;
-  font-weight: light;
 `;
+
 const Search = styled.input`
   border: 0;
+  width: 400px;
   padding-left: 10px;
-  background-color: #eaeaea;
-  width: 100%;
   height: 100%;
+  background-color: #eaeaea;
   outline: none;
   font-family: "jjwfont2", sans-serif;
 `;
@@ -33,6 +40,7 @@ const TipContainer = styled.div`
   align-items: center;
   margin-top: 0.5rem;
   flex-wrap: wrap;
+  flex-direction: column;
 `;
 
 const Tip = styled.div`
@@ -94,18 +102,20 @@ function SearchBar({ onSearch, onRemoveTip }: SearchBarProps) {
 
   return (
     <SearchContainer>
-      <Search
-        type="text"
-        value={searchQuery}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        placeholder={`먹고싶은 메뉴를 입력해주세요! (${searchQueries.length}/5)`}
-      />
-      <img
+      <SearchWrapper>
+        <Search
+          type="text"
+          value={searchQuery}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          placeholder={`먹고싶은 메뉴를 입력해주세요! (${searchQueries.length}/5)`}
+        />
+        <img
         src={SearchSrc}
         alt="search"
         onClick={() => addSearchQuery(searchQuery)}
       />
+      </SearchWrapper>
       <div style={{ display: "flex" }}>
         {searchQueries.map((query, index) => (
           <TipContainer key={index}>
