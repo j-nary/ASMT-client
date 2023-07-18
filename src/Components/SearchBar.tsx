@@ -24,7 +24,6 @@ const SearchWrapper = styled.div`
     height: 25px;
     cursor: pointer;
   }
-  margin-bottom: 2.5rem;
 
   @media screen and (max-width: 768px) {
     width: 80%;
