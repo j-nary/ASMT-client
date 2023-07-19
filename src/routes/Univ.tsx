@@ -16,6 +16,7 @@ import BookmarkOff from "../Assets/Img/bookmarkOff.png";
 import BookmarkOn from "../Assets/Img/bookmarkOn.png";
 import Cookies from "js-cookie";
 import LogoSrc from "../Assets/Img/logo2.jpeg";
+import { boolean } from "yargs";
 
 const Background = styled.div`
   background-image: url(${BackgroundSrc});
@@ -207,6 +208,7 @@ function Univ() {
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
   const [page, setPage] = useState(1);
+  const [init, setInit] = useState<boolean>(false);
   const [ref, inView] = useInView();
 
   const newMinPrice = minPrice < 2000 ? 2000 : minPrice;
@@ -243,7 +245,11 @@ function Univ() {
 
   useEffect(() => {
     setFoods([]);
-    fetchData();
+    if (init === false) {
+      setInit(true);
+    }
+    else
+      fetchData();
   }, [keywordList, sortMethod, minPrice, maxPrice]);
 
   useEffect(() => {
@@ -251,7 +257,6 @@ function Univ() {
     if (inView) {
       console.log(inView, "무한 스크롤 요청 ");
       data.page = page;
-
       fetchData();
     }
   }, [inView]);
