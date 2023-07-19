@@ -66,6 +66,8 @@ const Loader = styled.span`
 
 const RangeSliderWrapper = styled.ul`
   width: 110vh;
+  height: 100px;
+
   align-content: center;
   margin: 0 10px;
 
