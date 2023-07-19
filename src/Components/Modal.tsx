@@ -16,7 +16,7 @@ import Logo from "../Assets/Img/ModalLogo.jpeg";
 
 const ModalContainer = styled.div`
   flex-wrap: wrap;
-  min-width: 100%;
+  min-width: 70%;
   width: 30px;
   height: 100%;
   display: flex;
@@ -27,12 +27,12 @@ const ModalContainer = styled.div`
 `;
 
 const ModalLogo = styled.img`
-  width: 60%;
+  width: 35%;
 `;
 
 const DialogBox = styled.dialog`
   flex: 1;
-  min-width: 100%; /* 크기를 축소할 비율에 따라 조절 가능 */ 
+  width: 100%; /* 크기를 축소할 비율에 따라 조절 가능 */ 
   transform: scale(0.8); /* 크기를 50%로 축소 */
   height: cover;
   display: flex;
@@ -61,7 +61,7 @@ const RankBox = styled.ul`
     position: relative;
     flex-direction: row;
     max-height: 41em;
-    width: 65%;
+    width: 70%;
     margin: 8px auto 0; /* 가운데 정렬 및 상단 여백 수정 */
     flex-wrap: wrap;
     align-items: flex-start;
@@ -79,7 +79,6 @@ const RankImg = styled.img`
 `;
 
 const FoodBox = styled.ul`
-align-items: stretch;
   align-content: vertical;
   min-width: calc(50% - 1em); 
   min-height: 33%;
@@ -91,7 +90,6 @@ align-items: stretch;
   margin: 0.5em;
   transition: all 0.4s;
   background-color: white;
-  position: relative;
 
   &:hover {
     background-color: #B0E0E6;
@@ -115,7 +113,6 @@ const FoodInfo = styled.ul`
   width:100%;
   max-height:fit-content;
   max-width: 90%;
-  margin-left: 35%;
   padding: 2px;
 `;
 
@@ -179,7 +176,7 @@ function Modal({ univName, onClickToggleModal }: PropsWithChildren<ModalDefaultT
         <ModalLogo src={Logo}/>
         {foods.map((f, index) => (
           <RankBox>
-            <RankImg src={index === 0 ? Rank1 : index === 1 ? Rank2 : index === 2 ? Rank3 : index === 3 ? Rank4 : index === 4 ? Rank5 : ''} />
+            <ImageComponent imageUrl={index === 0 ? Rank1 : index === 1 ? Rank2 : index === 2 ? Rank3 : index === 3 ? Rank4 : index === 4 ? Rank5 : ''} />
             <FoodBox>
               <a href={f.placeLink} style={{ cursor: 'pointer' }}>
                 <ImageComponent imageUrl={`${f.menuImg}`} />
