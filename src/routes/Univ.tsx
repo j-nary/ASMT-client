@@ -202,8 +202,8 @@ function Univ() {
   const { state } = useLocation<RouteState>();
   const [foods, setFoods] = useState<FoodInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [minPrice, setMinPrice] = useState<number>(state.minimumPrice || 0);
-  const [maxPrice, setMaxPrice] = useState<number>(state.maximumPrice || 20000);
+  const [minPrice, setMinPrice] = useState<number>(state.minimumPrice);
+  const [maxPrice, setMaxPrice] = useState<number>(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState<Option>("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
@@ -211,11 +211,11 @@ function Univ() {
   const [init, setInit] = useState<boolean>(false);
   const [ref, inView] = useInView();
 
-  const newMinPrice = minPrice < 2000 ? 2000 : minPrice;
-  const newMaxPrice = maxPrice == 20000 ? 1000000 : maxPrice;
+  // const newMinPrice = minPrice < 2000 ? 2000 : minPrice;
+  // const newMaxPrice = maxPrice == 20000 ? 1000000 : maxPrice;
   const data = {
-    minimumPrice: newMinPrice,
-    maximumPrice: newMaxPrice,
+    minimumPrice: minPrice < 2000 ? 2000 : minPrice,
+    maximumPrice: maxPrice === 20000 ? 1000000 : maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
     showZeroPriceItems: showZeroPrice,
