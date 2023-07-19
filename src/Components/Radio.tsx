@@ -15,7 +15,7 @@ const RadioComponent = ({setSortMethod}:Props) => {
   };
 
   return (
-    <>
+    <div>
       <label>
         <input
           type="radio"
@@ -45,7 +45,7 @@ const RadioComponent = ({setSortMethod}:Props) => {
         />
         거리순
       </label>
-    </>
+    </div>
   );
 };
 

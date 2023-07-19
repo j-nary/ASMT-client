@@ -247,9 +247,7 @@ function Univ() {
     setFoods([]);
     if (init === false) {
       setInit(true);
-    }
-    else
-      fetchData();
+    } else fetchData();
   }, [keywordList, sortMethod, minPrice, maxPrice]);
 
   useEffect(() => {
@@ -347,6 +345,8 @@ function Univ() {
     height: 30px;
     cursor: pointer;
     margin-left: auto;
+    z-index: 100;
+    margin-right: 20px;
   `;
   const [showBookmark, setShowBookmark] = useState<boolean>(false);
   const toggleShowBookmark = () => {
@@ -379,15 +379,14 @@ function Univ() {
             maxPrice={maxPrice}
           />
         </RangeSliderWrapper>
-        <div>
-          <RadioComponent setSortMethod={handleSortMethodChange} />
+
+        <RadioComponent setSortMethod={handleSortMethodChange} />
+
+        <Container>
           <ShowBookmarkImage
             src={showBookmark ? BookmarkOn : BookmarkOff}
             onClick={toggleShowBookmark}
           />
-        </div>
-
-        <Container>
           <FoodsList>
             {foods.map(
               (f) =>
