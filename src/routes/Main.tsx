@@ -122,6 +122,7 @@ const NoSelectionMessage = styled(Univ)`
   background: none;
   white-space: nowrap; /* 한 줄로 표시 */
   text-align: center; /* 텍스트 가운데 정렬 */
+  grid-column: 1 / span 3; /* 학교 목록의 전체 폭을 차지하도록 설정 */
 `;
 
 const Title = styled.h1`
