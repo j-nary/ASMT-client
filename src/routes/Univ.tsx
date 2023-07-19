@@ -13,9 +13,10 @@ import { Handle } from "../Components/RangeSlider";
 import SearchBar from "../Components/SearchBar";
 import { useInView } from "react-intersection-observer";
 import BookmarkOff from "../Assets/Img/bookmarkOff.png";
-import BookamrkOn from "../Assets/Img/bookmarkOn.png";
+import BookmarkOn from "../Assets/Img/bookmarkOn.png";
 import Cookies from "js-cookie";
 import LogoSrc from "../Assets/Img/logo2.jpeg";
+import { boolean } from "yargs";
 
 const Background = styled.div`
   background-image: url(${BackgroundSrc});
@@ -23,7 +24,7 @@ const Background = styled.div`
   background-position: center;
   align-items: center;
   overflow-y: hidden;
-  overflow-x:hidden
+  overflow-x: hidden;
 `;
 
 const Main = styled.main`
@@ -43,8 +44,8 @@ const LogoImage = styled.img`
   cursor: pointer;
 
   @media screen and (max-width: 768px) {
-    width : 250px;
-    }
+    width: 250px;
+  }
 `;
 const UnivName = styled.p`
   font-size: 1.2rem;
@@ -53,23 +54,9 @@ const UnivName = styled.p`
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   @media screen and (max-width: 768px) {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
   }
 `;
-
-// const Title = styled.div`
-//   text-align: center;
-//   font-size: 2rem;[']
-//   margin-top: 1rem;
-//   margin-bottom: 2rem;
-//   @media screen and (max-width: 768px) {
-//   font-size: 1.5rem;
-//   }
-//   &:img {
-//     height: 50px;
-//     width: 50px;
-//   }
-// `;
 
 const Loader = styled.span`
   text-align: center;
@@ -85,7 +72,7 @@ const RangeSliderWrapper = styled.ul`
 
   @media screen and (max-width: 768px) {
     width: 90%;
-    margin: 0 
+    margin: 0;
   }
 `;
 
@@ -112,13 +99,10 @@ const FoodsList = styled.ul`
   scrollbar-width: thin;
   scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
 
-
   @media screen and (max-width: 768px) {
     height: 100%;
-
   }
 
-  
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -159,14 +143,11 @@ const FoodBox = styled.li`
     width: 100%;
     min-height: 25%;
     max-height: 25%;
-
   }
 
   &:hover {
     background-color: #b0e0e6;
   }
-
-  
 `;
 
 const FoodName = styled.li`
@@ -221,19 +202,20 @@ function Univ() {
   const { state } = useLocation<RouteState>();
   const [foods, setFoods] = useState<FoodInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [minPrice, setMinPrice] = useState<number>(state.minimumPrice || 0);
-  const [maxPrice, setMaxPrice] = useState<number>(state.maximumPrice || 20000);
+  const [minPrice, setMinPrice] = useState<number>(state.minimumPrice);
+  const [maxPrice, setMaxPrice] = useState<number>(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState<Option>("lowPrice");
   const [keywordList, setKeywordList] = useState<string[]>([]);
   const [showZeroPrice, setShowZeroPrice] = useState<boolean>(true);
   const [page, setPage] = useState(1);
+  const [init, setInit] = useState<boolean>(false);
   const [ref, inView] = useInView();
 
-  const newMinPrice = minPrice < 2000 ? 2000 : minPrice;
-  const newMaxPrice = maxPrice == 20000 ? 1000000 : maxPrice;
+  // const newMinPrice = minPrice < 2000 ? 2000 : minPrice;
+  // const newMaxPrice = maxPrice == 20000 ? 1000000 : maxPrice;
   const data = {
-    minimumPrice: newMinPrice,
-    maximumPrice: newMaxPrice,
+    minimumPrice: minPrice < 2000 ? 2000 : minPrice,
+    maximumPrice: maxPrice === 20000 ? 1000000 : maxPrice,
     searchKeywordList: keywordList,
     sortMethod: sortMethod,
     showZeroPriceItems: showZeroPrice,
@@ -263,7 +245,9 @@ function Univ() {
 
   useEffect(() => {
     setFoods([]);
-    fetchData();
+    if (init === false) {
+      setInit(true);
+    } else fetchData();
   }, [keywordList, sortMethod, minPrice, maxPrice]);
 
   useEffect(() => {
@@ -271,7 +255,6 @@ function Univ() {
     if (inView) {
       console.log(inView, "무한 스크롤 요청 ");
       data.page = page;
-
       fetchData();
     }
   }, [inView]);
@@ -356,6 +339,20 @@ function Univ() {
       expires: expirationDate,
     });
   };
+
+  const ShowBookmarkImage = styled.img`
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-left: auto;
+    z-index: 100;
+    margin-right: 20px;
+  `;
+  const [showBookmark, setShowBookmark] = useState<boolean>(false);
+  const toggleShowBookmark = () => {
+    setShowBookmark(!showBookmark);
+  };
+
   return (
     <Background>
       <Main>
@@ -382,47 +379,55 @@ function Univ() {
             maxPrice={maxPrice}
           />
         </RangeSliderWrapper>
+
         <RadioComponent setSortMethod={handleSortMethodChange} />
 
         <Container>
+          <ShowBookmarkImage
+            src={showBookmark ? BookmarkOn : BookmarkOff}
+            onClick={toggleShowBookmark}
+          />
           <FoodsList>
-            {foods.map((f) => (
-              <FoodBox key={f.menuId} onClick={() => postRank(f)}>
-                {bookmarkItems.includes(f.menuId) ? (
-                  <BookmarkIcon
-                    src={BookamrkOn}
-                    alt="BookmarkOn"
-                    onClick={() => toggleBookmark(f.menuId)}
-                  />
-                ) : (
-                  <BookmarkIcon
-                    src={BookmarkOff}
-                    alt="BookmarkOff"
-                    onClick={() => toggleBookmark(f.menuId)}
-                  />
-                )}
-                <a
-                  href={f.placeLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ cursor: "pointer" }}
-                >
-                  <ImageComponent imageUrl={`${f.menuImg}`} />
-                  <FoodInfo>
-                    <FoodName>
-                      <span>{f.menuName}</span>
-                    </FoodName>
-                    <span>{f.menuPrice}원</span>
-                    <div align-items="vertical">
-                      <span>{f.placeName}</span>
-                    </div>
-                    <span>
-                      {f.placeDistance}m | ★: {f.placeRating}
-                    </span>
-                  </FoodInfo>
-                </a>
-              </FoodBox>
-            ))}
+            {foods.map(
+              (f) =>
+                (showBookmark ? bookmarkItems.includes(f.menuId) : true) && (
+                  <FoodBox key={f.menuId} onClick={() => postRank(f)}>
+                    {bookmarkItems.includes(f.menuId) ? (
+                      <BookmarkIcon
+                        src={BookmarkOn}
+                        alt="BookmarkOn"
+                        onClick={() => toggleBookmark(f.menuId)}
+                      />
+                    ) : (
+                      <BookmarkIcon
+                        src={BookmarkOff}
+                        alt="BookmarkOff"
+                        onClick={() => toggleBookmark(f.menuId)}
+                      />
+                    )}
+                    <a
+                      href={f.placeLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <ImageComponent imageUrl={`${f.menuImg}`} />
+                      <FoodInfo>
+                        <FoodName>
+                          <span>{f.menuName}</span>
+                        </FoodName>
+                        <span>{f.menuPrice}원</span>
+                        <div align-items="vertical">
+                          <span>{f.placeName}</span>
+                        </div>
+                        <span>
+                          {f.placeDistance}m | ★: {f.placeRating}
+                        </span>
+                      </FoodInfo>
+                    </a>
+                  </FoodBox>
+                )
+            )}
             <div ref={ref}></div>
           </FoodsList>
         </Container>

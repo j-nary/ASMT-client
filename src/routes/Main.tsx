@@ -345,7 +345,7 @@ function Main() {
   };
 
   const handleSliderChange = (values: readonly number[]) => {
-    setMinPrice(minPrice);
+    setMinPrice(values[0]);
     setMaxPrice(values[1]);
     console.log(values[0], values[1]);
   };
@@ -401,7 +401,7 @@ function Main() {
                     <Link
                       to={{
                         pathname: `/${univ.id}`,
-                        state: { univName: univ.name, minimumPrice: minPrice, maximumPrice: maxPrice },
+                        state: { univName: univ.name, minimumPrice: minPrice, maximumPrice: maxPrice, },
                       }}
                     >
                       {univ.name}
