@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import RangeSlider from "../Components/RangeSlider";
 import LogoSrc from "../Assets/Img/logo.png";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
-import styled, { keyframes, css } from 'styled-components';
-import { InView } from 'react-intersection-observer';
-
+import styled, { keyframes, css } from "styled-components";
+import { InView } from "react-intersection-observer";
 
 const fadeInAnimation = keyframes`
   from {
@@ -25,14 +24,14 @@ const Container = styled.div`
   margin: 0 auto;
   size: cover;
   height: 100%;
-  `;
+`;
 
 const Background = styled.div`
   position: fixed;
   width: 100%;
   height: 100vh;
   overflow-y: hidden;
-  
+
   background-image: url(${BackgroundSrc});
   background-size: cover;
   background-position: center;
@@ -60,24 +59,23 @@ const Header = styled.header`
   align-items: center;
   margin: 5vh;
   font-family: "jjwfont", sans-serif;
-
 `;
 
 const Logo = styled.img`
-height: 10vh;
-display: flex;
-margin: 3vh 3vh 5vh 3vh;
-font-family: "jjwfont", sans-serif;
+  height: 10vh;
+  display: flex;
+  margin: 3vh 3vh 5vh 3vh;
+  font-family: "jjwfont", sans-serif;
 
-@media screen and (max-width: 768px) {
-  width: 100%;
-  height : auto;
-}
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const UnivsList = styled.ul`
   display: grid;
-  overflow-y:hidden;
+  overflow-y: hidden;
   grid-template-columns: repeat(3, 1fr); /* 한 행에 3개씩 나열 */
   gap: 10px; /* 항목 사이의 간격 설정 */
   margin-top: 20px;
@@ -86,7 +84,7 @@ const UnivsList = styled.ul`
   @media screen and (max-width: 768px) {
     max-height: 24vh;
 
-    overflow-y:scroll;
+    overflow-y: scroll;
   }
 `;
 
@@ -95,8 +93,12 @@ const Univ = styled.li<{ visible: boolean }>`
   border-radius: 15px;
   padding: 10px 10px;
   font-family: "jjwfont2", sans-serif;
-  animation: ${({ visible }) => visible && css`${fadeInAnimation} 0.5s ease-in-out`};
-  
+  animation: ${({ visible }) =>
+    visible &&
+    css`
+      ${fadeInAnimation} 0.5s ease-in-out
+    `};
+
   a {
     align-items: center;
     display: flex;
@@ -191,7 +193,6 @@ const univs = [
   { name: "홍익대학교", id: "hongik" },
 ];
 
-
 const RangeSliderWrapper = styled.ul`
   width: 100%;
   height: 8vh;
@@ -200,11 +201,9 @@ const RangeSliderWrapper = styled.ul`
 
   @media screen and (max-width: 768px) {
     width: 100%;
-    margin: 0 
+    margin: 0;
   }
-  
 `;
-
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -212,14 +211,10 @@ const ButtonWrapper = styled.div`
   margin-top: 20px;
   @media (max-width: 600px) {
     flex-wrap: wrap;
-    height:60%;
-  margin-top: 5px;
-
+    height: 60%;
+    margin-top: 5px;
   }
 `;
-
-
-
 
 interface AlphabetButtonProps {
   active: boolean;
@@ -239,11 +234,8 @@ const AlphabetButton = styled.button<AlphabetButtonProps>`
     color: ${(props) => (props.active ? "#34568E" : "#34568E")};
   }
 
-  
   @media (max-width: 600px) {
-  margin: 0 1px;
-
-
+    margin: 0 1px;
   }
 `;
 
@@ -358,7 +350,11 @@ function Main() {
           <Title>얼마 쓸래?</Title>
         </Header>
         <RangeSliderWrapper>
-          <RangeSlider onChangeValues={handleSliderChange} minPrice={minPrice} maxPrice={maxPrice} />
+          <RangeSlider
+            onChangeValues={handleSliderChange}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+          />
         </RangeSliderWrapper>
         <div>
           {/* 알파벳 버튼 리스트 */}
@@ -401,7 +397,11 @@ function Main() {
                     <Link
                       to={{
                         pathname: `/${univ.id}`,
-                        state: { univName: univ.name, minimumPrice: minPrice, maximumPrice: maxPrice },
+                        state: {
+                          univName: univ.name,
+                          minimumPrice: minPrice,
+                          maximumPrice: maxPrice,
+                        },
                       }}
                     >
                       {univ.name}
@@ -411,7 +411,9 @@ function Main() {
               </InView>
             ))
           ) : (
-            <NoSelectionMessage visible={true}>학교를 선택해주세요.</NoSelectionMessage>
+            <NoSelectionMessage visible={true}>
+              학교를 선택해주세요.
+            </NoSelectionMessage>
           )}
         </UnivsList>
       </Container>
