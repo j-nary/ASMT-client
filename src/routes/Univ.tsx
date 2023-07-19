@@ -66,12 +66,13 @@ const Loader = styled.span`
 
 const RangeSliderWrapper = styled.ul`
   width: 110vh;
-  height: 100px;
   align-content: center;
   margin: 0 10px;
 
   @media screen and (max-width: 768px) {
     width: 90%;
+  height: 80px;
+
     margin: 0;
   }
 `;
@@ -340,6 +341,38 @@ function Univ() {
     });
   };
 
+  const SibalList = styled.ul`
+  height: 20%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  width: 85vw;
+    display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  /* 커스텀 스크롤바 스타일 적용 */
+  scrollbar-width: thin;
+  scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
+
+  @media screen and (max-width: 768px) {
+    height: 10%;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: #6a91bd;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, 0.1);
+  }
+`;
+
   const ShowBookmarkImage = styled.img`
     width: 30px;
     height: 30px;
@@ -380,14 +413,20 @@ function Univ() {
           />
         </RangeSliderWrapper>
 
-        <RadioComponent setSortMethod={handleSortMethodChange} />
 
-        <Container>
+        <SibalList>
+          <RadioComponent setSortMethod={handleSortMethodChange} />
           <ShowBookmarkImage
             src={showBookmark ? BookmarkOn : BookmarkOff}
             onClick={toggleShowBookmark}
           />
+        </SibalList>
+        <Container>
+
+
           <FoodsList>
+
+
             {foods.map(
               (f) =>
                 (showBookmark ? bookmarkItems.includes(f.menuId) : true) && (
