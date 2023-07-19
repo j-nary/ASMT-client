@@ -23,7 +23,7 @@ const Background = styled.div`
   background-position: center;
   align-items: center;
   overflow-y: hidden;
-  overflow-x:hidden
+  overflow-x: hidden;
 `;
 
 const Main = styled.main`
@@ -43,8 +43,8 @@ const LogoImage = styled.img`
   cursor: pointer;
 
   @media screen and (max-width: 768px) {
-    width : 250px;
-    }
+    width: 250px;
+  }
 `;
 const UnivName = styled.p`
   font-size: 1.2rem;
@@ -53,7 +53,7 @@ const UnivName = styled.p`
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   @media screen and (max-width: 768px) {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
   }
 `;
 
@@ -85,7 +85,7 @@ const RangeSliderWrapper = styled.ul`
 
   @media screen and (max-width: 768px) {
     width: 90%;
-    margin: 0 
+    margin: 0;
   }
 `;
 
@@ -112,13 +112,10 @@ const FoodsList = styled.ul`
   scrollbar-width: thin;
   scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
 
-
   @media screen and (max-width: 768px) {
     height: 100%;
-
   }
 
-  
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -159,14 +156,11 @@ const FoodBox = styled.li`
     width: 100%;
     min-height: 25%;
     max-height: 25%;
-
   }
 
   &:hover {
     background-color: #b0e0e6;
   }
-
-  
 `;
 
 const FoodName = styled.li`
