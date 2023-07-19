@@ -4,8 +4,11 @@ import styled from "styled-components";
 import axios from "axios";
 
 const DialogButtonWrapper = styled.button`
-  width: 80vh;
-  height: cover;
+  width: 82vh;
+  height: 30px; /* 원하는 높이 설정 */
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   background-color: white;
   color: black;
   font-size: 1.1rem;
@@ -16,6 +19,10 @@ const DialogButtonWrapper = styled.button`
   transition: background-color 0.3s ease-in-out;
   font-family: "jjwfont", sans-serif;
   
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+
   &:hover {
     background-color: #B0E0E6;
   }
@@ -118,7 +125,7 @@ const DialogButton: React.FC<DialogButtonProps> = ({ univName, onClickToggleModa
 
   return (
     <DialogButtonWrapper onClick={onClickToggleModal}>
-      {menu.length > 0 && place.length > 0 ? (
+      {currentRank!=0 ? (
         <h1>
           {currentRank}. {currentPlace} - {currentMenu}
         </h1>
