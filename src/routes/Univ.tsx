@@ -223,6 +223,7 @@ function Univ() {
     sortMethod: sortMethod,
     showZeroPriceItems: showZeroPrice,
     school: univId,
+    userId: "유저아이디칸_추후동적으로할당해주세요",
     page: 1,
   };
   const fetchData = async () => {
