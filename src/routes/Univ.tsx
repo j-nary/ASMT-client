@@ -343,7 +343,7 @@ function Univ() {
     });
   };
 
-  const SibalList = styled.ul`
+  const RadioList = styled.ul`
   height: 20%;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -416,13 +416,13 @@ function Univ() {
         </RangeSliderWrapper>
 
 
-        <SibalList>
+        <RadioList>
           <RadioComponent setSortMethod={handleSortMethodChange} />
           <ShowBookmarkImage
             src={showBookmark ? BookmarkOn : BookmarkOff}
             onClick={toggleShowBookmark}
           />
-        </SibalList>
+        </RadioList>
         <Container>
 
 
