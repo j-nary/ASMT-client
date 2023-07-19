@@ -16,7 +16,7 @@ import Logo from "../Assets/Img/ModalLogo.jpeg";
 
 const ModalContainer = styled.div`
   flex-wrap: wrap;
-  min-width: 100%;
+  min-width: 70%;
   width: 30px;
   height: 100%;
   display: flex;
@@ -32,7 +32,7 @@ const ModalLogo = styled.img`
 
 const DialogBox = styled.dialog`
   flex: 1;
-  width: 70%; /* 크기를 축소할 비율에 따라 조절 가능 */ 
+  width: 100%; /* 크기를 축소할 비율에 따라 조절 가능 */ 
   transform: scale(0.8); /* 크기를 50%로 축소 */
   height: cover;
   display: flex;
@@ -61,7 +61,7 @@ const RankBox = styled.ul`
     position: relative;
     flex-direction: row;
     max-height: 41em;
-    width: 50%;
+    width: 70%;
     margin: 8px auto 0; /* 가운데 정렬 및 상단 여백 수정 */
     flex-wrap: wrap;
     align-items: flex-start;
