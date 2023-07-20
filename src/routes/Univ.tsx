@@ -51,7 +51,7 @@ const LogoImage = styled.img`
   cursor: pointer;
 
   @media screen and (max-width: 768px) {
-    width: 250px;
+    width: 175px;
   }
 
   @media (-webkit-device-pixel-ratio: 1.25)  {
@@ -66,6 +66,8 @@ const UnivName = styled.p`
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   @media screen and (max-width: 768px) {
+  margin-bottom: 1.1rem;
+    
     font-size: 1.2rem;
   }
 `;
@@ -103,7 +105,7 @@ const Container = styled.div`
 
 const FoodsList = styled.ul`
 
-  height: 100%;
+  height: 75%;
   overflow-x: hidden;
   overflow-y: scroll;
   width: 85vw;
@@ -117,7 +119,7 @@ const FoodsList = styled.ul`
   scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
 
   @media screen and (max-width: 768px) {
-    height: 100%;
+    height: 58%;
   }
 
   @media (min-width: 1600px) {
@@ -167,13 +169,18 @@ const FoodBox = styled.li`
 
   @media screen and (max-width: 768px) {
     width: 100%;
-    min-height: 30%;
-    max-height: 30%;
+    min-height: 50%;
+    max-height: 50%;
   }
 
   @media (min-width: 1600px) {
     min-height: 0%;
     height:20%;
+  }
+
+  @media (min-width: 1600px ) and (-webkit-device-pixel-ratio: 1.0) {
+    min-height: 0%;
+    height:30%;
   }
 
   &:hover {
@@ -192,6 +199,11 @@ const FoodInfo = styled.li`
   max-height: fit-content;
   margin-left: 2em;
   line-height:1.3;
+
+  @media screen and (max-width: 768px) {
+  line-height:1.0;
+    
+  }
 `;
 
 const API_URL = "http://13.125.233.202/api/search";
@@ -386,7 +398,7 @@ function Univ() {
   scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
 
   @media screen and (max-width: 768px) {
-    height: 10%;
+    height: 5%;
   }
 
   @media (min-width: 1600px) {

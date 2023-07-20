@@ -45,6 +45,8 @@ const Search = styled.input`
 `;
 const TipContainer = styled.div`
   display: flex;
+  justify-content: center;
+
   align-items: center;
   margin-top: 0.5rem;
   flex-wrap: wrap;
@@ -52,7 +54,7 @@ const TipContainer = styled.div`
 
   
   @media screen and (max-width: 768px) {
-    margin-left:5px
+    margin-left:8px
     }
   
 
@@ -69,8 +71,14 @@ position: relative;
 display: flex;
 
 @media screen and (max-width: 768px) {
+padding: 0.05rem 0.15rem;
+font-size:14px;
+
   margin-right: 0.15rem; // 팁 간 여백을 줄임;
 margin-left: 0.15rem; // 팁 간 여백을 줄임;
+white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
   }
 
   

@@ -28,12 +28,15 @@ const DialogButtonWrapper = styled.button`
   }
 
   @media screen and (max-width: 768px) {
+  font-size: 1rem;
     width: 90%;
     height: 60px; /* 원하는 높이 설정 */
     align-items: center;
     justify-content: center;
     overflow: hidden;
-
+    white-space: normal;
+  text-overflow: ellipsis;
+  word-break: normal;
 
     margin: 0 
   }
@@ -125,7 +128,7 @@ const DialogButton: React.FC<DialogButtonProps> = ({ univName, onClickToggleModa
 
   return (
     <DialogButtonWrapper onClick={onClickToggleModal}>
-      {currentRank!=0 ? (
+      {currentRank != 0 ? (
         <h1>
           {currentRank}. {currentPlace} - {currentMenu}
         </h1>
