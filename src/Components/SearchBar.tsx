@@ -96,6 +96,11 @@ function SearchBar({ onSearch, onRemoveTip }: SearchBarProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueries, setSearchQueries] = useState<string[]>([]);
 
+  const handleSearchIconClick = () => {
+    onSearch(searchQuery);
+    addSearchQuery(searchQuery);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
@@ -137,7 +142,7 @@ function SearchBar({ onSearch, onRemoveTip }: SearchBarProps) {
         <img
           src={SearchSrc}
           alt="search"
-          onClick={() => addSearchQuery(searchQuery)}
+          onClick={() => handleSearchIconClick()}
         />
       </SearchWrapper>
       <div style={{ display: "flex" }}>
