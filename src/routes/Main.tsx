@@ -118,8 +118,9 @@ const NoSelectionMessage = styled(Univ)`
   padding: 20px;
   border: none;
   background: none;
-  white-space: nowrap; /* 한 줄로 표시 */
+   white-space: nowrap; /* 한 줄로 표시 */
   text-align: center; /* 텍스트 가운데 정렬 */
+  grid-column: 1 / 4; /* 그리드 세로 넓게 설정 */
 `;
 
 const Title = styled.h1`
