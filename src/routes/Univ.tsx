@@ -40,7 +40,6 @@ const Background = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-
 `;
 
 const Main = styled.main`
@@ -55,7 +54,6 @@ const Main = styled.main`
 `;
 
 const LogoImage = styled.img`
-
   width: 400px;
   height: auto;
   cursor: pointer;
@@ -64,9 +62,8 @@ const LogoImage = styled.img`
     width: 175px;
   }
 
-  @media (-webkit-device-pixel-ratio: 1.25)  {
-    width:300px
-
+  @media (-webkit-device-pixel-ratio: 1.25) {
+    width: 300px;
   }
 `;
 const UnivName = styled.p`
@@ -76,8 +73,8 @@ const UnivName = styled.p`
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   @media screen and (max-width: 768px) {
-  margin-bottom: 1.1rem;
-    
+    margin-bottom: 1.1rem;
+
     font-size: 1.2rem;
   }
 `;
@@ -104,7 +101,6 @@ const RangeSliderWrapper = styled.ul`
 `;
 
 const Container = styled.div`
-
   height: calc(100vh - 300px);
   display: flex;
   flex-direction: column;
@@ -114,7 +110,6 @@ const Container = styled.div`
 `;
 
 const FoodsList = styled.ul`
-
   height: 75%;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -133,12 +128,11 @@ const FoodsList = styled.ul`
   }
 
   @media (min-width: 1600px) {
-    width:65vw;
+    width: 65vw;
   }
 
-  @media (-webkit-device-pixel-ratio: 1.25) and (min-width: 1400px)  {
+  @media (-webkit-device-pixel-ratio: 1.25) and (min-width: 1400px) {
     height: 73%;
-
   }
 
   &::-webkit-scrollbar {
@@ -185,12 +179,12 @@ const FoodBox = styled.li`
 
   @media (min-width: 1600px) {
     min-height: 0%;
-    height:20%;
+    height: 20%;
   }
 
-  @media (min-width: 1600px ) and (-webkit-device-pixel-ratio: 1.0) {
+  @media (min-width: 1600px) and (-webkit-device-pixel-ratio: 1) {
     min-height: 0%;
-    height:30%;
+    height: 30%;
   }
 
   &:hover {
@@ -208,11 +202,10 @@ const FoodInfo = styled.li`
   width: 100%;
   max-height: fit-content;
   margin-left: 2em;
-  line-height:1.3;
+  line-height: 1.3;
 
   @media screen and (max-width: 768px) {
-  line-height:1.0;
-    
+    line-height: 1;
   }
 `;
 
@@ -414,6 +407,7 @@ function Univ() {
         const response = await axios.get("http://13.125.233.202/api/bookmark", {
           params: {
             userId: userId,
+            sortMethod: sortMethod,
           },
           headers: {
             "Content-Type": "application/json",
@@ -436,7 +430,7 @@ function Univ() {
         { userId: userId, menuId: menuId },
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
           },
         }
       );
@@ -445,13 +439,12 @@ function Univ() {
     }
   };
 
-  // Function to remove a menu from bookmarks on the server
   const removeFromBookmark = async (menuId: number) => {
     try {
       await axios.delete("http://13.125.233.202/api/bookmark", {
         data: { menuId: menuId, userId: userId },
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       });
     } catch (error) {
@@ -459,7 +452,6 @@ function Univ() {
     }
   };
 
-  // Updated toggleBookmark function
   const toggleBookmark = async (menuId: number) => {
     if (bookmarkItems.some((item) => item.menuId === menuId)) {
       removeFromBookmark(menuId);
@@ -476,8 +468,6 @@ function Univ() {
     }
   };
 
-
-
   const ShowBookmarkImage = styled.img`
     width: 30px;
     height: 30px;
@@ -487,13 +477,22 @@ function Univ() {
     margin-right: 20px;
   `;
 
-
   const [showBookmark, setShowBookmark] = useState<boolean>(false);
   const toggleShowBookmark = () => {
     setShowBookmark(!showBookmark);
   };
 
-  function FoodItem({ f, bookmarkItems, toggleBookmark, postRank }: { f: any, bookmarkItems: any, toggleBookmark: any, postRank: any }) {
+  function FoodItem({
+    f,
+    bookmarkItems,
+    toggleBookmark,
+    postRank,
+  }: {
+    f: any;
+    bookmarkItems: any;
+    toggleBookmark: any;
+    postRank: any;
+  }) {
     const [opacity, setOpacity] = useState(1);
     const foodBoxRef = useRef(null);
 
@@ -501,13 +500,14 @@ function Univ() {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            const newOpacity = entry.intersectionRatio > 0.25 ? 1 : entry.intersectionRatio;
+            const newOpacity =
+              entry.intersectionRatio > 0.25 ? 1 : entry.intersectionRatio;
             setOpacity(Math.max(newOpacity, 0));
           });
         },
         {
           root: null,
-          rootMargin: '0px',
+          rootMargin: "0px",
           threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
         }
       );
@@ -525,7 +525,12 @@ function Univ() {
 
     // 기존의 FoodBox 컴포넌트에 ref 및 적용된 opacity 값 추가
     return (
-      <FoodBox ref={foodBoxRef} style={{ opacity }} onClick={() => postRank(f)} key={f.menuId}>
+      <FoodBox
+        ref={foodBoxRef}
+        style={{ opacity }}
+        onClick={() => postRank(f)}
+        key={f.menuId}
+      >
         {bookmarkItems.includes(f.menuId) ? (
           <BookmarkIcon
             src={BookmarkOn}
@@ -550,7 +555,9 @@ function Univ() {
             <FoodName>
               <span>{f.menuName}</span>
             </FoodName>
-            <span style={{ background: "#FAC7C7", fontWeight: "bold" }} >{f.menuPrice}원</span>
+            <span style={{ background: "#FAC7C7", fontWeight: "bold" }}>
+              {f.menuPrice}원
+            </span>
             <div align-items="vertical">
               <span>{f.placeName}</span>
             </div>
@@ -562,10 +569,6 @@ function Univ() {
       </FoodBox>
     );
   }
-
-
-
-
 
   return (
     <Background>
@@ -594,14 +597,12 @@ function Univ() {
           />
         </RangeSliderWrapper>
 
-
         <FoodsList>
           <RadioComponent setSortMethod={handleSortMethodChange} />
           <ShowBookmarkImage
             src={showBookmark ? BookmarkOn : BookmarkOff}
             onClick={toggleShowBookmark}
           />
-
         </FoodsList>
         <Container>
           <FoodsList>
@@ -632,7 +633,11 @@ function Univ() {
                       <FoodName>
                         <span>{f.menuName}</span>
                       </FoodName>
-                      <span style={{ background: "#FAC7C7", fontWeight: "bold" }}>{f.menuPrice}원</span>
+                      <span
+                        style={{ background: "#FAC7C7", fontWeight: "bold" }}
+                      >
+                        {f.menuPrice}원
+                      </span>
                       <div align-items="vertical">
                         <span>{f.placeName}</span>
                       </div>
@@ -673,7 +678,11 @@ function Univ() {
                         <FoodName>
                           <span>{f.menuName}</span>
                         </FoodName>
-                        <span style={{ background: "#FAC7C7", fontWeight: "bold" }}>{f.menuPrice}원</span>
+                        <span
+                          style={{ background: "#FAC7C7", fontWeight: "bold" }}
+                        >
+                          {f.menuPrice}원
+                        </span>
                         <div align-items="vertical">
                           <span>{f.placeName}</span>
                         </div>
