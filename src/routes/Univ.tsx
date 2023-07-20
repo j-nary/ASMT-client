@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Modal from "../Components/Modal";
@@ -25,6 +25,12 @@ const Background = styled.div`
   align-items: center;
   overflow-y: hidden;
   overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
 `;
 
 const Main = styled.main`
@@ -39,12 +45,18 @@ const Main = styled.main`
 `;
 
 const LogoImage = styled.img`
+
   width: 400px;
   height: auto;
   cursor: pointer;
 
   @media screen and (max-width: 768px) {
-    width: 250px;
+    width: 175px;
+  }
+
+  @media (-webkit-device-pixel-ratio: 1.25)  {
+    width:300px
+
   }
 `;
 const UnivName = styled.p`
@@ -54,6 +66,8 @@ const UnivName = styled.p`
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   @media screen and (max-width: 768px) {
+  margin-bottom: 1.1rem;
+    
     font-size: 1.2rem;
   }
 `;
@@ -80,6 +94,7 @@ const RangeSliderWrapper = styled.ul`
 `;
 
 const Container = styled.div`
+
   height: calc(100vh - 300px);
   display: flex;
   flex-direction: column;
@@ -89,7 +104,8 @@ const Container = styled.div`
 `;
 
 const FoodsList = styled.ul`
-  height: 100%;
+
+  height: 75%;
   overflow-x: hidden;
   overflow-y: scroll;
   width: 85vw;
@@ -103,11 +119,16 @@ const FoodsList = styled.ul`
   scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
 
   @media screen and (max-width: 768px) {
-    height: 100%;
+    height: 58%;
   }
 
   @media (min-width: 1600px) {
     width:65vw;
+  }
+
+  @media (-webkit-device-pixel-ratio: 1.25) and (min-width: 1400px)  {
+    height: 73%;
+
   }
 
   &::-webkit-scrollbar {
@@ -148,13 +169,18 @@ const FoodBox = styled.li`
 
   @media screen and (max-width: 768px) {
     width: 100%;
-    min-height: 30%;
-    max-height: 30%;
+    min-height: 50%;
+    max-height: 50%;
   }
 
   @media (min-width: 1600px) {
     min-height: 0%;
     height:20%;
+  }
+
+  @media (min-width: 1600px ) and (-webkit-device-pixel-ratio: 1.0) {
+    min-height: 0%;
+    height:30%;
   }
 
   &:hover {
@@ -173,6 +199,11 @@ const FoodInfo = styled.li`
   max-height: fit-content;
   margin-left: 2em;
   line-height:1.3;
+
+  @media screen and (max-width: 768px) {
+  line-height:1.0;
+    
+  }
 `;
 
 const API_URL = "http://13.125.233.202/api/search";
@@ -367,7 +398,7 @@ function Univ() {
   scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
 
   @media screen and (max-width: 768px) {
-    height: 10%;
+    height: 5%;
   }
 
   @media (min-width: 1600px) {
@@ -397,10 +428,86 @@ function Univ() {
     z-index: 100;
     margin-right: 20px;
   `;
+
+
   const [showBookmark, setShowBookmark] = useState<boolean>(false);
   const toggleShowBookmark = () => {
     setShowBookmark(!showBookmark);
   };
+
+  function FoodItem({ f, bookmarkItems, toggleBookmark, postRank }: { f: any, bookmarkItems: any, toggleBookmark: any, postRank: any }) {
+    const [opacity, setOpacity] = useState(1);
+    const foodBoxRef = useRef(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const newOpacity = entry.intersectionRatio > 0.25 ? 1 : entry.intersectionRatio;
+            setOpacity(Math.max(newOpacity, 0));
+          });
+        },
+        {
+          root: null,
+          rootMargin: '0px',
+          threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+        }
+      );
+
+      if (foodBoxRef.current) {
+        observer.observe(foodBoxRef.current);
+      }
+
+      return () => {
+        if (foodBoxRef.current) {
+          observer.unobserve(foodBoxRef.current);
+        }
+      };
+    }, []);
+
+    // 기존의 FoodBox 컴포넌트에 ref 및 적용된 opacity 값 추가
+    return (
+      <FoodBox ref={foodBoxRef} style={{ opacity }} onClick={() => postRank(f)} key={f.menuId}>
+        {bookmarkItems.includes(f.menuId) ? (
+          <BookmarkIcon
+            src={BookmarkOn}
+            alt="BookmarkOn"
+            onClick={() => toggleBookmark(f.menuId)}
+          />
+        ) : (
+          <BookmarkIcon
+            src={BookmarkOff}
+            alt="BookmarkOff"
+            onClick={() => toggleBookmark(f.menuId)}
+          />
+        )}
+        <a
+          href={f.placeLink}
+          target="_blank"
+          rel="noreferrer"
+          style={{ cursor: "pointer" }}
+        >
+          <ImageComponent imageUrl={`${f.menuImg}`} />
+          <FoodInfo>
+            <FoodName>
+              <span>{f.menuName}</span>
+            </FoodName>
+            <span style={{ background: "#FAC7C7", fontWeight: "bold" }} >{f.menuPrice}원</span>
+            <div align-items="vertical">
+              <span>{f.placeName}</span>
+            </div>
+            <span>
+              {f.placeDistance}m | ★: {f.placeRating}
+            </span>
+          </FoodInfo>
+        </a>
+      </FoodBox>
+    );
+  }
+
+
+
+
 
   return (
     <Background>
@@ -443,46 +550,17 @@ function Univ() {
           <FoodsList>
 
 
-            {foods.map(
-              (f) =>
-                (showBookmark ? bookmarkItems.includes(f.menuId) : true) && (
-                  <FoodBox key={f.menuId} onClick={() => postRank(f)}>
-                    {bookmarkItems.includes(f.menuId) ? (
-                      <BookmarkIcon
-                        src={BookmarkOn}
-                        alt="BookmarkOn"
-                        onClick={() => toggleBookmark(f.menuId)}
-                      />
-                    ) : (
-                      <BookmarkIcon
-                        src={BookmarkOff}
-                        alt="BookmarkOff"
-                        onClick={() => toggleBookmark(f.menuId)}
-                      />
-                    )}
-                    <a
-                      href={f.placeLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <ImageComponent imageUrl={`${f.menuImg}`} />
-                      <FoodInfo>
-                        <FoodName>
-                          <span>{f.menuName}</span>
-                        </FoodName>
-                        <span style={{ background: "#FAC7C7", fontWeight: "bold" }} >{f.menuPrice}원</span>
-                        <div align-items="vertical">
-                          <span>{f.placeName}</span>
-                        </div>
-                        <span>
-                          {f.placeDistance}m | ★: {f.placeRating}
-                        </span>
-                      </FoodInfo>
-                    </a>
-                  </FoodBox>
-                )
-            )}
+            {foods.map((f) => (
+              (showBookmark ? bookmarkItems.includes(f.menuId) : true) && (
+                <FoodItem
+                  key={f.menuId}
+                  f={f}
+                  bookmarkItems={bookmarkItems}
+                  toggleBookmark={toggleBookmark}
+                  postRank={postRank}
+                />
+              )
+            ))}
             <div ref={ref}></div>
           </FoodsList>
         </Container>
