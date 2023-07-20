@@ -323,6 +323,7 @@ function Univ() {
   };
 
   const [userId, setUserId] = useState<string>("");
+
   useEffect(() => {
     const generateUserId = () => {
       const timestamp = Date.now().toString();
@@ -332,21 +333,37 @@ function Univ() {
       const userId = timestamp + randomNumber;
       return userId;
     };
+    const getCookie = (name: string) => {
+      const value = "; " + document.cookie;
+      const parts = value.split("; " + name + "=");
+      if (parts.length === 2) return parts[1].split(";").shift();
+    };
+
+    const setCookie = (name: string, value: string) => {
+      const expirationDate = new Date();
+      expirationDate.setFullYear(expirationDate.getFullYear() + 10); // Set the expiration date 10 years in the future
+
+      const formattedDate = expirationDate.toUTCString();
+      document.cookie =
+        name + "=" + value + "; expires=" + formattedDate + "; path=/";
+    };
     const fetchUserId = () => {
       if (isMobile) {
         const id = navigator.userAgent;
-        setUserId(id);
+        setUserId(id); 
       } else {
-        const idFromLocalStorage = localStorage.getItem("user_id");
-        if (idFromLocalStorage) {
-          setUserId(idFromLocalStorage);
+        const idFromCookie = getCookie("user_id");
+        if (idFromCookie) {
+          setUserId(idFromCookie);
         } else {
+          // If not, generate a new user ID and store it in cookies.
           const newId = generateUserId();
-          localStorage.setItem("user_id", newId);
+          setCookie("user_id", newId);
           setUserId(newId);
         }
       }
     };
+
     fetchUserId();
   }, []);
 
