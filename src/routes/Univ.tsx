@@ -17,6 +17,15 @@ import BookmarkOn from "../Assets/Img/bookmarkOn.png";
 import Cookies from "js-cookie";
 import LogoSrc from "../Assets/Img/logo2.jpeg";
 import { boolean } from "yargs";
+import { isMobile, getUA } from "react-device-detect";
+// import {Platform} from "react-native";
+
+// let DeviceInfo: { getUniqueId: () => any; };
+// if (Platform.OS === "web") {
+//   DeviceInfo = require("some-web-device-info-package");
+// } else {
+//   DeviceInfo = require("react-native-device-info");
+// }
 
 const Background = styled.div`
   background-image: url(${BackgroundSrc});
@@ -73,7 +82,7 @@ const RangeSliderWrapper = styled.ul`
 
   @media screen and (max-width: 768px) {
     width: 90%;
-  height: 80px;
+    height: 80px;
 
     margin: 0;
   }
@@ -313,68 +322,102 @@ function Univ() {
     setMaxPrice(values[1]);
   };
 
-  const [bookmarkItems, setBookmarkItems] = useState<number[]>([]);
+  const [userId, setUserId] = useState<string>("");
   useEffect(() => {
-    const savedBookmarkedItems = Cookies.get("bookmarkedItems");
-    console.log("북마크 아이템 = ", savedBookmarkedItems);
-    if (savedBookmarkedItems && typeof savedBookmarkedItems == "string") {
-      setBookmarkItems(JSON.parse(savedBookmarkedItems));
-    } else {
-      setBookmarkItems([]);
-    }
+    const generateUserId = () => {
+      const timestamp = Date.now().toString();
+      const randomNumber = Math.floor(Math.random() * 10000)
+        .toString()
+        .padStart(4, "0");
+      const userId = timestamp + randomNumber;
+      return userId;
+    };
+    const fetchUserId = () => {
+      if (isMobile) {
+        const id = navigator.userAgent;
+        setUserId(id);
+      } else {
+        const idFromLocalStorage = localStorage.getItem("user_id");
+        if (idFromLocalStorage) {
+          setUserId(idFromLocalStorage);
+        } else {
+          const newId = generateUserId();
+          localStorage.setItem("user_id", newId);
+          setUserId(newId);
+        }
+      }
+    };
+    fetchUserId();
   }, []);
 
-  const toggleBookmark = (menuId: number) => {
-    if (bookmarkItems.includes(menuId)) {
-      const updateItems = bookmarkItems.filter((id) => id !== menuId);
-      setBookmarkItems(updateItems);
-      Cookies.set("bookmarkedItems", JSON.stringify(updateItems));
-    } else {
-      setBookmarkItems([...bookmarkItems, menuId]);
-      Cookies.set(
-        "bookmarkedItems",
-        JSON.stringify([...bookmarkItems, menuId])
-      );
-    }
+  const [bookmarkItems, setBookmarkItems] = useState<FoodInterface[]>([]);
+  useEffect(() => {
+    const getBookmark = async () => {
+      try {
+        const response = await axios.get("http://13.125.233.202/api/bookmark", {
+          params: {
+            userId: userId,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(response.data);
+        setBookmarkItems(response.data);
+      } catch (error) {
+        console.error("북마크 GET 요청 중 오류가 발생하였습니다: ", error);
+      }
+    };
 
-    const expirationDate = new Date();
-    expirationDate.setFullYear(expirationDate.getFullYear() + 10);
-    Cookies.set("bookmarkedItems", JSON.stringify(bookmarkItems), {
-      expires: expirationDate,
-    });
+    getBookmark();
+  }, [userId]);
+
+  const addToBookmark = async (menuId: number) => {
+    try {
+      await axios.post(
+        "http://13.125.233.202/api/bookmark",
+        { userId: userId, menuId: menuId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.error("북마크 POST 요청 중 오류가 발생하였습니다: ", error);
+    }
   };
 
-  const RadioList = styled.ul`
-  height: 20%;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  width: 85vw;
-    display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  /* 커스텀 스크롤바 스타일 적용 */
-  scrollbar-width: thin;
-  scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
+  // Function to remove a menu from bookmarks on the server
+  const removeFromBookmark = async (menuId: number) => {
+    try {
+      await axios.delete("http://13.125.233.202/api/bookmark", {
+        data: { menuId: menuId, userId: userId },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("북마크 DELETE 요청 중 오류가 발생하였습니다: ", error);
+    }
+  };
 
-  @media screen and (max-width: 768px) {
-    height: 10%;
-  }
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    height: 30%;
-    background: #6a91bd;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, 0.1);
-  }
-`;
+  // Updated toggleBookmark function
+  const toggleBookmark = async (menuId: number) => {
+    if (bookmarkItems.some((item) => item.menuId === menuId)) {
+      removeFromBookmark(menuId);
+      const updatedItems = bookmarkItems.filter(
+        (item) => item.menuId !== menuId
+      );
+      setBookmarkItems(updatedItems);
+    } else {
+      await addToBookmark(menuId);
+      setBookmarkItems([
+        ...bookmarkItems,
+        ...foods.filter((item) => item.menuId === menuId),
+      ]);
+    }
+  };
 
   const ShowBookmarkImage = styled.img`
     width: 30px;
@@ -388,6 +431,38 @@ function Univ() {
   const toggleShowBookmark = () => {
     setShowBookmark(!showBookmark);
   };
+
+  const RadioList = styled.ul`
+    height: 20%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 85vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    /* 커스텀 스크롤바 스타일 적용 */
+    scrollbar-width: thin;
+    scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
+
+    @media screen and (max-width: 768px) {
+      height: 10%;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      height: 30%;
+      background: #6a91bd;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, 0.1);
+    }
+  `;
 
   return (
     <Background>
@@ -416,7 +491,6 @@ function Univ() {
           />
         </RangeSliderWrapper>
 
-
         <RadioList>
           <RadioComponent setSortMethod={handleSortMethodChange} />
           <ShowBookmarkImage
@@ -425,16 +499,50 @@ function Univ() {
           />
         </RadioList>
         <Container>
-
-
           <FoodsList>
-
-
-            {foods.map(
-              (f) =>
-                (showBookmark ? bookmarkItems.includes(f.menuId) : true) && (
+            {showBookmark ? (
+              bookmarkItems.map((f) => (
+                <FoodBox key={f.menuId} onClick={() => postRank(f)}>
+                  {bookmarkItems.some((item) => item.menuId === f.menuId) ? (
+                    <BookmarkIcon
+                      src={BookmarkOn}
+                      alt="BookmarkOn"
+                      onClick={() => toggleBookmark(f.menuId)}
+                    />
+                  ) : (
+                    <BookmarkIcon
+                      src={BookmarkOff}
+                      alt="BookmarkOff"
+                      onClick={() => toggleBookmark(f.menuId)}
+                    />
+                  )}
+                  <a
+                    href={f.placeLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <ImageComponent imageUrl={`${f.menuImg}`} />
+                    <FoodInfo>
+                      <FoodName>
+                        <span>{f.menuName}</span>
+                      </FoodName>
+                      <span>{f.menuPrice}원</span>
+                      <div align-items="vertical">
+                        <span>{f.placeName}</span>
+                      </div>
+                      <span>
+                        {f.placeDistance}m | ★: {f.placeRating}
+                      </span>
+                    </FoodInfo>
+                  </a>
+                </FoodBox>
+              ))
+            ) : (
+              <>
+                {foods.map((f) => (
                   <FoodBox key={f.menuId} onClick={() => postRank(f)}>
-                    {bookmarkItems.includes(f.menuId) ? (
+                    {bookmarkItems.some((item) => item.menuId === f.menuId) ? (
                       <BookmarkIcon
                         src={BookmarkOn}
                         alt="BookmarkOn"
@@ -468,9 +576,10 @@ function Univ() {
                       </FoodInfo>
                     </a>
                   </FoodBox>
-                )
+                ))}
+                <div ref={ref}></div>
+              </>
             )}
-            <div ref={ref}></div>
           </FoodsList>
         </Container>
       </Main>
