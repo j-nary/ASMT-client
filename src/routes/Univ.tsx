@@ -341,8 +341,7 @@ function Univ() {
 
     const setCookie = (name: string, value: string) => {
       const expirationDate = new Date();
-      expirationDate.setFullYear(expirationDate.getFullYear() + 10); // Set the expiration date 10 years in the future
-
+      expirationDate.setFullYear(expirationDate.getFullYear() + 10);
       const formattedDate = expirationDate.toUTCString();
       document.cookie =
         name + "=" + value + "; expires=" + formattedDate + "; path=/";
@@ -350,7 +349,7 @@ function Univ() {
     const fetchUserId = () => {
       if (isMobile) {
         const id = navigator.userAgent;
-        setUserId(id); 
+        setUserId(id);
       } else {
         const idFromCookie = getCookie("user_id");
         if (idFromCookie) {
@@ -549,7 +548,9 @@ function Univ() {
                         <span>{f.placeName}</span>
                       </div>
                       <span>
-                        {f.placeDistance}m | ★: {f.placeRating}
+                        {f.placeDistance}
+                        m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★:{" "}
+                        {f.placeRating}
                       </span>
                     </FoodInfo>
                   </a>
@@ -588,7 +589,9 @@ function Univ() {
                           <span>{f.placeName}</span>
                         </div>
                         <span>
-                          {f.placeDistance}m | ★: {f.placeRating}
+                          {f.placeDistance}
+                          m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★:{" "}
+                          {f.placeRating}
                         </span>
                       </FoodInfo>
                     </a>
