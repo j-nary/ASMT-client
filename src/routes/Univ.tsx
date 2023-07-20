@@ -426,7 +426,7 @@ function Univ() {
     };
 
     getBookmark();
-  }, [userId]);
+  }, [userId, sortMethod]);
 
   const addToBookmark = async (menuId: number) => {
     try {
