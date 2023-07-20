@@ -663,7 +663,7 @@ function Univ() {
                       <FoodName>
                         <span>{f.menuName}</span>
                       </FoodName>
-                      <span>{f.menuPrice}원</span>
+                      <span style={{ background: "#FAC7C7", fontWeight: "bold" }}>{f.menuPrice}원</span>
                       <div align-items="vertical">
                         <span>{f.placeName}</span>
                       </div>
@@ -704,7 +704,7 @@ function Univ() {
                         <FoodName>
                           <span>{f.menuName}</span>
                         </FoodName>
-                        <span>{f.menuPrice}원</span>
+                        <span style={{ background: "#FAC7C7", fontWeight: "bold" }}>{f.menuPrice}원</span>
                         <div align-items="vertical">
                           <span>{f.placeName}</span>
                         </div>
