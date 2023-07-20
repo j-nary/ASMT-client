@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 import LogoSrc from "../Assets/Img/logo2.jpeg";
 import { boolean } from "yargs";
 import { isMobile, getUA } from "react-device-detect";
+import { wrap } from "module";
 // import {Platform} from "react-native";
 
 // let DeviceInfo: { getUniqueId: () => any; };
@@ -475,41 +476,7 @@ function Univ() {
     }
   };
 
-  const RadioList = styled.ul`
-    height: 20%;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    width: 85vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    /* 커스텀 스크롤바 스타일 적용 */
-    scrollbar-width: thin;
-    scrollbar-color: #6a91bd rgba(33, 122, 244, 0.1);
 
-  @media screen and (max-width: 768px) {
-    height: 5%;
-  }
-
-  @media (min-width: 1600px) {
-    width:65vw;
-  }
-
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      height: 30%;
-      background: #6a91bd;
-      border-radius: 10px;
-    }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, 0.1);
-  }
-`;
 
   const ShowBookmarkImage = styled.img`
     width: 30px;
@@ -627,13 +594,15 @@ function Univ() {
           />
         </RangeSliderWrapper>
 
-        <RadioList>
+
+        <FoodsList>
           <RadioComponent setSortMethod={handleSortMethodChange} />
           <ShowBookmarkImage
             src={showBookmark ? BookmarkOn : BookmarkOff}
             onClick={toggleShowBookmark}
           />
-        </RadioList>
+
+        </FoodsList>
         <Container>
           <FoodsList>
             {showBookmark ? (
