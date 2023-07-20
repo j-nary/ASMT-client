@@ -475,19 +475,6 @@ function Univ() {
     }
   };
 
-  const ShowBookmarkImage = styled.img`
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    margin-left: auto;
-    z-index: 100;
-    margin-right: 20px;
-  `;
-  const [showBookmark, setShowBookmark] = useState<boolean>(false);
-  const toggleShowBookmark = () => {
-    setShowBookmark(!showBookmark);
-  };
-
   const RadioList = styled.ul`
     height: 20%;
     overflow-x: hidden;
