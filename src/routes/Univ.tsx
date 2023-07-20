@@ -106,6 +106,10 @@ const FoodsList = styled.ul`
     height: 100%;
   }
 
+  @media (min-width: 1600px) {
+    width:65vw;
+  }
+
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -144,8 +148,13 @@ const FoodBox = styled.li`
 
   @media screen and (max-width: 768px) {
     width: 100%;
-    min-height: 25%;
-    max-height: 25%;
+    min-height: 30%;
+    max-height: 30%;
+  }
+
+  @media (min-width: 1600px) {
+    min-height: 0%;
+    height:20%;
   }
 
   &:hover {
@@ -163,7 +172,7 @@ const FoodInfo = styled.li`
   width: 100%;
   max-height: fit-content;
   margin-left: 2em;
-  padding: 2px;
+  line-height:1.3;
 `;
 
 const API_URL = "http://13.125.233.202/api/search";
@@ -361,6 +370,10 @@ function Univ() {
     height: 10%;
   }
 
+  @media (min-width: 1600px) {
+    width:65vw;
+  }
+
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -458,7 +471,7 @@ function Univ() {
                         <FoodName>
                           <span>{f.menuName}</span>
                         </FoodName>
-                        <span>{f.menuPrice}원</span>
+                        <span style={{ background: "#FAC7C7", fontWeight: "bold" }} >{f.menuPrice}원</span>
                         <div align-items="vertical">
                           <span>{f.placeName}</span>
                         </div>
