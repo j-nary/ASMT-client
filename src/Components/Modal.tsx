@@ -191,11 +191,12 @@ function Modal({ univName, onClickToggleModal }: PropsWithChildren<ModalDefaultT
                   <FoodName>
                     <span>{f.menuName}</span>
                   </FoodName>
-                  <span>{f.menuPrice}원</span>
+                  <span style={{ background: "#FAC7C7", fontWeight: "bold" }}>{f.menuPrice}원</span>
                   <div align-items="vertical">
                     <span>{f.placeName}</span>
                   </div>
-                  <span>{f.placeDistance}m | ★: {f.placeRating}</span>
+                  <span>{f.placeDistance}m
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★: {f.placeRating}</span>
                 </FoodInfo>
               </a>
             </FoodBox>
