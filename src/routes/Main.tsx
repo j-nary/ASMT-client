@@ -136,7 +136,7 @@ const Title = styled.h1`
 
 const univs = [
   { name: "가톨릭대학교", id: "catholic" },
-  { name: "강서대학교", id: "kcu" },
+  //  { name: "강서대학교", id: "kcu" },
   { name: "감리교신학대학교", id: "mtu" },
   { name: "건국대학교", id: "konkuk" },
   { name: "경기대학교", id: "kyonggi" },
@@ -153,7 +153,7 @@ const univs = [
 
   { name: "백석대학교", id: "bu" },
 
-  { name: "서울과학기술대학교", id: "seoultech" },
+  //  { name: "서울과학기술대학교", id: "seoultech" },
   { name: "서울교육대학교", id: "snue" },
   { name: "서울대학교", id: "snu" },
   { name: "서울시립대학교", id: "uos" },
@@ -256,7 +256,7 @@ function Main() {
       filteredList = univs.filter((univ) =>
         [
           "가톨릭대학교",
-          "강서대학교",
+          //"강서대학교",
           "감리교신학대학교",
           "건국대학교",
           "경기대학교",
@@ -283,7 +283,7 @@ function Main() {
     } else if (alphabet === "ㅅ") {
       filteredList = univs.filter((univ) =>
         [
-          "서울과학기술대학교",
+          //"서울과학기술대학교",
           "서울교육대학교",
           "서울대학교",
           "서울시립대학교",
