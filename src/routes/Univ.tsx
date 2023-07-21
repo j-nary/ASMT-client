@@ -109,6 +109,28 @@ const Container = styled.div`
   font-family: "jjwfont2", sans-serif;
 `;
 
+const RadioList = styled.ul`
+  height: 75%;
+  overflow: hidden;
+  width: 85vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media screen and (max-width: 768px) {
+    height: 58%;
+  }
+
+  @media (min-width: 1600px) {
+    width: 65vw;
+  }
+
+  @media (-webkit-device-pixel-ratio: 1.25) and (min-width: 1400px) {
+    height: 73%;
+  }
+`;
+
 const FoodsList = styled.ul`
   height: 75%;
   overflow-x: hidden;
@@ -597,13 +619,13 @@ function Univ() {
           />
         </RangeSliderWrapper>
 
-        <FoodsList>
+        <RadioList>
           <RadioComponent setSortMethod={handleSortMethodChange} />
           <ShowBookmarkImage
             src={showBookmark ? BookmarkOn : BookmarkOff}
             onClick={toggleShowBookmark}
           />
-        </FoodsList>
+        </RadioList>
         <Container>
           <FoodsList>
             {showBookmark ? (
@@ -613,13 +635,13 @@ function Univ() {
                     <BookmarkIcon
                       src={BookmarkOn}
                       alt="BookmarkOn"
-                      onClick={() => toggleBookmark(f.menuId)}
+                      onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
                     />
                   ) : (
                     <BookmarkIcon
                       src={BookmarkOff}
                       alt="BookmarkOff"
-                      onClick={() => toggleBookmark(f.menuId)}
+                      onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
                     />
                   )}
                   <a
@@ -658,13 +680,13 @@ function Univ() {
                       <BookmarkIcon
                         src={BookmarkOn}
                         alt="BookmarkOn"
-                        onClick={() => toggleBookmark(f.menuId)}
+                        onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
                       />
                     ) : (
                       <BookmarkIcon
                         src={BookmarkOff}
                         alt="BookmarkOff"
-                        onClick={() => toggleBookmark(f.menuId)}
+                        onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
                       />
                     )}
                     <a
