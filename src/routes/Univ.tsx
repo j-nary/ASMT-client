@@ -294,16 +294,16 @@ function Univ() {
   const fetchData = async () => {
     try {
       // console.log(typeof(state.univId));
-      console.log(`data = ${data}`);
-      console.log(data);
+      // console.log(`data = ${data}`);
+      // console.log(data);
       const jsonData = JSON.stringify(data);
-      console.log(jsonData);
+      // console.log(jsonData);
       const response = await axios.post(API_URL, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       setFoods((prev) => [...prev, ...response.data]);
       setLoading(false);
       setPage((page) => page + 1);
@@ -322,7 +322,7 @@ function Univ() {
   useEffect(() => {
     // inView가 true 일때만 실행한다.
     if (inView) {
-      console.log(inView, "무한 스크롤 요청 ");
+      // console.log(inView, "무한 스크롤 요청 ");
       data.page = page;
       fetchData();
     }
@@ -340,16 +340,16 @@ function Univ() {
         setKeywordList([...keywordList, query]);
       }
     }
-    console.log(keywordList);
+    // console.log(keywordList);
   };
   const removeTip = (index: number) => {
     setKeywordList((prevList) => prevList.filter((_, i) => i !== index));
-    console.log(keywordList);
+    // console.log(keywordList);
   };
 
-  useEffect(() => {
-    console.log(keywordList);
-  }, [keywordList]);
+  // useEffect(() => {
+  //   // console.log(keywordList);
+  // }, [keywordList]);
 
   // 클릭 한 번 할 시, 랭크에 기여
   const postRank = async (data: FoodInterface) => {
@@ -359,19 +359,16 @@ function Univ() {
         { menuId: data.menuId },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
       );
-      console.log(response);
-      console.log("POST 요청이 성공적으로 전송되었습니다.");
-      // 성공적으로 요청이 전송되었을 때 실행할 코드를 추가하세요.
+      // console.log(response);
+      // console.log("POST 요청이 성공적으로 전송되었습니다.");
     } catch (error) {
       console.error("POST 요청 중 오류가 발생하였습니다:", error);
-      // 오류가 발생했을 때 실행할 코드를 추가하세요.
     }
   };
 
   const handleSortMethodChange = (option: Option) => {
     setSortMethod(option);
     setPage(0);
-    console.log(option);
   };
   const handleSliderChange = (values: readonly number[]) => {
     setMinPrice(values[0]);
@@ -435,7 +432,7 @@ function Univ() {
             "Content-Type": "application/json",
           },
         });
-        console.log(response.data);
+        // console.log(response.data);
         setBookmarkItems(response.data);
       } catch (error) {
         console.error("북마크 GET 요청 중 오류가 발생하였습니다: ", error);
@@ -553,17 +550,17 @@ function Univ() {
         onClick={() => postRank(f)}
         key={f.menuId}
       >
-        {bookmarkItems.includes(f.menuId) ? (
+        {bookmarkItems.some((item: FoodInterface) => item.menuId === f.menuId) ? (
           <BookmarkIcon
             src={BookmarkOn}
             alt="BookmarkOn"
-            onClick={() => toggleBookmark(f.menuId)}
+            onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
           />
         ) : (
           <BookmarkIcon
             src={BookmarkOff}
             alt="BookmarkOff"
-            onClick={() => toggleBookmark(f.menuId)}
+            onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
           />
         )}
         <a
@@ -577,14 +574,18 @@ function Univ() {
             <FoodName>
               <span>{f.menuName}</span>
             </FoodName>
-            <span style={{ background: "#FAC7C7", fontWeight: "bold" }}>
+            <span
+              style={{ background: "#FAC7C7", fontWeight: "bold" }}
+            >
               {f.menuPrice}원
             </span>
             <div align-items="vertical">
               <span>{f.placeName}</span>
             </div>
             <span>
-              {f.placeDistance}m | ★: {f.placeRating}
+              {f.placeDistance}
+              m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★:{" "}
+              {f.placeRating}
             </span>
           </FoodInfo>
         </a>
@@ -630,92 +631,24 @@ function Univ() {
           <FoodsList>
             {showBookmark ? (
               bookmarkItems.map((f) => (
-                <FoodBox key={f.menuId} onClick={() => postRank(f)}>
-                  {bookmarkItems.some((item) => item.menuId === f.menuId) ? (
-                    <BookmarkIcon
-                      src={BookmarkOn}
-                      alt="BookmarkOn"
-                      onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
-                    />
-                  ) : (
-                    <BookmarkIcon
-                      src={BookmarkOff}
-                      alt="BookmarkOff"
-                      onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
-                    />
-                  )}
-                  <a
-                    href={f.placeLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ cursor: "pointer" }}
-                  >
-                    <ImageComponent imageUrl={`${f.menuImg}`} />
-                    <FoodInfo>
-                      <FoodName>
-                        <span>{f.menuName}</span>
-                      </FoodName>
-                      <span
-                        style={{ background: "#FAC7C7", fontWeight: "bold" }}
-                      >
-                        {f.menuPrice}원
-                      </span>
-                      <div align-items="vertical">
-                        <span>{f.placeName}</span>
-                      </div>
-                      <span>
-                        {f.placeDistance}
-                        m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★:{" "}
-                        {f.placeRating}
-                      </span>
-                    </FoodInfo>
-                  </a>
-                </FoodBox>
+                <FoodItem
+                  key={f.menuId}
+                  f={f}
+                  bookmarkItems={bookmarkItems}
+                  toggleBookmark={toggleBookmark}
+                  postRank={postRank}
+                />
               ))
             ) : (
               <>
                 {foods.map((f) => (
-                  <FoodBox key={f.menuId} onClick={() => postRank(f)}>
-                    {bookmarkItems.some((item) => item.menuId === f.menuId) ? (
-                      <BookmarkIcon
-                        src={BookmarkOn}
-                        alt="BookmarkOn"
-                        onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
-                      />
-                    ) : (
-                      <BookmarkIcon
-                        src={BookmarkOff}
-                        alt="BookmarkOff"
-                        onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
-                      />
-                    )}
-                    <a
-                      href={f.placeLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <ImageComponent imageUrl={`${f.menuImg}`} />
-                      <FoodInfo>
-                        <FoodName>
-                          <span>{f.menuName}</span>
-                        </FoodName>
-                        <span
-                          style={{ background: "#FAC7C7", fontWeight: "bold" }}
-                        >
-                          {f.menuPrice}원
-                        </span>
-                        <div align-items="vertical">
-                          <span>{f.placeName}</span>
-                        </div>
-                        <span>
-                          {f.placeDistance}
-                          m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★:{" "}
-                          {f.placeRating}
-                        </span>
-                      </FoodInfo>
-                    </a>
-                  </FoodBox>
+                  <FoodItem
+                    key={f.menuId}
+                    f={f}
+                    bookmarkItems={bookmarkItems}
+                    toggleBookmark={toggleBookmark}
+                    postRank={postRank}
+                  />
                 ))}
                 <div ref={ref}></div>
               </>
