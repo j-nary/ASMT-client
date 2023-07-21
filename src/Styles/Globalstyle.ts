@@ -1,18 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 export default createGlobalStyle`
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, menu, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-main, menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+* {
   margin: 0;
   padding: 0;
   border: 0;
@@ -53,10 +41,10 @@ table {
 body {
   /* font-family: 'Source Sans 3', sans-serif; */
   /* font-family: 'Black Han Sans', sans-serif; */
-  font-family: "Font";
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props: any) => props.theme.textColor};
   font-size: 1rem;
+  font-family: var(--font-jjwfont), var(--font-jjwfont2);
 }
 a {
   text-decoration: none;

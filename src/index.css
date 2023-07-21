@@ -1,0 +1,12 @@
+@font-face {
+	font-family: "jjwfont";
+	src: url(/src/Assets/Fonts/Bold.woff);
+}
+@font-face {
+	font-family: "jjwfont2";
+	src: url(/src/Assets/Fonts/Light.woff);
+}
+:root {
+    --font-jjwfont: "jjwfont";
+    --font-jjwfont2: "jjwfont2";	
+}

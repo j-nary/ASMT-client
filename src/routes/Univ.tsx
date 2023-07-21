@@ -14,7 +14,6 @@ import SearchBar from "../Components/SearchBar";
 import { useInView } from "react-intersection-observer";
 import BookmarkOff from "../Assets/Img/bookmarkOff.png";
 import BookmarkOn from "../Assets/Img/bookmarkOn.png";
-import Cookies from "js-cookie";
 import LogoSrc from "../Assets/Img/logo2.jpeg";
 import { boolean } from "yargs";
 import { isMobile, getUA } from "react-device-detect";
@@ -446,7 +445,7 @@ function Univ() {
     try {
       await axios.post(
         "http://13.125.233.202/api/bookmark",
-        { userId: userId, menuId: menuId },
+        { userId, menuId },
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",

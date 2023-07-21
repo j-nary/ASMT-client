@@ -6,4 +6,5 @@ export const theme: DefaultTheme = {
   accentColor: "#5D6DBE",
   circle1Color: "#99A4DB",
   circle2Color: "#C7E3E4",
+  
 };

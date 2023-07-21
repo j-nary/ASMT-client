@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'jjwfont';
+    src: local('../Assets/Fonts/Bold.woff') format('woff');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'jjwfont2';
+    src: local('../Assets/Fonts/Light.woff') format('woff');
+    font-style: normal;
+  }
+  html,
+  body {
+    font-family: 'jjwfont', sans-serif;
+  }
