@@ -268,7 +268,7 @@ function Univ() {
   const [isOpenRank, setOpenRank] = useState<boolean>(false);
   const { state } = useLocation<RouteState>();
   const [foods, setFoods] = useState<FoodInterface[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [minPrice, setMinPrice] = useState<number>(state.minimumPrice);
   const [maxPrice, setMaxPrice] = useState<number>(state.maximumPrice);
   const [sortMethod, setSortMethod] = useState<Option>("lowPrice");
@@ -312,15 +312,16 @@ function Univ() {
   };
 
   useEffect(() => {
+    setPage(1);
+    setLoading(true);
     setFoods([]);
-    if (init === false) {
-      setInit(true);
-    } else fetchData();
+    fetchData();
   }, [keywordList, sortMethod, minPrice, maxPrice]);
 
   useEffect(() => {
     // inView가 true 일때만 실행한다.
-    if (inView) {
+    if (inView && !loading) {
+      setLoading(true);
       // console.log(inView, "무한 스크롤 요청 ");
       data.page = page;
       fetchData();
@@ -543,52 +544,7 @@ function Univ() {
 
     // 기존의 FoodBox 컴포넌트에 ref 및 적용된 opacity 값 추가
     return (
-      <FoodBox
-        ref={foodBoxRef}
-        style={{ opacity }}
-        onClick={() => postRank(f)}
-        key={f.menuId}
-      >
-        {bookmarkItems.some((item: FoodInterface) => item.menuId === f.menuId) ? (
-          <BookmarkIcon
-            src={BookmarkOn}
-            alt="BookmarkOn"
-            onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
-          />
-        ) : (
-          <BookmarkIcon
-            src={BookmarkOff}
-            alt="BookmarkOff"
-            onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
-          />
-        )}
-        <a
-          href={f.placeLink}
-          target="_blank"
-          rel="noreferrer"
-          style={{ cursor: "pointer" }}
-        >
-          <ImageComponent imageUrl={`${f.menuImg}`} />
-          <FoodInfo>
-            <FoodName>
-              <span>{f.menuName}</span>
-            </FoodName>
-            <span
-              style={{ background: "#FAC7C7", fontWeight: "bold" }}
-            >
-              {f.menuPrice}원
-            </span>
-            <div align-items="vertical">
-              <span>{f.placeName}</span>
-            </div>
-            <span>
-              {f.placeDistance}
-              m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★:{" "}
-              {f.placeRating}
-            </span>
-          </FoodInfo>
-        </a>
-      </FoodBox>
+      <div></div>
     );
   }
 
@@ -630,28 +586,104 @@ function Univ() {
           <FoodsList>
             {showBookmark ? (
               bookmarkItems.map((f) => (
-                <FoodItem
+                <FoodBox
+                  onClick={() => postRank(f)}
                   key={f.menuId}
-                  f={f}
-                  bookmarkItems={bookmarkItems}
-                  toggleBookmark={toggleBookmark}
-                  postRank={postRank}
-                />
+                >
+                  {bookmarkItems.some((item: FoodInterface) => item.menuId === f.menuId) ? (
+                    <BookmarkIcon
+                      src={BookmarkOn}
+                      alt="BookmarkOn"
+                      onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
+                    />
+                  ) : (
+                    <BookmarkIcon
+                      src={BookmarkOff}
+                      alt="BookmarkOff"
+                      onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
+                    />
+                  )}
+                  <a
+                    href={f.placeLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <ImageComponent imageUrl={`${f.menuImg}`} />
+                    <FoodInfo>
+                      <FoodName>
+                        <span>{f.menuName}</span>
+                      </FoodName>
+                      <span
+                        style={{ background: "#FAC7C7", fontWeight: "bold" }}
+                      >
+                        {f.menuPrice}원
+                      </span>
+                      <div align-items="vertical">
+                        <span>{f.placeName}</span>
+                      </div>
+                      <span>
+                        {f.placeDistance}
+                        m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★:{" "}
+                        {f.placeRating}
+                      </span>
+                    </FoodInfo>
+                  </a>
+                </FoodBox>
               ))
             ) : (
               <>
                 {foods.map((f) => (
-                  <FoodItem
+                  <FoodBox
+
+                    onClick={() => postRank(f)}
                     key={f.menuId}
-                    f={f}
-                    bookmarkItems={bookmarkItems}
-                    toggleBookmark={toggleBookmark}
-                    postRank={postRank}
-                  />
+                  >
+                    {bookmarkItems.some((item: FoodInterface) => item.menuId === f.menuId) ? (
+                      <BookmarkIcon
+                        src={BookmarkOn}
+                        alt="BookmarkOn"
+                        onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
+                      />
+                    ) : (
+                      <BookmarkIcon
+                        src={BookmarkOff}
+                        alt="BookmarkOff"
+                        onClick={(e) => { toggleBookmark(f.menuId); e.stopPropagation(); }}
+                      />
+                    )}
+                    <a
+                      href={f.placeLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <ImageComponent imageUrl={`${f.menuImg}`} />
+                      <FoodInfo>
+                        <FoodName>
+                          <span>{f.menuName}</span>
+                        </FoodName>
+                        <span
+                          style={{ background: "#FAC7C7", fontWeight: "bold" }}
+                        >
+                          {f.menuPrice}원
+                        </span>
+                        <div align-items="vertical">
+                          <span>{f.placeName}</span>
+                        </div>
+                        <span>
+                          {f.placeDistance}
+                          m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★:{" "}
+                          {f.placeRating}
+                        </span>
+                      </FoodInfo>
+                    </a>
+                  </FoodBox>
                 ))}
-                <div ref={ref}></div>
               </>
             )}
+            <div ref={ref}></div>
+
           </FoodsList>
         </Container>
       </Main>
