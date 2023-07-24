@@ -24,10 +24,21 @@ const ModalContainer = styled.div`
   justify-content: center;
   position: fixed;
   z-index: 9999;
+  
+  @media screen and (max-width: 768px) {
+  min-width: 100%;
+
+  }
 `;
 
 const ModalLogo = styled.img`
   width: 35%;
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
+
+  
 `;
 
 const DialogBox = styled.dialog`
@@ -72,6 +83,14 @@ const RankBox = styled.ul`
     }
 `;
 
+const BlankOnlyPc = styled.span`
+@media screen and (max-width: 768px) {
+
+  display : none;
+}
+
+`;
+
 const RankImg = styled.img`
   position: absolute;
   width: 100px;
@@ -96,9 +115,12 @@ const FoodBox = styled.ul`
   }
   
   @media screen and (max-width: 768px) {
-    width: 100%;
-    height:130px
-
+    width: 90%;
+    margin: 0.3em;
+    margin-left:18px;
+    min-height : 0%;
+    max-height:100%;
+    height:125px;
   }
 `;
 
@@ -107,6 +129,10 @@ const FoodName = styled.ul`
     max-width: 100%;
     margin-bottom: 0.3em;
     margin-top: 0.5em;
+
+    @media screen and (max-width: 768px) {
+margin:0;
+    }
 `;
 
 const FoodInfo = styled.ul`
@@ -114,6 +140,12 @@ const FoodInfo = styled.ul`
   max-height:fit-content;
   max-width: 90%;
   padding: 2px;
+
+  @media screen and (max-width: 768px) {
+    max-width:100%;
+    padding:0px;
+    margin:0;
+  }
 `;
 
 
@@ -173,7 +205,7 @@ function Modal({ univName, onClickToggleModal }: PropsWithChildren<ModalDefaultT
   return (
     <ModalContainer>
       <DialogBox>
-        <ModalLogo src={Logo}/>
+        <ModalLogo src={Logo} />
         {foods.map((f, index) => (
           <RankBox>
             <ImageComponent imageUrl={index === 0 ? Rank1 : index === 1 ? Rank2 : index === 2 ? Rank3 : index === 3 ? Rank4 : index === 4 ? Rank5 : ''} />
@@ -195,8 +227,12 @@ function Modal({ univName, onClickToggleModal }: PropsWithChildren<ModalDefaultT
                   <div align-items="vertical">
                     <span>{f.placeName}</span>
                   </div>
-                  <span>{f.placeDistance}m
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★: {f.placeRating}</span>
+                  <span>{f.placeDistance}m </span>
+                  <BlankOnlyPc>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  </BlankOnlyPc>
+                  <span>★: {f.placeRating}</span>
+
                 </FoodInfo>
               </a>
             </FoodBox>

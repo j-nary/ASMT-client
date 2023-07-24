@@ -132,6 +132,12 @@ const NoSelectionMessage = styled(Univ)`
   ${HandIcon} {
     margin-right: 10px;
   }
+
+  
+  @media screen and (max-width: 768px) {
+  font-size: 20px;
+
+  }
 `;
 
 const Title = styled.h1`
