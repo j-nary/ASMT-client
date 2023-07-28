@@ -151,7 +151,6 @@ const Title = styled.h1`
 
 const univs = [
   { name: "가톨릭대학교", id: "catholic" },
-  { name: "강서대학교", id: "kcu" },
   { name: "감리교신학대학교", id: "mtu" },
   { name: "건국대학교", id: "konkuk" },
   { name: "경기대학교", id: "kyonggi" },
@@ -271,7 +270,6 @@ function Main() {
       filteredList = univs.filter((univ) =>
         [
           "가톨릭대학교",
-          "강서대학교",
           "감리교신학대학교",
           "건국대학교",
           "경기대학교",
