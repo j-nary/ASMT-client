@@ -7,6 +7,7 @@ import RangeSlider from "../Components/RangeSlider";
 import RadioComponent, { Option } from "../Components/Radio";
 import BackgroundSrc from "../Assets/Img/backimg3.jpg";
 import ImageComponent from "../Components/FoodImage";
+import MenuImageComponent from "../Components/MenuImage";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Handle } from "../Components/RangeSlider";
@@ -146,6 +147,8 @@ const FoodsList = styled.ul`
 
   @media screen and (max-width: 768px) {
     height: 58%;
+  margin: 2px auto 0; /* 가운데 정렬 및 상단 여백 수정 */
+
   }
 
   @media (min-width: 1600px) {
@@ -196,7 +199,7 @@ const FoodBox = styled.li`
     width: 100%;
     min-height: 30%;
     max-height: 30%;
-  padding: 0.5em;
+  padding: 0.2em;
 
   }
 
@@ -501,6 +504,11 @@ function Univ() {
     margin-left: auto;
     z-index: 100;
     margin-right: 20px;
+
+    @media screen and (max-width: 768px) {
+      width:20px;
+      height:20px;
+    }
   `;
 
   const [showBookmark, setShowBookmark] = useState<boolean>(false);
@@ -616,7 +624,7 @@ function Univ() {
                     rel="noreferrer"
                     style={{ cursor: "pointer" }}
                   >
-                    <ImageComponent imageUrl={`${f.menuImg}`} />
+                    <MenuImageComponent imageUrl={`${f.menuImg}`} />
                     <FoodInfo>
                       <FoodName>
                         <span>{f.menuName}</span>
@@ -665,7 +673,7 @@ function Univ() {
                       rel="noreferrer"
                       style={{ cursor: "pointer" }}
                     >
-                      <ImageComponent imageUrl={`${f.menuImg}`} />
+                      <MenuImageComponent imageUrl={`${f.menuImg}`} />
                       <FoodInfo>
                         <FoodName>
                           <span>{f.menuName}</span>

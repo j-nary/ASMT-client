@@ -1,10 +1,20 @@
 import { useState } from 'react';
+import styled from "styled-components";
 
 export type Option = "lowPrice" | "highPrice" | "distance";
 
 type Props = {
   setSortMethod: (option: Option) => void;
 }
+
+const RadioRadio = styled.div`
+
+
+@media screen and (max-width: 768px) {
+  font-size:13px;
+}
+
+`;
 
 const RadioComponent = ({ setSortMethod }: Props) => {
   const [selectedOption, setSelectedOption] = useState<Option>('lowPrice');
@@ -16,7 +26,7 @@ const RadioComponent = ({ setSortMethod }: Props) => {
 
   return (
     <li>
-      <div>
+      <RadioRadio>
         <label>
           <input
             type="radio"
@@ -49,7 +59,7 @@ const RadioComponent = ({ setSortMethod }: Props) => {
           />
           거리순
         </label>
-      </div>
+      </RadioRadio>
     </li>
   );
 };
