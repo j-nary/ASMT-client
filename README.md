@@ -178,12 +178,12 @@ ex. (2/5) = (현재 검색한 개수) / (최대 검색 가능한 개수)
 ## 5. 개발환경 
 - Front End 
 
-React +styled-components + TypeScript 
+  React +styled-components + TypeScript 
 
 - Back End 
 
-SpringBoot +JPA + MySql 
+  SpringBoot +JPA + MySql 
 
 - CI/CD 
 
-AWS EC2 Instance 
+  AWS EC2 Instance 
