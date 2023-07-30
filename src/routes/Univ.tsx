@@ -208,6 +208,7 @@ const FoodBox = styled.li`
     height: 30%;
   }
 
+ 
 
   &:hover {
     background-color: #b0e0e6;
@@ -231,7 +232,7 @@ const FoodInfo = styled.li`
   }
 `;
 
-const API_URL = "http://localhost:8080/api/search";
+const API_URL = "http://13.125.233.202/api/search";
 
 interface RouteParams {
   univId: string;
@@ -424,7 +425,7 @@ function Univ() {
   useEffect(() => {
     const getBookmark = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/bookmark", {
+        const response = await axios.get("http://13.125.233.202/api/bookmark", {
           params: {
             userId: userId,
             sortMethod: sortMethod,
@@ -446,7 +447,7 @@ function Univ() {
   const addToBookmark = async (menuId: number) => {
     try {
       await axios.post(
-        "http://localhost:8080/api/bookmark",
+        "http://13.125.233.202/api/bookmark",
         { userId, menuId },
         {
           headers: {
@@ -461,7 +462,7 @@ function Univ() {
 
   const removeFromBookmark = async (menuId: number) => {
     try {
-      await axios.delete("http://localhost:8080/api/bookmark", {
+      await axios.delete("http://13.125.233.202/api/bookmark", {
         data: { menuId: menuId, userId: userId },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
