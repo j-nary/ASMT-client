@@ -210,7 +210,11 @@ function Modal({ univName, onClickToggleModal }: PropsWithChildren<ModalDefaultT
           <RankBox>
             <ImageComponent imageUrl={index === 0 ? Rank1 : index === 1 ? Rank2 : index === 2 ? Rank3 : index === 3 ? Rank4 : index === 4 ? Rank5 : ''} />
             <FoodBox>
-              <a href={f.placeLink} style={{ cursor: 'pointer' }}>
+              <a 
+              href={f.placeLink} 
+              target="_blank"
+              rel="noreferrer"
+              style={{ cursor: 'pointer' }}>
                 <ImageComponent imageUrl={`${f.menuImg}`} />
                 {/* {(f.menuImg == "null" || f.menuImg == null) ? (
                   <FoodImg src={AltSrc} alt="static" />
