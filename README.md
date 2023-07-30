@@ -176,14 +176,14 @@ ex. (2/5) = (현재 검색한 개수) / (최대 검색 가능한 개수)
 - 모바일 화면에서는 단순하고 직관적인 디자인을 적용하고, 데스크 탑 화면에서는 넓은 공간을 활용해 풍부한 콘텐츠를  제공할 수  있 다.
   
 ## 5. 개발환경 
-1) Front End 
+- Front End 
 
 React +styled-components + TypeScript 
 
-2) Back End 
+- Back End 
 
 SpringBoot +JPA + MySql 
 
-3) CI/CD 
+- CI/CD 
 
 AWS EC2 Instance 
