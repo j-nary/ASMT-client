@@ -13,7 +13,8 @@ const FoodImg = styled.img`
   margin-right: 10px;
 
   @media screen and (max-width: 768px) {
-    height: 100px;
+    height: 70px;
+    width: 70px;
   }
 `;
 

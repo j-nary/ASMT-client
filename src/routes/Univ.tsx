@@ -194,8 +194,10 @@ const FoodBox = styled.li`
 
   @media screen and (max-width: 768px) {
     width: 100%;
-    min-height: 50%;
-    max-height: 50%;
+    min-height: 30%;
+    max-height: 30%;
+  padding: 0.5em;
+
   }
 
   @media (min-width: 1600px) {
@@ -219,6 +221,10 @@ const FoodName = styled.li`
   font-weight: bold;
   margin-bottom: 0.3em;
   margin-top: 0.5em;
+
+  @media screen and (max-width: 768px) {
+    margin:0;
+  }
 `;
 
 const FoodInfo = styled.li`
@@ -228,7 +234,8 @@ const FoodInfo = styled.li`
   line-height: 1.3;
 
   @media screen and (max-width: 768px) {
-    line-height: 1;
+    line-height: 1.3;
+    font-size:13px;
   }
 `;
 
@@ -361,8 +368,6 @@ function Univ() {
         { menuId: data.menuId },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
       );
-      // console.log(response);
-      // console.log("POST 요청이 성공적으로 전송되었습니다.");
     } catch (error) {
       console.error("POST 요청 중 오류가 발생하였습니다:", error);
     }
