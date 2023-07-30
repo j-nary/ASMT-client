@@ -357,7 +357,7 @@ function Univ() {
   const postRank = async (data: FoodInterface) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/rank",
+        "http://13.125.233.202/api/rank",
         { menuId: data.menuId },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
       );
