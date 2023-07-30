@@ -208,6 +208,16 @@ const FoodBox = styled.li`
     height: 30%;
   }
 
+  @media (max-width: 3000px) {
+    min-height: 0%;
+    height: 20%;
+  }
+
+  @media (min-width: 3000px) and (-webkit-device-pixel-ratio: 1.5) {
+    min-height: 0%;
+    height: 30%;
+  }
+
   &:hover {
     background-color: #b0e0e6;
   }
